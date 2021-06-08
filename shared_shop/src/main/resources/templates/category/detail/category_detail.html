@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{common/layout_4block :: layout(~{::body/content()})}">
+<head>
+<title>カテゴリ詳細 | シェアードショップ</title>
+<meta charset="UTF-8" />
+</head>
+<body class="admin category_detail">
+		<h2 class="title">カテゴリ詳細</h2>
+		<div class="user_detail_area">
+			<ul class="input_list">
+				<li>
+					<span class="input_title">カテゴリ名</span>
+					<span class="input_value" th:text="${category.name}"></span>
+				</li>
+				<li>
+					<span class="input_title">説明</span>
+					<span class="input_value" th:text="${category.description}"></span>
+				</li>
+			</ul>
+		</div>
+
+
+		<div class="detail_button_area">
+			<form th:action="@{/category/list}" class="update">
+			    <input type="submit" value="戻る" />
+			</form>
+			<form th:action="@{/category/update/input}" method="post">
+				<input type="hidden" name="id" th:value="${category.id}"  />
+				<input type="submit" value="変更" />
+			</form>
+			<form th:action="@{/category/delete/check}" method="post">
+				<input type="hidden" name="id" th:value="${category.id}" />
+				<input type="submit" value="削除" class="delete" />
+			</form>
+		</div>
+</body>
+</html>

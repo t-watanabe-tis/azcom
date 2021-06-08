@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!-- <html xmlns:th="http://www.thymeleaf.org" -->
+<!-- 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" -->
+<!-- 	layout:decorator="common/layout_3block"> -->
+<html xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{common/layout_3block :: layout(~{::body/content()})}">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body th:object="${loginForm}" class="user login">
+
+		<h2 class="page_title">ログイン</h2>
+		<p class="description">メールアドレスとパスワードを入力してください。</p>
+		<form method="post" th:action="@{/login}" th:object="${loginForm}">
+			
+			<ul th:if="${#fields.hasErrors('*')}"  th:class="input_list" >
+  				<li th:each="err : ${#fields.errors('*')}" th:text="${err}" th:class="error_list" ></li>
+			</ul>
+			<table class="login_form">
+				
+				<tbody>
+				
+					<tr>
+						<th class="label">メールアドレス</th>
+						<td class="input"><input type="text" th:field="*{email}" /></td>
+					</tr>
+					<tr>
+						<th class="label">パスワード</th>
+						<td class="input"><input type="password" th:field="*{password}" /></td>
+					</tr>
+					<tr>
+						<th class="label"></th>
+						<td class="input"><input type="submit" value="ログイン" /></td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+
+</body>
+</html>

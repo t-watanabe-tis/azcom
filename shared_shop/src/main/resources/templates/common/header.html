@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+<div th:fragment="layout-header" class="container">
+	<h1 class="site_title">シェアードショップ</h1>
+	<div th:if="${session.user != null and session.user.authority == 2}" class="user_info">
+		<a th:href="@{/user/detail}" th:text="${session.user.name}"></a>さん、ようこそ | <a th:href="@{/logout}">ログアウト</a>
+	</div>
+	<div th:if="${session.user != null and (session.user.authority == 0 or session.user.authority == 1)}" class="user_info">
+		<a th:href="@{/user/detail/admin/{id}(id=${session.user.id})}" th:text="${session.user.name}"></a>さん、ようこそ | <a th:href="@{/logout}">ログアウト</a>
+	</div>
+	<div th:if="${session.user == null}" class="user_info">
+		<a th:href="@{/login}">ログイン</a> | <a th:href="@{/user/regist/input}">新規会員登録</a>
+	</div>
+</div>
+</body>
+</html>
