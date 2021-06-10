@@ -55,7 +55,7 @@ public class LoginController {
 	 * @param form ログインフォーム
 	 * @param result 入力チェック結果
 	 * @param session セッション情報
-	 * @return 
+	 * @return
 			一般会員の場合 "/" トップ画面へ
 			運用管理者、システム管理者の場合 "admin_menu"へ
 	 */
@@ -70,7 +70,7 @@ public class LoginController {
 			Integer authority = ((UserBean) session.getAttribute("user")).getAuthority();
 			if (authority.intValue() == 2) {
 				// 一般会員ログインした場合、トップ画面に遷移
-				return "";
+				return "/index";
 			}
 			else {
 				// 運用管理者、もしくはシステム管理者としてログインした場合、管理者用メニュー画面に遷移

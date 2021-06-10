@@ -21,7 +21,7 @@ public class ItemShowCustomerController {
 	@Autowired
 	ItemRepository itemRepository;
 
-	
+
 	/**
 	 * トップ画面 表示処理
 	 *
@@ -32,9 +32,12 @@ public class ItemShowCustomerController {
 	@RequestMapping(path = "/")
 	public String index(Model model,  Pageable pageable) {
 
-		
+
 		return "index";
 	}
 
-	
+	@RequestMapping("/newItems")
+	public String showNewItemList(Model model) {
+		return "item/list/item_list";
+	}
 }
