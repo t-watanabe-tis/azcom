@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>
+			商品詳細 | シェアードショップ
+		</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
+	</head>
+	<body class="user item_detail">
+		<header>
+			<div class="container">
+				<h1 class="site_title">
+					シェアードショップ
+				</h1>
+				<div class="user_info">
+					<a href="/shared_shop/user/detail">
+						一般三郎
+					</a>
+					さん、ようこそ |
+					<a href="/shared_shop/logout">
+						ログアウト
+					</a>
+				</div>
+			</div>
+		</header>
+		<nav class="navi_area">
+			<ul class="navi_menu">
+				<li>
+					<a href="/shared_shop/">
+						トップ
+					</a>
+				</li>
+				<li>
+					<a href="/shared_shop/item/list/1">
+						新着一覧
+					</a>
+				</li>
+				<li>
+					<a href="/shared_shop/basket/list?page=0">
+						買い物かご
+					</a>
+				</li>
+				<li>
+					<a href="/shared_shop/order/list">
+						注文一覧
+					</a>
+				</li>
+			</ul>
+		</nav>
+		<div class="container">
+			<aside class="search" >
+				<div  class="search_area">
+					<h2 class="title">
+						カテゴリ別検索
+					</h2>
+					<div class="form">
+						<form action="/shared_shop/item/list/category/1">
+							<select name="categoryId">
+								<option value="2">
+									書籍
+								</option>
+								<option value="1">
+									食料品
+								</option>
+								<option value="15">
+									キッチン用品
+								</option>
+								<option value="13">
+									アクセサリ
+								</option>
+								<option value="10">
+									OA用品
+								</option>
+								<option value="12">
+									手芸用品
+								</option>
+								<option value="9">
+									飲み物
+								</option>
+								<option value="8">
+									ネットワーク機器
+								</option>
+								<option value="6">
+									掃除用具
+								</option>
+								<option value="5">
+									文房具
+								</option>
+								<option value="7">
+									食器
+								</option>
+								<option value="3">
+									乗り物
+								</option>
+							</select>
+							<input type="submit" value="検索" />
+						</form>
+					</div>
+				</div>
+			</aside>
+			<article class="main">
+				<h2 class="title">
+					商品詳細
+				</h2>
+				<div class="item_info_form_area">
+					<div class="item_detail_area">
+						<div class="item_image_area">
+							<img src="img/20180311122622_apple.jpg" />
+						</div>
+						<dl class="item_detail_list">
+							<dt>
+								商品名：
+							</dt>
+							<dd>
+								りんご
+							</dd>
+							<dt>
+								価格：
+							</dt>
+							<dd>
+								110
+							</dd>
+							<dt>
+								在庫：
+							</dt>
+							<dd>
+								在庫あり
+							</dd>
+							<dt>
+								カテゴリ：
+							</dt>
+							<dd>
+								食料品
+							</dd>
+							<dt>
+								説明：
+							</dt>
+							<dd>
+								青森県産のりんごです。とってもみずみずしい！
+							</dd>
+						</dl>
+					</div>
+					<form action="/shared_shop/basket/add" method="post" class="user_info_form">
+						<input type="hidden" name="id" value="1"  />
+						<input type="submit" value="買い物かごに入れる" class="send_button"/>
+					</form>
+					<form action="/shared_shop/item/list/1">
+						<input type="submit" value="戻る"  class="back_button" />
+					</form>
+				</div>
+			</article>
+		</div>
+		<footer>
+			<small class="container">
+				Copyright(C) 2017 System Shared co., ltd, ALL Rights Reserved
+			</small>
+		</footer>
+	</body>
+</html>
