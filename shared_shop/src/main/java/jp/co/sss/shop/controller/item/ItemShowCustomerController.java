@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.sss.shop.repository.ItemRepository;
@@ -38,5 +39,14 @@ public class ItemShowCustomerController {
 	public String showNewItemList(Model model) {
 		return "item/list/item_list";
 	}
+
+
+	//商品詳細画面 嘉川
+	@RequestMapping(path="newItems/item/detail/{id}")
+		public String create(@PathVariable int id, Model model) {
+			model.addAttribute("item", itemRepository.getOne(id));
+//			System.out.println(itemRepository.getOne(id).getName());
+				return "item/detail/item_detail";
+		}
 
 }

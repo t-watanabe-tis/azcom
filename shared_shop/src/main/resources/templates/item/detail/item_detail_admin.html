@@ -30,23 +30,23 @@
 					<dd th:text="${item.description}"></dd>
 				</dl>
 			</div>
-			
+
 			<div class="detail_button_area">
 				<form th:action="@{/item/list/admin}">
 				    <input type="submit" value="戻る"  class="back_button" />
 				</form>
-				
+
 				<form method="post" th:action="@{/item/update/input}">
 					<input type="hidden" name="id" th:value="${item.id}" />
 					<input type="submit" value="変更" />
 				</form>
-				
+
 				<form method="post" th:action="@{/item/delete/check}">
 					<input type="hidden" name="id" th:value="${item.id}" />
 					<input type="submit" value="削除" class="delete" />
 				</form>
 			</div>
-			
+
 		</div>
 
 </body>
