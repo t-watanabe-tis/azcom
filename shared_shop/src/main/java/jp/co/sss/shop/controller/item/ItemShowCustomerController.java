@@ -80,7 +80,6 @@ public class ItemShowCustomerController {
 
 		model.addAttribute("categories", categoryRepository.findAll());
 		List<Item> itemList = itemRepository.findByCategory(categoryRepository.getOne(categoryId));
-//		model.addAttribute("items", itemRepository.findByCategory(categoryRepository.getOne(categoryId)));
 		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList);
 		model.addAttribute("items", itemBeanList);
 		return "item/list/item_list";
@@ -93,11 +92,13 @@ public class ItemShowCustomerController {
 		return "common/sidebar";
 	}
 
-	@RequestMapping(path = "/itemName", method = RequestMethod.POST)
-	public String itemName(String name, Model model) {
-		model.addAttribute("items", itemRepository.findByNameLike("%" + name + "%"));
+	@RequestMapping(path = "/item/list/categoryName", method = RequestMethod.GET)
+	public String itemName(String categoryName, Model model) {
 
-		return "redirect:/item/list/item_list";
+		List<Item> itemNameList = itemRepository.findByNameLike("%" + categoryName + "%");
+		List<ItemBean> itemNameBeanList = BeanCopy.copyEntityToItemBean(itemNameList);
+		model.addAttribute("items", itemNameBeanList);
+		return "item/list/item_list";
 
 	}
 

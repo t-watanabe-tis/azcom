@@ -12,8 +12,7 @@
 			<h2 class="title">カテゴリ別検索</h2>
 			<div class="form">
 				<!-- 商品一覧画面以外で表示-->
-				<form th:if="${sortType == null}"
-					th:action="@{/item/list/category}">
+				<form th:if="${sortType == null}" th:action="@{/item/list/category}">
 					<select name="categoryId">
 						<option th:each="category: ${categories}"
 							th:value="${category.id}" th:text="${category.name}"></option>
@@ -32,9 +31,9 @@
 
 		<div th:if="${session.user == null or session.user.authority == 2}">
 
-			<form action="/itemNameSearch" method="post">
-				商品名:<input type="text" name="name"><input type="submit"
-					value="検索" />
+			<form th:action="@{/item/list/categoryName}">
+				商品名:<input type="text" name="categoryName"><input
+					type="submit" value="検索">
 			</form>
 		</div>
 
