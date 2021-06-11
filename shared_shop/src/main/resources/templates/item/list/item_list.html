@@ -7,23 +7,26 @@
 </head>
 <body>
 	<h2 class="title">商品一覧</h2>
-	<table >
-			<tr>
-				<th>商品画像</th>
-				<th>商品名</th>
-				<th>価格</th>
-				<th>カテゴリ</th>
-			</tr>
-			<!--/* 商品情報 */-->
-			<tr th:each="item: ${items}">
-				<td>
-					<img th:src="@{}">
-				</td>
-				<td><a th:href="@{/item/detail/admin/{id}(id=${item.id})}"
-					th:text="${item.name}"></a></td>
-				<td th:text="${item.price}"></td>
-				<td th:text="${item.categoryName}"></td>
-			</tr>
-		</table>
+	<table>
+		<tr>
+			<th>商品画像</th>
+			<th>商品名</th>
+			<th>価格</th>
+			<th>カテゴリ</th>
+		</tr>
+		<!--/* 商品情報 */-->
+		<tr th:each="item: ${items}">
+			<td><img th:src="@{}"></td>
+			<td><a th:href="@{/item/detail/admin/{id}(id=${item.id})}"
+				th:text="${item.name}"></a></td>
+			<td th:text="${item.price}"></td>
+			<td th:text="${item.categoryName}"></td>
+		</tr>
+	</table>
+
+
+
+
+
 </body>
 </html>
