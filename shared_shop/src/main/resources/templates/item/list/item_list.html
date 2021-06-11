@@ -7,6 +7,14 @@
 </head>
 <body>
 	<h2 class="title">商品一覧</h2>
+
+	<div>
+	<a>新着順</a>
+	<a>売れ筋順</a>
+	<a>価格が高い順</a>
+	<a>価格が低い順</a>
+	</div>
+
 	<table>
 		<tr>
 			<th>商品画像</th>
@@ -16,8 +24,8 @@
 		</tr>
 		<!--/* 商品情報 */-->
 		<tr th:each="item: ${items}">
-			<td><img th:src="@{}"></td>
-			<td><a th:href="@{/item/detail/admin/{id}(id=${item.id})}"
+			<td>商品画像</td>
+			<td><a th:href="@{/item/detail/{id}(id=${item.id})}"
 				th:text="${item.name}"></a></td>
 			<td th:text="${item.price}"></td>
 			<td th:text="${item.categoryName}"></td>

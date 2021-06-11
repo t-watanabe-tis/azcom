@@ -1,15 +1,20 @@
 package jp.co.sss.shop.controller.item;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jp.co.sss.shop.bean.ItemBean;
 import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
+import jp.co.sss.shop.util.BeanCopy;
 
 /**
  * 商品管理 一覧表示機能(一般会員用)のコントローラクラス
@@ -40,10 +45,26 @@ public class ItemShowCustomerController {
 		return "/index";
 	}
 
-	@RequestMapping("/newItems")
+	//
+	@RequestMapping("/item/list")
 	public String showNewItemList(Model model) {
+
+		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemRepository.findAll());
+		model.addAttribute("items", itemBeanList);
 		return "item/list/item_list";
 	}
+
+
+	//商品詳細画面
+	@RequestMapping(path="/item/detail/{id}")
+	public String create(@PathVariable int id, Model model) {
+		model.addAttribute("item", itemRepository.getOne(id));
+		System.out.println("detail");
+						System.out.println(itemRepository.getOne(id).getName());
+		return "item/detail/item_detail";
+	}
+
+
 
 	@RequestMapping(path = "/categorySearch", method = RequestMethod.POST)
 	public String categorySearch(Integer id, Model model) {
