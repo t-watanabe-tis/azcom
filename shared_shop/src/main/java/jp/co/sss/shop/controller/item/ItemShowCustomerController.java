@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.sss.shop.bean.ItemBean;
 import jp.co.sss.shop.entity.Category;
+import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.util.BeanCopy;
@@ -54,36 +55,50 @@ public class ItemShowCustomerController {
 		return "item/list/item_list";
 	}
 
-
 	//商品詳細画面
-	@RequestMapping(path="/item/detail/{id}")
+	@RequestMapping(path = "/item/detail/{id}")
 	public String create(@PathVariable int id, Model model) {
 		model.addAttribute("item", itemRepository.getOne(id));
 		System.out.println("detail");
-						System.out.println(itemRepository.getOne(id).getName());
+		System.out.println(itemRepository.getOne(id).getName());
 		return "item/detail/item_detail";
 	}
 
+	//カテゴリー別検索
+	@RequestMapping("/category")
+	public String category(Model model) {
+		model.addAttribute("categories", categoryRepository.findAll());
+		return "common/sidebar";
+	}
 
-
-	@RequestMapping(path = "/categorySearch", method = RequestMethod.POST)
-	public String categorySearch(Integer id, Model model) {
+	@RequestMapping(path = "/item/list/category", method = RequestMethod.GET)
+	public String categorySearch(Integer categoryId, Model model) {
 		Category category = new Category();
 
-		category.setId(id);
+		category.setId(categoryId);
+		System.out.println(categoryId);
 
-		model.addAttribute("genre", categoryRepository.findAll());
-		model.addAttribute("items", itemRepository.findByCategory(categoryRepository.getOne(id)));
+		model.addAttribute("categories", categoryRepository.findAll());
+		List<Item> itemList = itemRepository.findByCategory(categoryRepository.getOne(categoryId));
+//		model.addAttribute("items", itemRepository.findByCategory(categoryRepository.getOne(categoryId)));
+		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList);
+		model.addAttribute("items", itemBeanList);
 		return "item/list/item_list";
 	}
 
-	@RequestMapping(path = "/itemSearch", method = RequestMethod.POST)
-	public String itemSearch(String name, Model model) {
-		model.addAttribute("items",itemRepository.findByNameLike("%" + name + "%"));
-
-		return "item/list/itemSearch";
-
+	//商品名検索
+	@RequestMapping("/itemNameSearch")
+	public String itemNameSearch(Model model) {
+		model.addAttribute("items", itemRepository.findAll());
+		return "common/sidebar";
 	}
 
+	@RequestMapping(path = "/itemName", method = RequestMethod.POST)
+	public String itemName(String name, Model model) {
+		model.addAttribute("items", itemRepository.findByNameLike("%" + name + "%"));
+
+		return "redirect:/item/list/item_list";
+
+	}
 
 }
