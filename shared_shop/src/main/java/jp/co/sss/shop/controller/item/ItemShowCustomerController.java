@@ -80,41 +80,49 @@ public class ItemShowCustomerController {
 		System.out.println(itemRepository.getOne(id).getName());
 		return "item/detail/item_detail";
 	}
+//
+//	//カテゴリー別検索
+//	@RequestMapping("/category")
+//	public String category(Model model) {
+//		model.addAttribute("categories", categoryRepository.findAll());
+//		return "common/sidebar";
+//	}
 
 	//カテゴリー別検索
-	@RequestMapping("/category")
-	public String category(Model model) {
-		model.addAttribute("categories", categoryRepository.findAll());
-		return "common/sidebar";
-	}
-
 	@RequestMapping(path = "/item/list/category", method = RequestMethod.GET)
-	public String categorySearch(Integer categoryId, Model model) {
+	public String categorySearch(Integer categoryId, Model model, Pageable pageable) {
+
 		Category category = new Category();
-
 		category.setId(categoryId);
-		System.out.println(categoryId);
 
-		model.addAttribute("categories", categoryRepository.findAll());
-		List<Item> itemList = itemRepository.findByCategory(categoryRepository.getOne(categoryId));
-		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList);
+		Page<Item> itemList = itemRepository.findByDeleteFlagAndCategory(Constant.NOT_DELETED, category, pageable);
+		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
+
 		model.addAttribute("items", itemBeanList);
+		model.addAttribute("pages", itemList);
+		model.addAttribute("url", "/item/list");
+
 		return "item/list/item_list";
 	}
 
-	//商品名検索
-	@RequestMapping("/itemNameSearch")
-	public String itemNameSearch(Model model) {
-		model.addAttribute("items", itemRepository.findAll());
-		return "common/sidebar";
-	}
+//	//商品名検索
+//	@RequestMapping("/itemNameSearch")
+//	public String itemNameSearch(Model model) {
+//		model.addAttribute("items", itemRepository.findAll());
+//		return "common/sidebar";
+//	}
 
 	@RequestMapping(path = "/item/list/categoryName", method = RequestMethod.GET)
-	public String itemName(String categoryName, Model model) {
+	public String itemName(String categoryName, Model model, Pageable pageable) {
 
-		List<Item> itemNameList = itemRepository.findByNameLike("%" + categoryName + "%");
-		List<ItemBean> itemNameBeanList = BeanCopy.copyEntityToItemBean(itemNameList);
-		model.addAttribute("items", itemNameBeanList);
+		Page<Item> itemList = itemRepository.findByDeleteFlagAndNameLike(Constant.NOT_DELETED, "%" + categoryName + "%", pageable);
+
+//		List<Item> itemNameList = itemRepository.findByNameLike("%" + categoryName + "%");
+		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
+		model.addAttribute("items", itemBeanList);
+		model.addAttribute("pages", itemList);
+		model.addAttribute("url", "/item/list");
+
 		return "item/list/item_list";
 
 	}
