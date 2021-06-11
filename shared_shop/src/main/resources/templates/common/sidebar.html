@@ -7,7 +7,8 @@
 	<aside th:fragment="layout-sidebar"
 		th:class="${session.user == null or session.user.authority == 2} ? ${'search'} : ${'admin_menu'}">
 		<!--/* 検索メニュー(一般会員用) */-->
-		<div class="search_area">
+		<div class="search_area"
+			th:if="${session.user == null or session.user.authority == 2}">
 			<h2 class="title">カテゴリ別検索</h2>
 			<div class="form">
 				<!-- 商品一覧画面以外で表示-->
@@ -27,6 +28,14 @@
 					</select> <input type="submit" value="検索" />
 				</form>
 			</div>
+		</div>
+
+		<div th:if="${session.user == null or session.user.authority == 2}">
+
+			<form action="/itemSearch" method="post">
+				商品名:<input type="text" name="name"><input type="submit"
+					value="検索" />
+			</form>
 		</div>
 
 
