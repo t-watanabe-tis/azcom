@@ -3,6 +3,7 @@ package jp.co.sss.shop.controller.item;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.util.BeanCopy;
+import jp.co.sss.shop.util.Constant;
 
 /**
  * 商品管理 一覧表示機能(一般会員用)のコントローラクラス
@@ -46,14 +48,29 @@ public class ItemShowCustomerController {
 		return "/index";
 	}
 
-	//
-	@RequestMapping("/item/list")
-	public String showNewItemList(Model model) {
+//
+//	@RequestMapping("/item/list")
+//	public String showNewItemList(Model model) {
+//
+//		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemRepository.findAll());
+//		model.addAttribute("items", itemBeanList);
+//		return "item/list/item_list";
+//	}
+//
 
-		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemRepository.findAll());
+	@RequestMapping("/item/list")
+	public String showNewItemList(Model model, Pageable pageable) {
+		Page<Item> itemList = itemRepository.findByDeleteFlagOrderByInsertDateDesc(Constant.NOT_DELETED, pageable);
+		// エンティティ内の検索結果をJavaBeansにコピー
+		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
+		// 会員情報をViewに渡す
+		model.addAttribute("pages", itemList);
 		model.addAttribute("items", itemBeanList);
+		model.addAttribute("url", "/item/list");
 		return "item/list/item_list";
 	}
+
+
 
 	//商品詳細画面
 	@RequestMapping(path = "/item/detail/{id}")

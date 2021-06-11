@@ -9,10 +9,7 @@
 	<h2 class="title">商品一覧</h2>
 
 	<div>
-	<a>新着順</a>
-	<a>売れ筋順</a>
-	<a>価格が高い順</a>
-	<a>価格が低い順</a>
+		<a>新着順</a> <a>売れ筋順</a> <a>価格が高い順</a> <a>価格が低い順</a>
 	</div>
 
 	<table>
@@ -33,6 +30,20 @@
 	</table>
 
 
+	<ul class="paging" th:if="!${#lists.isEmpty(items)}">
+		<li th:class="${pages.first} ? 'disabled':''"><span
+			th:if="${pages.first}">&lt;&lt;</span> <a th:if="${not pages.first}"
+			th:href="@{${url}(page=0)}">&lt;&lt;</a></li>
+		<li th:each='i : ${#numbers.sequence(0, pages.totalPages-1)}'
+			th:class="(${i}==${pages.number})? 'active' : ''"><span
+			th:if='${i}==${pages.number}' th:text='${i+1}'>1</span> <a
+			th:if='${i}!=${pages.number}' th:href="@{${url}(page=${i})}"> <span
+				th:text='${i+1}'>1</span>
+		</a></li>
+		<li th:class="${pages.last} ? 'disabled':''"><span
+			th:if="${pages.last}">&gt;&gt;</span> <a th:if="${not pages.last}"
+			th:href="@{${url}(page=(${pages.totalPages}-1))}">&gt;&gt;</a></li>
+	</ul>
 
 
 
