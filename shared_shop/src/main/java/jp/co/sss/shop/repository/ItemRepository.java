@@ -21,6 +21,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	// 商品情報を新着順で検索
 	public Page<Item> findByDeleteFlagOrderByInsertDateDesc(int deleteFlag, Pageable pageable);
 
-	List<Category> findByCategory(Category category);
+	List<Item> findByCategory(Category category);
+
+	List<Item> findByNameLike(String name);
 
 }
