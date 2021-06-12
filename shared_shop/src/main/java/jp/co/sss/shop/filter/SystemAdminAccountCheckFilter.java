@@ -18,7 +18,7 @@ import jp.co.sss.shop.util.URLCheck;
 
 /**
  * システム管理者向けアクセス制限用フィルタ
- * 
+ *
  * @author System Shared
  */
 @Component
@@ -39,7 +39,7 @@ public class SystemAdminAccountCheckFilter implements Filter {
 				if (user.getAuthority() == 0) {
 					// セッション情報を削除
 					session.invalidate();
-					
+
 					// レスポンス情報を取得
 					HttpServletResponse httpResponse = (HttpServletResponse) response;
 
@@ -58,7 +58,7 @@ public class SystemAdminAccountCheckFilter implements Filter {
 
 	/**
 	 * リクエストURLがチェック対象であるかを判定
-	 * 
+	 *
 	 * @param requestURL リクエストURL
 	 * @return true：チェック対象、false：チェック対象外
 	 */
@@ -67,6 +67,7 @@ public class SystemAdminAccountCheckFilter implements Filter {
 		String requestURL = httpRequest.getRequestURI();
 
 		if (!URLCheck.checkURLForStaticFile(requestURL)
+				//以下の文字列を含んだリクエストに対してフィルターを実行
 				&& requestURL.indexOf("/login") == -1
 				&& requestURL.indexOf("/admin") == -1
 				&& requestURL.indexOf("/user/list") == -1

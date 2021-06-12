@@ -15,19 +15,24 @@
 				<th>会員氏名</th>
 				<th>メールアドレス</th>
 				<th>操作</th>
-				
+
 			</tr>
 			<tr th:each="user: ${users}">
 				<td><a th:href="@{/user/detail/admin/{id}(id=${user.id})}"
 					th:text="${user.name}"></a></td>
 				<td th:text="${user.email}"></td>
 				<td>
-				<form method="post" th:action="@{/user/update/input/admin}" th:if="${user.authority != 0}">
+				<!--   <form method="post" th:action="@{/user/update/input/admin}" th:if="${user.authority != 0}">
+					<input type="hidden" name="id" th:value="${user.id}"/>
+					<input type="hidden" name="backflg" th:value="0" />
+					<input type="submit" value="変更"/> -->
+				<!--  </form>
+				<!--  <form method="post" th:action="@{/user/update/input/admin}" th:if="${user.authority == 0 and session.user.authority == 0}">
 					<input type="hidden" name="id" th:value="${user.id}"/>
 					<input type="hidden" name="backflg" th:value="0" />
 					<input type="submit" value="変更"/>
-				</form>
-				<form method="post" th:action="@{/user/update/input/admin}" th:if="${user.authority == 0 and session.user.authority == 0}">
+				</form> -->
+				<form method="post" th:action="@{/user/update/input/admin}" >
 					<input type="hidden" name="id" th:value="${user.id}"/>
 					<input type="hidden" name="backflg" th:value="0" />
 					<input type="submit" value="変更"/>
