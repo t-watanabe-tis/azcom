@@ -44,7 +44,7 @@
 		</div>
 		<form method="post" class="user_info_form"
 			action="/shared_shop/basket/add">
-			<input type="hidden" name="id" value="1" />
+			<input type="hidden" name="id" th:value="${item.id}" />
 			<div th:unless="${item.stock == 0}">
 				<input type="submit" value="買い物かごに入れる" class="send_button" />
 			</div>
