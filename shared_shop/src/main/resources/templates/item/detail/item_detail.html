@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    th:replace="~{common/layout_4block :: layout(~{::body/content()})}">
+    th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
 <head>
 
 <title>商品詳細 | シェアードショップ</title>
@@ -40,16 +40,17 @@
 					<dd th:text="${item.description}"></dd>
 				</dl>
 
-				</div>
-					<form method="post" class="user_info_form" action="/shared_shop/basket/add">
+				</div><table>
+
+					<td><form method="post" class="user_info_form" action="/shared_shop/basket/add">
 						<input type="hidden" name="id" value="1" />
 						<div th:unless="${item.stock == 0}"><input type="submit" value="買い物かごに入れる" class="send_button" />
-						</div>
-					</form>
+						</div></td>
+					<td></form>
 					<!-- <form action="/shared_shop/item/list/1"> -->
 					 <form method="post" th:action="@{/item/list}">
 						<input type="submit" value="戻る" class="back_button" />
-					</form>
+					</form></td></table>
 				</div>
 			</article>
 		</div>
