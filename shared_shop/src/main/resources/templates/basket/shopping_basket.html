@@ -8,5 +8,39 @@
 <body>
 	<h2 class="title">買い物かご</h2>
 
+	<!-- 買い物かご内の商品一覧 -->
+	<table>
+		<tr>
+			<th>商品名</th>
+			<th>数</th>
+			<th>操作</th>
+			<th>在庫</th>
+		</tr>
+		<tr th:each="item :${session.basket}">
+			<td th:text="${item.getName()}"></td>
+			<td th:text="${item.getQuantityInBasket()}"></td>
+			<td>
+				<form action="@{basket/delete}" method="post">
+					<input type="hidden" name="id" th:value="${item.getId()}" /> <input
+						type="submit" value="削除" class="delete" />
+				</form>
+			</td>
+			<td th:text="${item.getStock()}"></td>
+		</tr>
+
+
+	</table>
+
+	<form th:action="@{/address/input}">
+		<span th:each="item: ${session.basket}">
+			<input type="hidden" name="itemId" th:value="${item.getName()}">
+			<input type="hidden" name="orderNum" th:value="${item.getQuantityInBasket()}">
+		</span>
+		<input type="submit" value="ご注文のお手続き">
+	</form>
+	<form th:action="@{/basket/allDelete}" method="post">
+		<input type="submit" value="買い物かごを空にする" class="delete" />
+	</form>
+
 </body>
 </html>

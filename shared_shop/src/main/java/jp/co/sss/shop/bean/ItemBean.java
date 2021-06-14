@@ -47,6 +47,17 @@ public class ItemBean {
 	 */
 	private String	categoryName;
 
+
+	private Integer quantityInBasket;
+
+	public Integer getQuantityInBasket() {
+		return quantityInBasket;
+	}
+
+	public void setQuantityInBasket(Integer quantityInBasket) {
+		this.quantityInBasket = quantityInBasket;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -109,6 +120,18 @@ public class ItemBean {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+
+	//商品idと商品名が一致していれば等価
+	@Override
+	public boolean equals(Object obj) {
+
+		if(obj instanceof ItemBean) {
+			ItemBean other = (ItemBean) obj;
+			return other.getId() == this.getId() && other.getName().equals(this.getName());
+		}
+		return false;
 	}
 
 }
