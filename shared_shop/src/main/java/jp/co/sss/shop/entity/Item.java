@@ -28,62 +28,68 @@ public class Item {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_items_gen")
 	@SequenceGenerator(name = "seq_items_gen", sequenceName = "seq_items", allocationSize = 1)
-	private Integer			id;
+	private Integer id;
 
 	/**
 	 * 商品名
 	 */
 	@Column
-	private String			name;
+	private String name;
 
 	/**
 	 * 価格
 	 */
 	@Column
-	private Integer			price;
+	private Integer price;
 
 	/**
 	 * 商品説明
 	 */
 	@Column
-	private String			description;
+	private String description;
 
 	/**
 	 * 在庫数
 	 */
 	@Column
-	private Integer			stock;
+	private Integer stock;
 
 	/**
 	 * 商品画像ファイル名
 	 */
 	@Column
-	private String			image;
+	private String image;
+
+	/**
+	 * カテゴリID
+	 */
+	@Column(name = "category_id", insertable = false, updatable = false)
+	private Integer categoryId;
 
 	/**
 	 * 削除フラグ
 	 */
 	@Column(insertable = false)
-	private Integer			deleteFlag;
+	private Integer deleteFlag;
 
 	/**
 	 * 登録日付
 	 */
 	@Column(insertable = false, updatable = false)
-	private Date			insertDate;
+	private Date insertDate;
 
 	/**
 	 * カテゴリ情報
 	 */
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "id")
-	private Category		category;
+	private Category category;
 
 	/**
 	 * 注文商品情報
 	 */
 	@OneToMany(mappedBy = "item")
-	private List<OrderItem>	orderItemList;
+	private List<OrderItem> orderItemList;
 
 	/**
 	 * コンストラクタ
@@ -173,6 +179,14 @@ public class Item {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public Integer getDeleteFlag() {

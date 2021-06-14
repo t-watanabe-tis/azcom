@@ -10,6 +10,8 @@ public class URLCheck {
 	public static boolean checkURLForStaticFile(String requestURL) {
 		if (requestURL.indexOf(Constant.CSS_FOLDER) != -1 || requestURL.indexOf(Constant.IMAGE_FOLDER) != -1) {
 			return true;
+			
+			//git diff test
 		} else {
 			return false;
 		}
