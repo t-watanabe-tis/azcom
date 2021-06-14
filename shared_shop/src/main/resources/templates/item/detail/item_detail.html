@@ -13,21 +13,7 @@
 <body class="user_item_detail">
 	<h2 class="title">商品詳細</h2>
 
-<<<<<<< HEAD
-				</div><table>
 
-					<td><form method="post" class="user_info_form" action="/shared_shop/basket/add">
-						<input type="hidden" name="id" value="1" />
-						<div th:unless="${item.stock == 0}"><input type="submit" value="買い物かごに入れる" class="send_button" />
-						</div></td>
-					<td></form>
-					<!-- <form action="/shared_shop/item/list/1"> -->
-					 <form method="post" th:action="@{/item/list}">
-						<input type="submit" value="戻る" class="back_button" />
-					</form></td></table>
-				</div>
-			</article>
-=======
 	<div class="item_info_form_area">
 		<div class="item_detail_area">
 			<div class="item_image_area">
@@ -88,7 +74,7 @@
 			</span> <span th:if="${item.image == null}"> <img
 				th:src="@{/img/common/no_image.jpg}"></img>
 			</span>
->>>>>>> a631124237670501127eeb6e8623ea7215ada773
+
 		</div>
 		<tr>
 			<th>商品名:</th>
