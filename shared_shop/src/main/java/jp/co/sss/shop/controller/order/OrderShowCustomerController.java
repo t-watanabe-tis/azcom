@@ -5,20 +5,25 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import jp.co.sss.shop.bean.OrderBean;
+import jp.co.sss.shop.bean.OrderItemBean;
+import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.Order;
 import jp.co.sss.shop.entity.OrderItem;
 import jp.co.sss.shop.form.OrderShowForm;
 import jp.co.sss.shop.repository.OrderRepository;
+import jp.co.sss.shop.util.PriceCalc;
 
 /**
  * 注文管理 一覧表示機能(一般会員用)のコントローラクラス
@@ -58,7 +63,9 @@ public class OrderShowCustomerController {
 	        Pageable pageable) {
 
 		// すべての注文情報を取得
-		Page<Order> orderList = orderRepository.findByUserIdOrderByInsertDateDesc(3, pageable);
+		UserBean user = (UserBean) session.getAttribute("user");
+		int userId = user.getId();
+		Page<Order> orderList = orderRepository.findByUserIdOrderByInsertDateDesc(userId, pageable);
 		// 注文情報リストを生成
 		List<OrderBean> orderBeanList = new ArrayList<OrderBean>();
 		for (Order order : orderList) {
@@ -93,6 +100,60 @@ public class OrderShowCustomerController {
 
 		return "order/list/order_list";
 
+	}
+
+	/**
+	 * 注文情報詳細表示処理
+	 *
+	 * @param model
+	 *            Viewとの値受渡し
+	 * @param form
+	 *            表示用注文情報
+	 * @param session
+	 *            セッション情報
+	 * @return "/order/detail/order_detail" 注文情報 詳細画面へ
+	 */
+	@RequestMapping(path = "/order/detail/{id}")
+	public String showOrder(@PathVariable int id, Model model, @ModelAttribute OrderShowForm form) {
+
+		// 選択された注文情報に該当する情報を取得
+		Order order = orderRepository.findById(form.getId()).orElse(null);
+
+		// 表示する注文情報を生成
+		OrderBean orderBean = new OrderBean();
+		BeanUtils.copyProperties(order, orderBean);
+		orderBean.setInsertDate(order.getInsertDate().toString());
+
+		// 会員名を注文情報に設定
+		orderBean.setUserName(order.getUser().getName());
+
+		// 注文商品情報を取得
+		List<OrderItemBean> orderItemBeanList = new ArrayList<OrderItemBean>();
+		for (OrderItem orderItem : order.getOrderItemsList()) {
+			OrderItemBean orderItemBean = new OrderItemBean();
+
+			orderItemBean.setName(orderItem.getItem().getName());
+			orderItemBean.setPrice(orderItem.getPrice());
+			orderItemBean.setOrderNum(orderItem.getQuantity());
+
+			//購入時単価の合計値を計算
+			//※OrderItemのItemフィールドからgetPriceを利用すると、購入時ではなく現在の単価になってしまう。
+			int subtotal = orderItem.getPrice() * orderItem.getQuantity();
+
+			orderItemBean.setSubtotal(subtotal);
+
+			orderItemBeanList.add(orderItemBean);
+		}
+
+		// 合計金額を算出
+		int total = PriceCalc.orderItemPriceTotal(orderItemBeanList);
+
+		// 注文情報をViewへ渡す
+		model.addAttribute("order", orderBean);
+		model.addAttribute("orderItemBeans", orderItemBeanList);
+		model.addAttribute("total", total);
+
+		return "order/detail/order_detail";
 	}
 
 

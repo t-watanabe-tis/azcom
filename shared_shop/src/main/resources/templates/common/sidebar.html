@@ -14,6 +14,7 @@
 				<!-- 商品一覧画面以外で表示-->
 				<form th:if="${sortType == null}" th:action="@{/item/list/category}">
 					<select name="categoryId">
+						<option value="">---</option>
 						<option th:each="category: ${categories}"
 							th:value="${category.id}" th:text="${category.name}"></option>
 					</select> <input type="submit" value="検索" />
@@ -22,12 +23,14 @@
 				<form th:unless="${sortType == null}"
 					th:action="@{/item/list/category/} + ${sortType}">
 					<select name="categoryId">
+						<option value="">---</option>
 						<option th:each="category: ${categories}"
 							th:value="${category.id}" th:text="${category.name}"></option>
 					</select> <input type="submit" value="検索" />
 				</form>
 			</div>
 		</div>
+
 
 		<div th:if="${session.user == null or session.user.authority == 2}">
 
@@ -36,6 +39,7 @@
 					type="submit" value="検索">
 			</form>
 		</div>
+
 
 
 
