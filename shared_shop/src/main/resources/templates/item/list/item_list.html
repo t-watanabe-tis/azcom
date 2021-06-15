@@ -21,8 +21,8 @@
 			</tr>
 			<!--/* 商品情報 */-->
 			<tr th:each="item: ${items}">
-				<td><span th:if="${item.image == null}">
-				 <img th:src="@{/img/common/no_image.jpg}"width="25%" height="auto"></img>
+				<td><span th:if="${item.image}">
+				 <img th:src="${item.image}"width="25%" height="auto"></img>
 				</span></td>
 				<td><a th:href="@{/item/detail/{id}(id=${item.id})}"
 					th:text="${item.name}"></a></td>
