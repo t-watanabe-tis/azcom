@@ -5,7 +5,7 @@
 </head>
 <body>
 <div th:fragment="layout-header" class="container">
-	<h1 class="site_title">シェアードショップ</h1>
+	<h1 class="site_title">SHARED SHOP</h1>
 	<div th:if="${session.user != null and session.user.authority == 2}" class="user_info">
 		<a th:href="@{/user/detail}" th:text="${session.user.name}"></a>さん、ようこそ | <a th:href="@{/logout}">ログアウト</a>
 	</div>

@@ -32,8 +32,7 @@
 		<div th:if="${session.user == null or session.user.authority == 2}">
 
 			<form th:action="@{/item/list/categoryName}">
-				商品名:
-				<input type="text" name="categoryName"><input
+				商品名:<input type="text" name="categoryName"><input
 					type="submit" value="検索">
 			</form>
 		</div>

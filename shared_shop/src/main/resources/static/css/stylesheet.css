@@ -3,6 +3,7 @@
 body {
 	color: #12526d;
 	font-size: 14px;
+
 }
 
 /* ---- テキスト系 ---- */
@@ -342,7 +343,7 @@ p {
 	float: left;
 }
 .item_image_area img{
-	width: 80%;
+	width: 60%;
 	height: auto;
 }
 .item_detail_list {
