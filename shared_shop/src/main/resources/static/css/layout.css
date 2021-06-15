@@ -107,6 +107,7 @@ body > .container {
 
 /* ---- ヘッダー ---- */
 header {
+
 	background: #87ceeb;
 	padding: 10px 0;
 
@@ -172,7 +173,7 @@ header {
 
 /* ---- ナビゲーションバー ---- */
 .navi_area {
-	background: #edf9fe;
+	background: #808080;
 }
 .navi_menu {
 	width: 960px;
