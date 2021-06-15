@@ -6,7 +6,7 @@
 <meta charset="UTF-8" />
 
 </head>
-<body class="admin order_list">
+<body class="order_list">
 <h2 class="title">注文一覧</h2>
 		<div th:if="${#lists.isEmpty(orders)}">
 			<p th:text="#{orderList.none}"></p>
@@ -22,7 +22,7 @@
 
 				<tr th:each="order: ${orders}">
 					<td>
-						<a th:href="@{/order/detail/{id}(id=${order.insertDate})}" th:text="${order.insertDate}"></a>
+						<a th:href="@{/order/detail/{id}(id=${order.id})}" th:text="${order.insertDate}"></a>
 					</td>
 
 					<td th:switch="${order.payMethod}">
