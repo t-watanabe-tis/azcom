@@ -12,7 +12,7 @@
 			<a>新着順</a> <a>売れ筋順</a> <a>価格が高い順</a> <a>価格が低い順</a>
 		</div>
 
-		<table>
+		<table class="list_table item_list"  th:if="!${#lists.isEmpty(items)}">
 			<tr>
 				<th>商品画像</th>
 				<th>商品名</th>
@@ -21,7 +21,9 @@
 			</tr>
 			<!--/* 商品情報 */-->
 			<tr th:each="item: ${items}">
-				<td>商品画像</td>
+				<td><span th:if="${item.image}">
+				 <img th:src="${item.image}"width="25%" height="auto"></img>
+				</span></td>
 				<td><a th:href="@{/item/detail/{id}(id=${item.id})}"
 					th:text="${item.name}"></a></td>
 				<td th:text="${item.price}"></td>

@@ -68,9 +68,38 @@ li {
 	margin: 0 auto;
 	overflow: hidden;
 	float: none;
+
 }
 body > .container {
-	margin-top: 15px;
+	 margin: 0;
+  width: 98.7vw;
+  height: 160vh;
+  background-image:
+    linear-gradient(140deg,
+      #00f3ffA0,
+      #0028b960 40%,
+      #00f3ff60 60%,
+      #00f3ffA0),
+    url("https://beiz.jp/images_T/water/water_00001.jpg");
+  background-repeat: no-repeat;
+  background-position: 50%;
+  animation: move 15s infinite both;
+}
+
+@keyframes move{
+  0% {
+    background-size:100% auto;
+  }
+  50% {
+    background-size:140% auto;
+  }
+  100% {
+    background-size:100% auto;
+  }
+
+
+
+
 }
 .content {
 	padding:30px 0 60px;
@@ -78,8 +107,10 @@ body > .container {
 
 /* ---- ヘッダー ---- */
 header {
+
 	background: #87ceeb;
 	padding: 10px 0;
+
 }
 .admin header {
 	background: #ff8669;
@@ -94,8 +125,8 @@ header {
  */
 .site_title {
 	float: left;
-	font-size: 1.8em;
-	font-weight: normal;
+	font-size: 3.5em;
+	font-weight: 900;
 	margin:0;
 }
 
@@ -142,12 +173,13 @@ header {
 
 /* ---- ナビゲーションバー ---- */
 .navi_area {
-	background: #edf9fe;
+	background: #808080;
 }
 .navi_menu {
 	width: 960px;
 	padding:12px 0;
 	margin: 0 auto;
+
 }
 .navi_menu li {
 	display: inline-block;
@@ -235,6 +267,7 @@ aside.admin_menu {
 	float: right;
 	width: 76%;
 	padding-bottom: 80px;
+
 }
 .admin_menu .main {
 	width: 100%;
