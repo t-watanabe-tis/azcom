@@ -15,9 +15,8 @@
 
 	<!-- 商品を追加した総計が在庫数を超過したときに出力されるメッセージ -->
 	<div th:if="${orverStockItemName != null}">
-		<p th:text="${orverStockItemName} +  #{basketList.itemStockNone}"></p>
+		<p th:text="${orverStockItemName} +  #{basketList.itemStockShortage}"></p>
 	</div>
-	<p th:test="${orverStockItemName}"></p>
 
 	<!-- 買い物かご内に商品が含まれている場合に商品一覧 -->
 	<div th:unless="${#lists.isEmpty(session.basket)}">
