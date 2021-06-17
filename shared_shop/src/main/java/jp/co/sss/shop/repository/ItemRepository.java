@@ -20,17 +20,19 @@ import jp.co.sss.shop.entity.Item;
 public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	// 商品情報を新着順で検索
-	public Page<Item> findByDeleteFlagOrderByInsertDateDesc(int deleteFlag, Pageable pageable);
+	public Page<Item> findByDeleteFlagOrderByInsertDateDescIdAsc(int deleteFlag, Pageable pageable);
 
+	//カテゴリー検索
 	public Page<Item> findByDeleteFlagAndCategory(int deleteFlag, Category category, Pageable pageable);
 
+	//商品名曖昧検索
 	public Page<Item> findByDeleteFlagAndNameLike(int deleteFlag, String name, Pageable pageable);
 
-	//	List<Item> findByCategory(Category category);
-	//
-	//	List<Item> findByNameLike(String name);
+	//価格の低い順
+	public Page<Item> findByDeleteFlagOrderByPriceAscIdAsc(int deleteFlag, Pageable pageable);
 
-	List<Item> findByCategoryId(int categoryId);
+	//価格の高い順
+	public Page<Item> findByDeleteFlagOrderByPriceDescIdAsc(int deleteFlag, Pageable pageable);
 
 	/*
 	 *SELECT items.id, items.name, items.image, items.price, items.stock, SUM(order_items.quantity)

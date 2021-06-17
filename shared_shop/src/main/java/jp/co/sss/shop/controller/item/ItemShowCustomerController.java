@@ -63,22 +63,20 @@ public class ItemShowCustomerController {
 		return "/index";
 	}
 
-	//
-	//	@RequestMapping("/item/list")
-	//	public String showNewItemList(Model model) {
-	//
-	//		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemRepository.findAll());
-	//		model.addAttribute("items", itemBeanList);
-	//		return "item/list/item_list";
-	//	}
-	//
-
 	@RequestMapping("/item/list")
 	public String showNewItemList(Model model, Pageable pageable) {
-		Page<Item> itemList = itemRepository.findByDeleteFlagOrderByInsertDateDesc(Constant.NOT_DELETED, pageable);
+
+		Page<Item> itemList = itemRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(Constant.NOT_DELETED, pageable);
+		List<Item> il = itemList.getContent();
+
 		// エンティティ内の検索結果をJavaBeansにコピー
 		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
 		// 会員情報をViewに渡す
+
+		for(Item item: il) {
+			System.out.println(item.getName());
+		}
+
 		model.addAttribute("pages", itemList);
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("url", "/item/list");
@@ -88,22 +86,31 @@ public class ItemShowCustomerController {
 	//商品詳細画面
 	@RequestMapping(path = "/item/detail/{id}")
 	public String create(@PathVariable int id, Model model) {
+
+		model.addAttribute("item", itemRepository.getOne(id));
+		return "item/detail/item_detail";
+	}
+
+
 		//	model.addAttribute("categoryId", categoryRepository.findById(id));
 
 		//		商品関連表示
 		//		id（item）をもとに商品情報を取得 例：オレンジ
-		Item targetItem = itemRepository.getOne(id);
-		//		取得した商品情報のid(item)をもとにしてid(category)が一致するものを取得　例：食料品
-		Integer targetCategoryId = targetItem.getCategoryId();
-		List<Item> sameCategoryItems = itemRepository.findByCategoryId(targetCategoryId);
-		model.addAttribute("targetItem", sameCategoryItems);
 
-		model.addAttribute("item", targetItem);
+//
+//		Item targetItem = itemRepository.getOne(id);
+//		//		取得した商品情報のid(item)をもとにしてid(category)が一致するものを取得　例：食料品
+//		Integer targetCategoryId = targetItem.getCategoryId();
+//		List<Item> sameCategoryItems = itemRepository.findByCategoryId(targetCategoryId);
+//		model.addAttribute("targetItem", sameCategoryItems);
+//
+//		model.addAttribute("item", targetItem);
+//
+//		System.out.println("detail");
+//		System.out.println(itemRepository.getOne(id).getName());
+//		return "item/detail/item_detail";
+//	}
 
-		System.out.println("detail");
-		System.out.println(itemRepository.getOne(id).getName());
-		return "item/detail/item_detail";
-	}
 
 	//カテゴリー別検索
 	@RequestMapping(path = "/item/list/category", method = RequestMethod.GET)
@@ -123,13 +130,7 @@ public class ItemShowCustomerController {
 		return "item/list/item_list";
 	}
 
-	//	//商品名検索
-	//	@RequestMapping("/itemNameSearch")
-	//	public String itemNameSearch(Model model) {
-	//		model.addAttribute("items", itemRepository.findAll());
-	//		return "common/sidebar";
-	//	}
-
+	//商品名検索
 	@RequestMapping(path = "/item/list/categoryName", method = RequestMethod.GET)
 	public String itemName(@ModelAttribute ItemBean itemBean, String categoryName, Model model,
 			Pageable pageable) {
@@ -147,5 +148,36 @@ public class ItemShowCustomerController {
 		return "item/list/item_list";
 
 	}
+
+
+	//商品一覧並び替え【　価格の低い順　】
+	@RequestMapping(path = "/item/list/priceAsc", method = RequestMethod.GET)
+	public String showItemListPriceAsc(Model model, Pageable pageable) {
+
+		Page<Item> itemList = itemRepository.findByDeleteFlagOrderByPriceAscIdAsc(Constant.NOT_DELETED, pageable);
+		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
+
+		model.addAttribute("items", itemBeanList);
+		model.addAttribute("pages", itemList);
+		model.addAttribute("url", "/item/list");
+
+		return "item/list/item_list";
+	}
+
+
+	//商品一覧並び替え【　価格の高い順　】
+	@RequestMapping(path = "/item/list/priceDesc", method = RequestMethod.GET)
+	public String showItemListPriceDesc(Model model, Pageable pageable) {
+
+		Page<Item> itemList = itemRepository.findByDeleteFlagOrderByPriceDescIdAsc(Constant.NOT_DELETED, pageable);
+		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
+
+		model.addAttribute("items", itemBeanList);
+		model.addAttribute("pages", itemList);
+		model.addAttribute("url", "/item/list");
+
+		return "item/list/item_list";
+	}
+
 
 }
