@@ -13,6 +13,7 @@
 html {
 	min-height: 100%;
 	position: relative;
+	scroll-behavior: smooth;
 }
 
 /* スキルアップテクニック1-2
@@ -73,7 +74,7 @@ li {
 body > .container {
 	 margin: 0;
   width: 98.7vw;
-  height: 160vh;
+  height: 150vh;
   background-image:
     linear-gradient(140deg,
       #00f3ffA0,
@@ -83,7 +84,8 @@ body > .container {
     url("https://beiz.jp/images_T/water/water_00001.jpg");
   background-repeat: no-repeat;
   background-position: 50%;
-  animation: move 15s infinite both;
+  animation: move 17s infinite both;
+  overflow: visible;
 }
 
 @keyframes move{
