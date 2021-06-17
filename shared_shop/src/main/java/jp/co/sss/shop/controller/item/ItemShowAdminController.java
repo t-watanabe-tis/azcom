@@ -42,8 +42,7 @@ public class ItemShowAdminController {
 	@RequestMapping(path = "/item/list/admin")
 	public String showItem(Model model, Pageable pageable) {
 		// 商品情報を全件検索(新着順)
-		Page<Item> itemList = itemRepository.findByDeleteFlagOrderByInsertDateDesc(Constant.NOT_DELETED, pageable);
-
+		Page<Item> itemList = itemRepository.findByDeleteFlagOrderByInsertDateDescIdAsc(Constant.NOT_DELETED, pageable);
 		// エンティティ内の検索結果をJavaBeansにコピー
 		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
 
