@@ -63,6 +63,8 @@ public class ItemShowCustomerController {
 		return "/index";
 	}
 
+
+
 	//
 	//	@RequestMapping("/item/list")
 	//	public String showNewItemList(Model model) {
