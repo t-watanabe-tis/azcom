@@ -87,9 +87,9 @@ public class ItemShowCustomerController {
 	@RequestMapping(path = "/item/detail/{id}")
 	public String create(@PathVariable int id, Model model) {
 
-		model.addAttribute("item", itemRepository.getOne(id));
-		return "item/detail/item_detail";
-	}
+//		model.addAttribute("item", itemRepository.getOne(id));
+//		return "item/detail/item_detail";
+
 
 
 		//	model.addAttribute("categoryId", categoryRepository.findById(id));
@@ -98,18 +98,18 @@ public class ItemShowCustomerController {
 		//		id（item）をもとに商品情報を取得 例：オレンジ
 
 //
-//		Item targetItem = itemRepository.getOne(id);
-//		//		取得した商品情報のid(item)をもとにしてid(category)が一致するものを取得　例：食料品
-//		Integer targetCategoryId = targetItem.getCategoryId();
-//		List<Item> sameCategoryItems = itemRepository.findByCategoryId(targetCategoryId);
-//		model.addAttribute("targetItem", sameCategoryItems);
-//
-//		model.addAttribute("item", targetItem);
-//
-//		System.out.println("detail");
-//		System.out.println(itemRepository.getOne(id).getName());
-//		return "item/detail/item_detail";
-//	}
+		Item targetItem = itemRepository.getOne(id);
+		//		取得した商品情報のid(item)をもとにしてid(category)が一致するものを取得　例：食料品
+		Integer targetCategoryId = targetItem.getCategoryId();
+		List<Item> sameCategoryItems = itemRepository.findByCategoryId(targetCategoryId);
+		model.addAttribute("targetItem", sameCategoryItems);
+
+		model.addAttribute("item", targetItem);
+
+		System.out.println("detail");
+		System.out.println(itemRepository.getOne(id).getName());
+		return "item/detail/item_detail";
+	}
 
 
 	//カテゴリー別検索
