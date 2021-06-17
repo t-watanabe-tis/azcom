@@ -2,20 +2,25 @@ package jp.co.sss.shop.controller.item;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
 
 import jp.co.sss.shop.bean.ItemBean;
 import jp.co.sss.shop.entity.Category;
 import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.CategoryRepository;
 import jp.co.sss.shop.repository.ItemRepository;
+import jp.co.sss.shop.repository.OrderItemRepository;
 import jp.co.sss.shop.util.BeanCopy;
 import jp.co.sss.shop.util.Constant;
 
@@ -35,15 +40,26 @@ public class ItemShowCustomerController {
 	@Autowired
 	CategoryRepository categoryRepository;
 
+	@Autowired
+	OrderItemRepository orderItemRepository;
+
+	@Autowired
+	EntityManager entityManager;
+
 	/**
 	 * トップ画面 表示処理
 	 *
 	 * @param model    Viewとの値受渡し
+	 * @param categoryId
 	 * @param pageable ページング情報
 	 * @return "/" トップ画面へ
 	 */
 	@RequestMapping(path = "/")
-	public String index(Model model, Pageable pageable) {
+	public String index(Model model) {
+
+		List<Item> sale = itemRepository.findBySaleItemsQuery();
+
+		model.addAttribute("saleItems", sale);
 
 		return "/index";
 	}
@@ -83,7 +99,6 @@ public class ItemShowCustomerController {
 		List<Item> sameCategoryItems = itemRepository.findByCategoryId(targetCategoryId);
 		model.addAttribute("targetItem", sameCategoryItems);
 
-
 		model.addAttribute("item", targetItem);
 
 		System.out.println("detail");
@@ -104,6 +119,7 @@ public class ItemShowCustomerController {
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("pages", itemList);
 		model.addAttribute("url", "/item/list");
+		model.addAttribute("textCategoryId", categoryId);
 
 		return "item/list/item_list";
 	}
@@ -116,7 +132,8 @@ public class ItemShowCustomerController {
 	//	}
 
 	@RequestMapping(path = "/item/list/categoryName", method = RequestMethod.GET)
-	public String itemName(String categoryName, Model model, Pageable pageable) {
+	public String itemName(@ModelAttribute ItemBean itemBean, String categoryName, Model model,
+			Pageable pageable) {
 
 		Page<Item> itemList = itemRepository.findByDeleteFlagAndNameLike(Constant.NOT_DELETED, "%" + categoryName + "%",
 				pageable);
@@ -126,6 +143,7 @@ public class ItemShowCustomerController {
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("pages", itemList);
 		model.addAttribute("url", "/item/list");
+		model.addAttribute("textCategoryName", categoryName);
 
 		return "item/list/item_list";
 
