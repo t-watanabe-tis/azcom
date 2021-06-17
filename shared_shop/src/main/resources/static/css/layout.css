@@ -67,9 +67,15 @@ li {
 .container {
 	width: 960px;
 	margin: 0 auto;
-	overflow: hidden;
+	overflow: auto;
 	float: none;
 
+}
+.container {
+	width: 960px;
+	margin: 0 auto;
+	overflow: hidden;
+	float: none;
 }
 body > .container {
 	 margin: 0;
@@ -86,6 +92,11 @@ body > .container {
   background-position: 50%;
   animation: move 17s infinite both;
   overflow: visible;
+
+  background-attachment: fixed;
+  background-size: 100% auto;
+
+
 }
 
 @keyframes move{
