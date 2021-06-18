@@ -177,6 +177,11 @@ public class OrderRegistCustomerController {
 		User user = new User();
 		user.setId(form.getId());
 
+		try {
+			 Thread.sleep(5000); // 10秒(1万ミリ秒)間だけ処理を止める
+			 } catch (InterruptedException e) {
+			 }
+
 
 
 		// ordersテーブルに登録
