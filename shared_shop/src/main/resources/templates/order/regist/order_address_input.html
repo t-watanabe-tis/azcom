@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+</head>
+<body>
+
+		<article class="main">
+				<h2 class="title">
+					お届け先入力
+				</h2>
+				<div class="user_info_form_area">
+					<form method="post" action="/shared_shop/payment/input" th:object="${userForm}">
+						<br />
+						<ul class="input_list">
+							<li>
+								<label>
+									<span class="input_title">
+										郵便番号
+									</span>
+									<!--   <input type="text" name="postalCode" th:value=""/> -->
+									<input type = "text" th:field="*{postalCode}">
+									<!-- <span th:errors="*{pastalCode}"></span><br/> -->
+								</label>
+							</li>
+							<li>
+								<label>
+									<span class="input_title">
+										住所
+									</span>
+									<textarea name="address" rows="6" th:field="*{address}"></textarea>
+									<!-- <span th:errors="*{address}"></span><br/> -->
+
+								</label>
+							</li>
+							<li>
+								<label>
+									<span class="input_title">
+										氏名
+									</span>
+									<!-- <input type="text" name="name" value=""/> -->
+									<input type = "text" th:field="*{name}">
+									<!-- <span th:errors="*{name}"></span><br/> -->
+								</label>
+							</li>
+							<li>
+								<label>
+									<span class="input_title">
+										電話番号
+									</span>
+									<!-- <input type="text" name="phoneNumber" value=""/> -->
+									<input type = "text" th:field="*{phoneNumber}">
+									<!-- <span th:errors="*{phoneNumber}"></span><br/> -->
+								</label>
+							</li>
+						</ul>
+						<input type="submit" value="次へ" class="send_button" />
+						<input type="hidden" name="id" th:value="*{id}" >
+						<input type="hidden" name="backFlg" value="false" />
+					</form>
+					<form action="/shared_shop/basket/list">
+						<input type="submit" value="戻る" class="back_button" />
+					</form>
+				</div>
+			</article>
+</body>
+</html>

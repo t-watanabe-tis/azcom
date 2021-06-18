@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
+<head>
+<meta charset="UTF-8" />
+<title>注文内容最終確認 | シェアードショップ</title>
+</head>
+<body>
+	<article class="main">
+		<h2 class="title">注文内容最終確認</h2>
+		<form method="post" action="/shared_shop/order/check">
+			<br />
+
+			<!-- 注文時点で在庫数＜注文数の場合に出力されるメッセージ -->
+			<div th:if="!${#lists.isEmpty(orverStockItems)}" th:each="item: ${orverStockItems}">
+				<p th:text="${item.name} + #{orderStock.itemStockShortage}"></p>
+			</div>
+
+			<!-- 注文時点で在庫なしの場合に出力されるメッセージ -->
+			<div th:if="!${#lists.isEmpty(zeroStockItems)}" th:each="item: ${zeroStockItems}">
+				<p th:text="${item.name} + #{orderStock.itemStockNone}"></p>
+			</div>
+
+
+
+			<!-- 注文時点で在庫数＜注文数の場合に出力されるメッセージ
+			<div th:if="${orverStockItemName != null}">
+				<p th:text="${orverStockItemName} +  #{orderStock.itemStockShortage}"></p>
+			</div> -->
+
+			<!-- 在庫がある場合 -->
+			<div th:unless="${#lists.isEmpty(session.basket)}">
+
+			<table class="list_table item_detail"
+				th:each="item : ${session.basket}">
+				<tr th:if="!${#lists.contains(orverStockItems, item)}">
+					<th>商品名</th>
+					<th>商品画像</th>
+					<th>単価</th>
+					<th>数量</th>
+					<th>小計</th>
+				</tr>
+				<tr th:if="!${#lists.contains(orverStockItems, item)}">
+					<td th:text="${item.name}"></td>
+					<td th:text="${item.image}"></td>
+					<td th:text="${item.price}"></td>
+					<td th:text="${item.quantityInBasket}"></td>
+					<td th:text="${item.price * item.quantityInBasket}"></td>
+				</tr>
+
+				<tr>
+						<td colspan="3"></td>
+						<!-- <td class="total" th:each="item : ${session.basket}"> -->
+						<td class="total">
+							合計
+						</td>
+						 <td class="total" th:text="${totalPrice}">
+
+						</td>
+					</tr>
+			</table>
+			</div>
+			</form>
+
+
+
+			 <div class="user_info_form_area">
+				<table class="detail_table address" th:each="order : ${userForm}">
+					<caption class="table_caption">お届け先</caption>
+					<tr>
+						<th>郵便番号</th>
+						<td th:text="${order.postalCode}"></td>
+						<th>住所</th>
+						<td th:text="${order.address}"></td>
+						<th>氏名</th>
+						<td th:text="${order.name}"></td>
+						<th>電話番号</th>
+						<td th:text="${order.phoneNumber}"></td>
+
+					</tr>
+
+				</table>
+
+				 <table class="detail_table pay" th:each="order : ${userForm}">
+					<caption class="table_caption">お支払い方法</caption>
+					<tr>
+						<th>お支払い方法</th>
+						<td><span th:text="${order.payMethod}"> </span></td>
+					</tr>
+				</table>
+			<form method="post" action="/shared_shop/order/complete">
+					<input type="hidden" name="id" th:value="${order.id}" />
+					<input type="hidden" name="postalCode" th:value="${order.postalCode}" />
+					 <input type="hidden" name="address" th:value="${order.address}" />
+					 <input type="hidden" name="name" th:value="${order.name}" />
+					 <input type="hidden" name="phoneNumber" th:value="${order.phoneNumber}" />
+					 <input type="hidden" name="payMethod" th:value="${order.payMethod}" />
+				<div th:unless="${order.id == 0}">
+					<input class="send_button" type="submit" value="ご注文の確定" />
+				</div>
+			</form>
+			<form method="post" action="/shared_shop/payment/input" class="update">
+					<input type="hidden" name="id" th:value="${order.id}" />
+					<input type="hidden" name="postalCode" th:value="${order.postalCode}" />
+					<input type="hidden" name="address" th:value="${order.address}" />
+					<input type="hidden" name="name" th:value="${order.name}" />
+					<input type="hidden" name="phoneNumber" th:value="${order.phoneNumber}" />
+					<input type="hidden" name="payMethod" th:value="${order.payMethod}" />
+					<input type="hidden" name="backFlg" value="true" />
+					<input class="back_button" type="submit" value="戻る" />
+				</form>
+			</div>
+			</article>
+
+
+</body>
+</html>
