@@ -25,7 +25,12 @@ body {
 	padding: 0;
 }
 
-h2,
+h2{
+	font-size: 1.6em;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+}
 h3 {
 	font-size: 1em;
 	font-weight: normal;
@@ -44,7 +49,7 @@ form {
 
 table {
 	width:100%;
-	background-color: #fff;
+
 	border-collapse: collapse;
 	margin: 0px auto 20px;
 }
@@ -64,23 +69,26 @@ li {
  * 子要素にfloatプロパティを設定している場合、その子要素の高さを親要素は知ることができなくなります。
  * しかしoverflowプロパティの値hiddenを設定することで、本来の高さを取り戻すことができます。
  */
-.container {
-	width: 960px;
-	margin: 0 auto;
-	overflow: auto;
-	float: none;
 
-}
+
+
 .container {
-	width: 960px;
+	width: 87%;
 	margin: 0 auto;
 	overflow: hidden;
 	float: none;
+	font-size: 50 px;
+}
+ body::-webkit-scrollbar {
+    display:none;
+
+
+
 }
 body > .container {
 	 margin: 0;
-  width: 98.7vw;
-  height: 150vh;
+  width:100%;                              /* 横幅のサイズを指定    */
+    height:700px;
   background-image:
     linear-gradient(140deg,
       #00f3ffA0,
@@ -89,13 +97,12 @@ body > .container {
       #00f3ffA0),
     url("https://beiz.jp/images_T/water/water_00001.jpg");
   background-repeat: no-repeat;
-  background-position: 50%;
-  animation: move 17s infinite both;
-  overflow: visible;
-
+  background-position:  center;
   background-attachment: fixed;
-  background-size: 100% auto;
-
+  background-size: over;
+  animation: move 17s infinite both;
+  overflow: hidden;
+  font-size: 50 px;
 
 }
 
@@ -136,11 +143,48 @@ header {
  * その様な場合、em指定をしておくと便利です。
  * 基本サイズが変更になったとしても、比例して大きさが変化します。
  */
+
+ @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 .site_title {
 	float: left;
-	font-size: 3.5em;
-	font-weight: 900;
+	font-size: 4.5em;
+	font-weight: 2000;
 	margin:0;
+	overflow: hidden;
+  transform: translate(110%, 0);
+  transition: transform cubic-bezier(0.215, 0.61, 0.355, 1)3s;
+  color: #0000a0;
+  font-family: 'Josefin Sans', sans-serif;
+}
+.title span {
+  display: block;
+  transform: translate(100%, 0);
+  transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 5s;
+}
+
+.title.-visible,
+.title.-visible span {
+  transform: translate(0, 0);
+}
+
+.sentence {
+  overflow: hidden;
+  transform: translate(-100%, 0);
+  transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 2.5s;
+  font-family: "Yu Gothic Medium";
+  font-size: 16px;
+  text-align: left;
+}
+
+.sentence span {
+  display: block;
+  transform: translate(100%, 0);
+  transition: transform cubic-bezier(0.215, 0.61, 0.355, 1) 5s;
+}
+
+.sentence.-visible,
+.sentence.-visible span {
+  transform: translate(0, 0);
 }
 
 /* スキルアップテクニック5
@@ -155,6 +199,7 @@ header {
 }
 .user_info a {
 	text-decoration: none;
+	font-size: 1.5em;
 }
 
 /* スキルアップテクニック6
@@ -181,6 +226,7 @@ header {
 	padding: 5px 8px;
 	color: #fff;
 	text-shadow: 1px 1px 1px #12526d;
+
 }
 
 
@@ -196,7 +242,7 @@ header {
 }
 .navi_menu li {
 	display: inline-block;
-	width: 24%;
+	width: 30%;
 }
 .navi_menu a {
 	display: inline-block;
@@ -232,13 +278,15 @@ aside.admin_menu {
 .admin_menu .title {
 	border-radius: 6px 6px 0 0;
 	text-align: center;
-	font-size: 1.1em;
+	font-size: 1.6rem;
 }
 .admin_menu .title {
 	background: #ff6c49;
 }
 .search .form {
-	padding: 15px 0 50px 5px;
+	padding: 20px 0 100px 8px;
+	width:100%;
+
 }
 .search .price,
 .admin_menu .display_list {
@@ -250,6 +298,8 @@ aside.admin_menu {
 	text-align: center;
 	text-decoration: none;
 	transition: background-color 0.18s;
+	width: 200px; height: 30px;
+
 }
 .search .price:link,
 .search .price:visited,
@@ -278,8 +328,9 @@ aside.admin_menu {
 /* ---- メイン ---- */
 .main {
 	float: right;
-	width: 76%;
+	width: 75%;
 	padding-bottom: 80px;
+	font-size: 1.2rem;
 
 }
 .admin_menu .main {
@@ -291,7 +342,7 @@ aside.admin_menu {
 .admin .main .title {
 	padding: 8px 15px;
 	position: relative;
-	font-size: 1.5rem;
+	font-size: 2rem;
 	}
 .main .title::before,
 .admin .main .title::before {
@@ -386,7 +437,8 @@ footer {
 }
 small {
 	height: 30px;
-	line-height:30px;
+	line-height:50px;
 	text-shadow: 1px 1px 1px #fff;
 	font-size: 8pt;
+
 }

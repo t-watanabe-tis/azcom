@@ -10,10 +10,10 @@
 		<h2 class="title">売れ筋商品</h2>
 
 		<div th:each="item:${saleItems}">
-			<div th:text="${item.name}"></div>
+			 <font size="4.5"><div th:text="${item.name}"></div></font>
 
 			<a th:href="@{/item/detail/{id}(id=${item.id})}"> <img
-				th:src="${item.image}" />
+				th:src="${item.image}" width="40%" height="auto"/>
 			</a>
 
 		</div>

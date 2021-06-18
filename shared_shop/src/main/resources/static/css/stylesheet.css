@@ -44,6 +44,7 @@ p {
 }
 .login .page_title {
 	font-weight: bold;
+
 }
 .main .page_title {
 	padding-left: 10px;
@@ -366,11 +367,11 @@ p {
 
 /* ---- 検索フォーム ---- */
 .search [type=text] {
-	width: 115px;
+	width: auto;
 }
 
 .search select {
-	width: 125px;
+	width: auto;
 }
 
 /* ---- 処理完了メッセージの出力箇所 ---- */
@@ -386,7 +387,8 @@ p {
 
 /* ---- 入力欄全般 ---- */
 [type=text], [type=password] {
-	padding: 3px;
+	padding: 7px;
+
 }
 
 [type=date] {
@@ -403,7 +405,7 @@ select {
 [type=submit] {
 	border: 1px solid #808080;
 	border-radius: 6px;
-	padding: 2px 10px;
+	padding: 4px 10px;
 	color: #12526d;
 	background: #fff;
 	box-shadow: 1px 2px 2px #eee;
@@ -483,7 +485,7 @@ select {
 }
 .detail_table caption {
 	text-align: left;
-	font-size: 1.1rem;
+	font-size: 4.4rem;
 }
 .detail_table th{
 	border-bottom: 1px solid #fff;
