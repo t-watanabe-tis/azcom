@@ -17,11 +17,9 @@
 	<div class="item_info_form_area">
 		<div class="item_detail_area">
 			<div class="item_image_area">
-				<span th:if="${item.image != null}"> <img
-					th:src="@{/img/{image}(image=${item.image})}"></img>
-				</span> <span th:if="${item.image == null}"> <img
-					th:src="@{/img/common/no_image.jpg}"></img>
-				</span>
+			<a th:href="@{/item/detail/{id}(id=${item.id})}"> <img
+				th:src="${item.image}" />
+			</a>
 			</div>
 
 
@@ -68,11 +66,9 @@
 		<h3>商品関連:</h3>
 
 		<div class="item_image_area">
-			<span th:if="${item.image != null}"> <img
-				th:src="@{/img/{image}(image=${item.image})}"></img>
-			</span> <span th:if="${item.image == null}"> <img
-				th:src="@{/img/common/no_image.jpg}"></img>
-			</span>
+			<a th:href="@{/item/detail/{id}(id=${item.id})}"> <img
+				th:src="${item.image}" />
+			</a>
 
 		</div>
 		<tr>

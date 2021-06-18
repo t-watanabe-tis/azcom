@@ -37,6 +37,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	//価格の高い順
 	public Page<Item> findByDeleteFlagOrderByPriceDescIdAsc(int deleteFlag, Pageable pageable);
 
+	//売れ筋順の表示
+
 	/*
 	 *SELECT items.id, items.name, items.image, items.price, items.stock, SUM(order_items.quantity)
 	FROM items
@@ -55,5 +57,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 			+ "GROUP BY i.id, i.name, i.price, i.description, i.image, c.name, o.quantity "
 			+ "ORDER BY SUM(o.quantity) DESC")
 	public List<Item> findBySaleItemsQuery();
+
+	public List<Item> findByCategoryId(Integer tergetCategoryid);
 
 }
