@@ -44,7 +44,7 @@
 				th:class="(${i}==${pages.number})? 'active' : ''"><span
 				th:if='${i}==${pages.number}' th:text='${i+1}'>1</span> <a
 				th:if='${i}!=${pages.number}' th:href="@{${url}(page=${i})}"> <span
-					th:text='${i+1}'>1</span>
+					th:text="${i+1}">1</span>
 			</a></li>
 			<li th:class="${pages.last} ? 'disabled':''"><span
 				th:if="${pages.last}">&gt;&gt;</span> <a th:if="${not pages.last}"

@@ -29,7 +29,10 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	public Page<Item> findByDeleteFlagAndNameLike(int deleteFlag, String name, Pageable pageable);
 
 	//価格の低い順
-	public Page<Item> findByDeleteFlagOrderByPriceAscIdAsc(int deleteFlag, Pageable pageable);
+	public Page<Item> findByDeleteFlagOrderByPriceAsc(int deleteFlag, Pageable pageable);
+
+	@Query("SELECT i FROM Item i WHERE i.deleteFlag = 0 ORDER BY i.price ASC, i.id ASC")
+	public Page<Item> findByDeleteFlagOrderByPriceAsc(Pageable pageable);
 
 	//価格の高い順
 	public Page<Item> findByDeleteFlagOrderByPriceDescIdAsc(int deleteFlag, Pageable pageable);
