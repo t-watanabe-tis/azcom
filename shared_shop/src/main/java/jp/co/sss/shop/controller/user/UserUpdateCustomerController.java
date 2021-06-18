@@ -20,12 +20,11 @@ import jp.co.sss.shop.form.UserForm;
 import jp.co.sss.shop.repository.UserRepository;
 
 /**
- * 会員管理 変更機能(運用管理者、システム管理者)のコントローラクラス
+ * 会員管理 変更機能
  *
- * @author SystemShared
  */
 @Controller
-public class UserUpdateAdminController {
+public class UserUpdateCustomerController {
 
 	/**
 	 * 会員情報
@@ -46,11 +45,11 @@ public class UserUpdateAdminController {
 	 * @param form  会員情報フォーム
 	 * @return "user/update/user_update_input_admin" 会員情報 変更入力画面へ
 	 **/
-	@RequestMapping(path = "/user/update/input/admin", method = RequestMethod.POST)
+	@RequestMapping(path = "/user/update/input", method = RequestMethod.POST)
 	public String updateInput(boolean backFlg, Model model, @ModelAttribute UserForm form) {
 
 		// 戻るボタンかどうかを判定
-		if (!backFlg) {
+       if (!backFlg) {
 
 			// 変更対象の会員情報を取得
 			User user = userRepository.getOne(form.getId());
@@ -72,7 +71,7 @@ public class UserUpdateAdminController {
 			model.addAttribute("user", userBean);
 
 		}
-		return "user/update/user_update_input";
+		return "category/update/user_update_input";
 	}
 
 	/**
@@ -85,7 +84,7 @@ public class UserUpdateAdminController {
 	 * 入力値エラーあり："user/update/user_update_input_admin" 会員情報変更入力画面へ
 	 * 入力値エラーなし："user/update/user_update_check_admin" 会員情報 変更確認画面へ
 	 */
-	@RequestMapping(path = "/user/update/check/admin", method = RequestMethod.POST)
+	@RequestMapping(path = "/user/update/check", method = RequestMethod.POST)
 	public String updateCheck( Model model, @Valid @ModelAttribute UserForm form, BindingResult result) {
 		// 入力値にエラーがあった場合、会員情報 変更入力画面表示処理に戻る
 		if (result.hasErrors()) {
@@ -97,10 +96,10 @@ public class UserUpdateAdminController {
 			// 会員情報をViewに渡す
 			model.addAttribute("user", userBean);
 
-			return "user/update/user_update_input_admin";
+			return "category/update/user_update_input";
 		}
 
-		return "user/update/user_update_check_admin";
+		return "category/update/user_update_check";
 	}
 
 	/**
@@ -110,7 +109,7 @@ public class UserUpdateAdminController {
 	 * @param form  会員情報
 	 * @return "user/update/user_update_complete_admin" 会員情報 変更完了画面へ
 	 */
-	@RequestMapping(path = "/user/update/complete/admin", method = RequestMethod.POST)
+	@RequestMapping(path = "/user/update/complete", method = RequestMethod.POST)
 	public String updateComplete(Model model, @ModelAttribute UserForm form) {
 
 		// 変更対象の会員情報を取得
@@ -130,19 +129,10 @@ public class UserUpdateAdminController {
 		user.setInsertDate(insertDate);
 
 		// 会員情報を保存
+		user.setAuthority(2);
 		userRepository.save(user);
 
-		// セッションからログインユーザーの情報を取得
-		UserBean userBean = (UserBean) session.getAttribute("user");
-		// 変更対象の会員が、ログインユーザと一致していた場合セッション情報を変更
-		if (user.getId().equals(userBean.getId())) {
-			// Userエンティティの各フィールドの値をUserBeanにコピー
-			BeanUtils.copyProperties(form, userBean);
-			// 会員情報をViewに渡す
-			session.setAttribute("user", userBean);
-		}
-
-		return "redirect:/user/update/complete/admin";
+		return "redirect:/user/update/complete";
 	}
 
 	/**
@@ -150,10 +140,8 @@ public class UserUpdateAdminController {
 	 *
 	 * @return "user/update/user_update_complete_admin" 会員情報 変更完了画面へ
 	 */
-	@RequestMapping(path = "/user/update/complete/admin", method = RequestMethod.GET)
+	@RequestMapping(path = "/user/update/complete", method = RequestMethod.GET)
 	public String updateCompleteRedirect() {
-
-		return "user/update/user_update_complete_admin";
+		return "category/update/user_update_complete";
 	}
-
 }
