@@ -15,7 +15,7 @@ import jp.co.sss.shop.entity.User;
 @Repository
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-	
+
 	// メールアドレスに該当する会員情報を検索（メールアドレスのみ）
 	User findByEmail(String email);
 
@@ -24,4 +24,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	// 削除フラグに合った会員情報をすべて検索
 	Page<User> findByDeleteFlagOrderByInsertDateDesc(int deleteFlag, Pageable pageable);
+
+
 }

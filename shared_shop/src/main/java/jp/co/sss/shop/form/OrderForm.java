@@ -62,7 +62,9 @@ public class OrderForm {
 	 * 注文時点合計金額
 	 */
 	private Integer price;
-	
+
+
+
 
 
 	public Integer getId() {
@@ -128,6 +130,6 @@ public class OrderForm {
 	public void setPrice(Integer price) {
 		this.price = price;
 	}
-	
-	
+
+
 }
