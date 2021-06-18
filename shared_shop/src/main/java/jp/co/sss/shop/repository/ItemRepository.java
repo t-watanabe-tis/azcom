@@ -66,6 +66,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	public List<Item> findByCategoryId(Integer tergetCategoryid);
 
+	//注文確定商品を在庫数に反映
 	@Transactional
 	@Modifying
 	@Query("UPDATE Item i SET i.stock = :quantityInBasket WHERE i.id = :id")
