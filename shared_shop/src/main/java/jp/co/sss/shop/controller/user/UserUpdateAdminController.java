@@ -72,7 +72,7 @@ public class UserUpdateAdminController {
 			model.addAttribute("user", userBean);
 
 		}
-		return "user/update/user_update_input";
+		return "user/update/user_update_input_admin";
 	}
 
 	/**

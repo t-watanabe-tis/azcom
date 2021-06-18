@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,7 +57,7 @@ public class OrderRegistCustomerController {
 	//買い物かご画面から届け先入力画面
 	@RequestMapping(path = "/address/input", method = RequestMethod.POST)
 	public String inputAddress(@ModelAttribute UserForm form, boolean backFlg) {
-		/*public String inputAddress(@ModelAttribute OrderForm orderForm, UserForm form, boolean backFlg) {*/
+
 
 		if(!backFlg) {
 			UserBean userBean = (UserBean) session.getAttribute("user");
@@ -68,16 +69,19 @@ public class OrderRegistCustomerController {
 			form.setName(user.getName());
 			form.setPhoneNumber(user.getPhoneNumber());
 
+			form.setEmail(user.getEmail());
+			form.setPassword(user.getPassword());
+			form.setAuthority(user.getAuthority());
+			form.setDeleteFlag(user.getDeleteFlag());
+			/*form.setInsertDate(user.getInsertDate());*/
+
 		}
 		return "order/regist/order_address_input";
 	}
 	//届け先入力画面
 	@RequestMapping(path = "/address/input", method = RequestMethod.GET)
-public String inputAddressRedirect(@ModelAttribute UserForm form, boolean backFlg) {
-//	public String inputAddressRedirect(@Valid @ModelAttribute OrderForm orderForm, BindingResult result, UserForm form, boolean backFlg) {
-//		if(result.hasErrors()) {
-//			return inputAddress(orderForm);
-//		}
+	public String inputAddressRedirect(@Valid @ModelAttribute UserForm form, BindingResult result, boolean backFlg) {
+
 
 
 		if(backFlg) {
@@ -95,16 +99,26 @@ public String inputAddressRedirect(@ModelAttribute UserForm form, boolean backFl
 			form.setName(user.getName());
 			form.setPhoneNumber(user.getPhoneNumber());
 
+			form.setEmail(user.getEmail());
+			form.setPassword(user.getPassword());
+			form.setAuthority(user.getAuthority());
+			form.setDeleteFlag(user.getDeleteFlag());
+
+
 		}
+
 
 		return "order/regist/order_address_input";
 	}
 
+
+
+
 	//届け先入力画面から支払方法選択画面
 	@RequestMapping(path = "/payment/input", method = RequestMethod.POST)
-	public String inputPayment(@ModelAttribute UserForm form, BindingResult result, boolean backFlg, Model model) {
+	public String inputPayment(@Valid @ModelAttribute UserForm form, BindingResult result, boolean backFlg, Model model) {
 
-		//
+		/*System.out.println(result.hasErrors());*/
 		if(result.hasErrors()) {
 			//				return "order/regist/order_address_input";
 			return inputAddress(form, !backFlg);
@@ -113,7 +127,7 @@ public String inputAddressRedirect(@ModelAttribute UserForm form, boolean backFl
 			model.addAttribute("order", form);
 			return "order/regist/order_payment_input";
 		}
-		//			return "order/regist/order_payment_input";
+//				return "order/regist/order_payment_input";
 
 	}
 
@@ -190,6 +204,11 @@ public String inputAddressRedirect(@ModelAttribute UserForm form, boolean backFl
 			orderItem.setPrice(item.getPrice());
 			orderItem.setItem(i);
 			orderItem.setOrder(order);
+
+
+//			在庫数を減らす
+			itemRepository.updateStockById(item.getStock() - item.getQuantityInBasket(), item.getId());
+
 
 			orderItemRepository.save(orderItem);
 		}
