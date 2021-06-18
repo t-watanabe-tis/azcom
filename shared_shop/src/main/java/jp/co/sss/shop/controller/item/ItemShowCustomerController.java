@@ -63,6 +63,7 @@ public class ItemShowCustomerController {
 		return "/index";
 	}
 
+
 	@RequestMapping("/item/list")
 	public String showNewItemList(Model model, Pageable pageable) {
 
@@ -74,7 +75,8 @@ public class ItemShowCustomerController {
 		// 会員情報をViewに渡す
 
 		for(Item item: il) {
-			System.out.println(item.getName());
+			System.out.print(item.getId());
+			System.out.println(item.getPrice());
 		}
 
 		model.addAttribute("pages", itemList);
@@ -82,6 +84,7 @@ public class ItemShowCustomerController {
 		model.addAttribute("url", "/item/list");
 		return "item/list/item_list";
 	}
+
 
 	//商品詳細画面
 	@RequestMapping(path = "/item/detail/{id}")
@@ -137,9 +140,8 @@ public class ItemShowCustomerController {
 
 		Page<Item> itemList = itemRepository.findByDeleteFlagAndNameLike(Constant.NOT_DELETED, "%" + categoryName + "%",
 				pageable);
-
-		//		List<Item> itemNameList = itemRepository.findByNameLike("%" + categoryName + "%");
 		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
+
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("pages", itemList);
 		model.addAttribute("url", "/item/list");
@@ -154,12 +156,20 @@ public class ItemShowCustomerController {
 	@RequestMapping(path = "/item/list/priceAsc", method = RequestMethod.GET)
 	public String showItemListPriceAsc(Model model, Pageable pageable) {
 
+//		Page<Item> itemList = itemRepository.findByDeleteFlagOrderByPriceAsc(pageable);
 		Page<Item> itemList = itemRepository.findByDeleteFlagOrderByPriceAscIdAsc(Constant.NOT_DELETED, pageable);
+//		Page<Item> itemList = itemRepository.findByDeleteFlag(new Sort(Sort.Direction.ASC, "price"), pageable);
 		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
 
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("pages", itemList);
 		model.addAttribute("url", "/item/list");
+
+		for(Item item: itemList.getContent()) {
+			System.out.print(item.getId());
+			System.out.print("  ");
+			System.out.println(item.getPrice());
+		}
 
 		return "item/list/item_list";
 	}

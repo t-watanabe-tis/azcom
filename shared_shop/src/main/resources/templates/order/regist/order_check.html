@@ -89,6 +89,7 @@
 					</tr>
 				</table>
 			<form method="post" action="/shared_shop/order/complete">
+			<input type="hidden" name="deleteFlag" th:value="*{deleteFlag}" >
 					<input type="hidden" name="id" th:value="${order.id}" />
 					<input type="hidden" name="postalCode" th:value="${order.postalCode}" />
 					 <input type="hidden" name="address" th:value="${order.address}" />

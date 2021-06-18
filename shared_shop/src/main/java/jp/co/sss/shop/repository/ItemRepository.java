@@ -2,10 +2,14 @@ package jp.co.sss.shop.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import jp.co.sss.shop.entity.Category;
@@ -30,6 +34,11 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	//価格の低い順
 	public Page<Item> findByDeleteFlagOrderByPriceAscIdAsc(int deleteFlag, Pageable pageable);
+
+	@Query("SELECT i FROM Item i WHERE i.deleteFlag = 0 ORDER BY i.price ASC, i.name ASC")
+	public Page<Item> findByDeleteFlagOrderByPriceAsc(Pageable pageable);
+
+//	public Page<Item> findByDeleteFlag(Sort sort, Pageable pageapbe);
 
 	//価格の高い順
 	public Page<Item> findByDeleteFlagOrderByPriceDescIdAsc(int deleteFlag, Pageable pageable);
@@ -56,5 +65,11 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	public List<Item> findBySaleItemsQuery();
 
 	public List<Item> findByCategoryId(Integer tergetCategoryid);
+
+	//注文確定商品を在庫数に反映
+	@Transactional
+	@Modifying
+	@Query("UPDATE Item i SET i.stock = :quantityInBasket WHERE i.id = :id")
+	public Integer updateStockById(@Param("quantityInBasket") Integer stock, @Param("id") Integer id);
 
 }

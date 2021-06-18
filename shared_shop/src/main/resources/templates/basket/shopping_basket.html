@@ -49,7 +49,7 @@
 		</table>
 
 
-		<form th:action="@{/address/input}">
+		<form th:action="@{/address/input}" method="post">
 			<span th:each="item: ${session.basket}"> <input type="hidden"
 				name="itemId" th:value="${item.getName()}"> <input
 				type="hidden" name="orderNum"
