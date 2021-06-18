@@ -36,7 +36,7 @@
 		<div th:if="${session.user == null or session.user.authority == 2}">
 
 			<form th:action="@{/item/list/categoryName}">
-				商品名<br /> <input style="width: 200px; height: 30px;" font size="30"value="幅200px, 高さ30px"type="text" name="categoryName"placeholder="商品名で検索..."
+				商品名<br /> <input type="text" name="categoryName"placeholder="商品名で検索..."
 					th:value="${textCategoryName}"><input type="submit"
 					value="検索">
 			</form>
