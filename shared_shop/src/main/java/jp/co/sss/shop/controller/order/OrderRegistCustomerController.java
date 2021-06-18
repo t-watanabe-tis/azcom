@@ -177,6 +177,11 @@ public class OrderRegistCustomerController {
 		User user = new User();
 		user.setId(form.getId());
 
+		try {
+			 Thread.sleep(5000); // 10秒(1万ミリ秒)間だけ処理を止める
+			 } catch (InterruptedException e) {
+			 }
+
 
 
 		// ordersテーブルに登録
@@ -216,8 +221,12 @@ public class OrderRegistCustomerController {
 		//買い物かごの中身を空にする
 		basket.clear();
 
-		return "order/regist/order_complete";
+		return "redirect:/order/complete";
+	}
 
+	@RequestMapping(path = "/order/complete")
+	public String showOrderComp() {
+		return "order/regist/order_complete";
 	}
 }
 
