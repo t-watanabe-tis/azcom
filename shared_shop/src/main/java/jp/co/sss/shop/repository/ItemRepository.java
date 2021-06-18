@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import jp.co.sss.shop.entity.Category;
@@ -49,11 +50,24 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	ORDER BY SUM(order_items.quantity) DESC;
 	 */
 
+
+
+	//売れ筋順(トップ画面用)
 	@Query("SELECT new Item(i.id, i.name, i.price, i.description, i.image, c.name) "
 			+ "FROM Item i INNER JOIN i.category c INNER JOIN i.orderItemList o "
 			+ "GROUP BY i.id, i.name, i.price, i.description, i.image, c.name, o.quantity "
 			+ "ORDER BY SUM(o.quantity) DESC")
 	public List<Item> findBySaleItemsQuery();
+
+
+
+	//売れ筋順(カテゴリ別検索用)
+	@Query("SELECT new Item(i.id, i.name, i.price, i.description, i.image, c.name) "
+			+ "FROM Item i INNER JOIN i.category c INNER JOIN i.orderItemList o "
+			+ "WHERE c.id = :categoryId "
+			+ "GROUP BY i.id, i.name, i.price, i.description, i.image, c.name, o.quantity "
+			+ "ORDER BY SUM(o.quantity) DESC")
+	public List<Item> findBySaleCategoryQuery(@Param("categoryId") Integer categoryId);
 
 	public List<Item> findByCategoryId(Integer tergetCategoryid);
 

@@ -33,6 +33,22 @@
 		</div>
 
 
+
+<!-- 追記部分 -->
+		<p th:text="${sort}"></p>
+				<form th:if="${sortType == null}" th:action="@{/item/list/category}">
+					<select name="categoryId">
+						<option th:each="category: ${categories}"
+							th:value="${category.id}" th:text="${category.name}"
+							th:selected="${category.id == textCategoryId}"></option>
+					</select> <input type="submit" value="検索" />
+				</form>
+
+
+
+
+
+
 		<div th:if="${session.user == null or session.user.authority == 2}">
 
 			<form th:action="@{/item/list/categoryName}">
