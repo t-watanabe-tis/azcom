@@ -156,7 +156,9 @@ public class ItemShowCustomerController {
 	@RequestMapping(path = "/item/list/priceAsc", method = RequestMethod.GET)
 	public String showItemListPriceAsc(Model model, Pageable pageable) {
 
-		Page<Item> itemList = itemRepository.findByDeleteFlagOrderByPriceAsc(pageable);
+//		Page<Item> itemList = itemRepository.findByDeleteFlagOrderByPriceAsc(pageable);
+		Page<Item> itemList = itemRepository.findByDeleteFlagOrderByPriceAscIdAsc(Constant.NOT_DELETED, pageable);
+//		Page<Item> itemList = itemRepository.findByDeleteFlag(new Sort(Sort.Direction.ASC, "price"), pageable);
 		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
 
 		model.addAttribute("items", itemBeanList);

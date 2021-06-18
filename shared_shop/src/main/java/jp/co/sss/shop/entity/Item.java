@@ -21,7 +21,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "items")
-public class Item implements Comparable<Item>{
+
+public class Item {
 	/**
 	 * 商品ID
 	 */
@@ -220,19 +221,19 @@ public class Item implements Comparable<Item>{
 	public void setOrderItemsList(List<OrderItem> orderItemList) {
 		this.orderItemList = orderItemList;
 	}
-
-	@Override
-	public int compareTo(Item anothor) {
-
-		if(this.getInsertDate().equals(anothor.getInsertDate())) {
-			return 0;
-		}
-		else if(this.getInsertDate().before(anothor.getInsertDate())) {
-			return -1;
-		}
-		else {
-			return 1;
-		}
-	}
+//
+//	@Override
+//	public int compareTo(Item anothor) {
+//
+//		if(this.getInsertDate().equals(anothor.getInsertDate())) {
+//			return 0;
+//		}
+//		else if(this.getInsertDate().before(anothor.getInsertDate())) {
+//			return -1;
+//		}
+//		else {
+//			return 1;
+//		}
+//	}
 
 }
