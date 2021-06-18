@@ -216,8 +216,12 @@ public class OrderRegistCustomerController {
 		//買い物かごの中身を空にする
 		basket.clear();
 
-		return "order/regist/order_complete";
+		return "redirect:/order/complete";
+	}
 
+	@RequestMapping(path = "/order/complete")
+	public String showOrderComp() {
+		return "order/regist/order_complete";
 	}
 }
 
