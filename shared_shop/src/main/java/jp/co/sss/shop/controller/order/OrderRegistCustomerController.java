@@ -178,10 +178,10 @@ public String inputAddressRedirect(@ModelAttribute UserForm form, boolean backFl
 		orderRepository.save(order);
 
 
+//		  order_itemsテーブルに登録
 		List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
 		for(ItemBean item: basket) {
 
-//		  order_itemsテーブルに登録
 			OrderItem orderItem = new OrderItem();
 			Item i = new Item();
 			i.setId(item.getId());
@@ -194,6 +194,8 @@ public String inputAddressRedirect(@ModelAttribute UserForm form, boolean backFl
 			orderItemRepository.save(orderItem);
 		}
 
+		//買い物かごの中身を空にする
+		basket.clear();
 
 		return "order/regist/order_complete";
 
