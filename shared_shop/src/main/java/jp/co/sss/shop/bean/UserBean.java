@@ -9,7 +9,7 @@ public class UserBean {
 	/**
 	 * 会員ID
 	 */
-	private Integer	id;
+	private Integer id;
 	/**
 	 * 会員メールアドレス
 	 */
@@ -37,13 +37,13 @@ public class UserBean {
 	/**
 	 * 権限
 	 */
-	private Integer	authority;
+	private Integer authority;
 
-	
+
 	/**
 	 * 削除フラグ 0:未削除、1:削除済み
 	 */
-	private Integer	deleteFlag;
+	private Integer deleteFlag;
 	/**
 	 * 登録日付
 	 */
