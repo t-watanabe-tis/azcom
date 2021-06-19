@@ -149,7 +149,7 @@ public class OrderRegistCustomerController {
 
 				zeroStockItems.add(item);
 			}
-			if(item.getQuantityInBasket() > currentStock) {
+			if( currentStock != 0  &&  item.getQuantityInBasket() > currentStock) {
 
 				orverStockItems.add(item);
 			}
@@ -183,6 +183,7 @@ public class OrderRegistCustomerController {
 
 		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("orverStockItems", orverStockItems);
+		model.addAttribute("zeroStockItems", zeroStockItems);
 //		model.addAttribute("item", itemForm);
 		model.addAttribute("order", form);
 		model.addAttribute("token", toReturn);

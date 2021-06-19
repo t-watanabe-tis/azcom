@@ -36,12 +36,10 @@ public class BasketCustomerController {
 			for(ItemBean item: basket) {
 
 				Integer currentStock = itemRepository.getOne(item.getId()).getStock();
-
-
-
 				item.setStock(currentStock);
 			}
 		}
+
 		return "basket/shopping_basket";
 	}
 
@@ -106,6 +104,7 @@ public class BasketCustomerController {
 
 		List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
 		basket.remove(basket.indexOf(itemBean));
+
 		return "redirect:/basket/list";
 	}
 
@@ -116,6 +115,7 @@ public class BasketCustomerController {
 
 		List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
 		basket.clear();
+
 		return "redirect:/basket/list";
 	}
 
