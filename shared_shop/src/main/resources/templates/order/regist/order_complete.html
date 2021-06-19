@@ -20,6 +20,10 @@
 						トップへ戻る
 					</a>
 				</p>
+
+				<div th:if="${duplicatedOrder}">
+					<p>＊こちらの注文はすでに完了しております</p>
+				</div>
 			</article>
 </body>
 </html>

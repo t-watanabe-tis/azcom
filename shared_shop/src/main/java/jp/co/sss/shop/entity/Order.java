@@ -75,10 +75,19 @@ public class Order {
 	private User			user;
 
 	/**
+	 * ワンタイムトークン
+	 */
+	@Column
+	private String token;
+
+	/**
 	 * 注文商品リスト
 	 */
 	@OneToMany(mappedBy = "order")
 	private List<OrderItem>	orderItemsList;
+
+
+
 
 	public Integer getId() {
 		return id;
@@ -142,6 +151,14 @@ public class Order {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public List<OrderItem> getOrderItemsList() {
