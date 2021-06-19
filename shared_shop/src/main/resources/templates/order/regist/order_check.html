@@ -88,7 +88,7 @@
 						<td><span th:text="${order.payMethod}"> </span></td>
 					</tr>
 				</table>
-			<form method="post" action="/shared_shop/order/complete">
+			<form method="post" action="/shared_shop/order/complete" onsubmit="return checkSubmit()">
 			<input type="hidden" name="deleteFlag" th:value="*{deleteFlag}" >
 					<input type="hidden" name="id" th:value="${order.id}" />
 					<input type="hidden" name="postalCode" th:value="${order.postalCode}" />
@@ -112,7 +112,6 @@
 				</form>
 			</div>
 			</article>
-
-
+			<script type="text/javascript" th:src="@{/js/submit-check.js}"></script>
 </body>
 </html>
