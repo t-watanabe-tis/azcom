@@ -9,9 +9,8 @@
 	<h2 class="title">商品一覧</h2>
 	<div>
 		<div>
-			<a th:href="@{/item/list}">新着順</a>
+			<a th:href="@{/item/list/(categoryId=${categoryId})}">新着順</a>
 			<a th:href="@{/item/list/saleDesc/(categoryId=${categoryId})}">売れ筋順</a>
-			<!-- <a th:href="@{/item/list/priceAsc/(categoryId=${categoryId})}">売れ筋順</a> -->
 			<a th:href="@{/item/list/priceDesc/(categoryId=${categoryId})}">価格が高い順</a>
 			<a th:href="@{/item/list/priceAsc/(categoryId=${categoryId})}">価格が低い順</a>
 		</div>
