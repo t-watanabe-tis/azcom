@@ -42,7 +42,7 @@
 					<th>数量</th>
 					<th>小計</th>
 				</tr>
-				<tr th:if="!${#lists.contains(orverStockItems, item)}">
+				<tr th:if="!${#lists.contains(zeroStockItems, item)}">
 					<td th:text="${item.name}"></td>
 					<td><span th:if="${item.image}">
 				 <img th:src="${item.image}"width="25%" height="auto"></img>
@@ -120,9 +120,9 @@
 					 <input type="hidden" name="" th:value="${itemForm.price}">
 					 <input type="hidden" name="" th:value="${itemForm.quantityInBasket}"> -->
 				<!-- <div th:unless="${order.id == 0}"> -->
-					<div th:if="${#lists.isEmpty(session.basket)}">
-					<input th:if="${duplicatedOrder == null}" class="send_button" type="submit" value="ご注文の確定" />
-					</div>
+					 <div th:unless="${#lists.isEmpty(session.basket)}">
+					<input th:if="${duplicatedOrder == null}"  class="send_button" type="submit" value="ご注文の確定" />
+					 </div>
 			</form></td>
 			<td><form method="post" action="/shared_shop/payment/input" class="update">
 					<input type="hidden" name="id" th:value="${order.id}" />
