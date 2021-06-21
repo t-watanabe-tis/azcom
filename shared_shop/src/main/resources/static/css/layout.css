@@ -149,13 +149,13 @@ header {
  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 .site_title {
 	float: left;
-	font-size: 4.0em;
+	font-size: 3.8em;
 	line-height:0.95em;
 	font-weight:bold;
 	text-shadow: 0.05em 0.02em 0.02em rgba(0,0,0,1);
 	margin:0;
 	overflow: hidden;
-  transform: translate(97%, 0);
+  transform: translate(83%, 0);
   transition: transform cubic-bezier(0.215, 0.61, 0.355, 1)3s;
   color: #8080ff;
   font-family: 'Century Gothic';
@@ -291,7 +291,7 @@ aside.admin_menu {
 	background: #ff6c49;
 }
 .search .form {
-	padding: 50px 0 100px 8px;
+	padding: 50px 0 100px 0px;
 	width:100%;
 
 }
@@ -337,7 +337,7 @@ aside.admin_menu {
 	float: right;
 	width: 75%;
 	padding-bottom: 80px;
-	font-size: 0.7rem;
+	font-size: 1.0rem;
 
 }
 .admin_menu .main {
