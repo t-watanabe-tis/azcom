@@ -28,7 +28,9 @@
 				<th>在庫</th>
 			</tr>
 			<tr th:each="item :${session.basket}">
-				<td th:text="${item.getName()}"></td>
+				<td>
+					<a th:href="@{/item/detail/{id}(id=${item.id})}">[[${item.getName()}]]</a>
+				</td>
 				<td th:text="${item.getQuantityInBasket()}"></td>
 				<td>
 					<form th:action="@{/basket/delete}" method="post">
