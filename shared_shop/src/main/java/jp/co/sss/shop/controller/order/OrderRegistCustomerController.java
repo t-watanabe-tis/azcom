@@ -199,9 +199,9 @@ public class OrderRegistCustomerController {
 		User user = new User();
 		user.setId(form.getId());
 
-		//ダブルクリック対策機能の確認のため、５秒経過後に画面遷移するよう設定
+		//ダブルクリック対策機能の確認のため、3秒経過後に画面遷移するよう設定
 		try {
-			 Thread.sleep(5000); // 10秒(1万ミリ秒)間だけ処理を止める
+			 Thread.sleep(3000); // 3秒間だけ処理を止める
 			 } catch (InterruptedException e) {
 			 }
 
