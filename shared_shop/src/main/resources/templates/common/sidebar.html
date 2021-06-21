@@ -13,30 +13,52 @@
 			<div class="form">
 				<!-- 商品一覧画面以外で表示-->
 				<form th:if="${sortType == null}" th:action="@{/item/list/category}">
-					ジャンル検索<br/><select name="categoryId">
+					<select name="categoryId">
 
 						<option th:each="category: ${categories}"
 							th:value="${category.id}" th:text="${category.name}"
 							th:selected="${category.id == textCategoryId}"></option>
 					</select> <input type="submit" value="検索" />
+
+						<!-- <input type="hidden" name="sorted" th:value="${sort}" /> -->
+
+						<input type="hidden" name="sorted" th:value="${sort}" />
+
 				</form>
 				<!-- 商品一覧画面上で表示 -->
-				<form th:unless="${sortType == null}"
+				<!-- <form th:unless="${sortType == null}"
 					th:action="@{/item/list/category/} + ${sortType}">
-					ジャンル検索<br/><select name="categoryId">
+					<select name="categoryId">
 						<option th:each="category: ${categories}"
 							th:value="${category.id}" th:text="${category.name}"
 							th:selected="${category.id == textCategoryId}"></option>
 					</select> <input type="submit" value="検索" />
-				</form>
+
+					<input type="hidden" name="sorted" th:value="${sort}" />
+
+				</form> -->
 			</div>
 		</div>
+
+
+
+<!-- 追記部分 -->
+
+			<input type="hidden" name="sorted" th:value="${sort}" />
+
+
+
+
+
+
+
+
 
 
 		<div th:if="${session.user == null or session.user.authority == 2}">
 
 			<form th:action="@{/item/list/categoryName}">
-				  商品検索<br /> <input type="text" name="categoryName"placeholder="商品名で検索..."
+				商品名<br /> <input type="text" name="categoryName"
 					th:value="${textCategoryName}"><input type="submit"
 					value="検索">
 			</form>

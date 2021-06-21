@@ -23,6 +23,12 @@ import jp.co.sss.shop.entity.Item;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Integer> {
 
+	//注文確定商品を在庫数に反映
+	@Transactional
+	@Modifying
+	@Query("UPDATE Item i SET i.stock = :quantityInBasket WHERE i.id = :id")
+	public Integer updateStockById(@Param("quantityInBasket") Integer stock, @Param("id") Integer id);
+
 	// 商品情報を新着順で検索
 	public Page<Item> findByDeleteFlagOrderByInsertDateDescIdAsc(int deleteFlag, Pageable pageable);
 
@@ -34,11 +40,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	//価格の低い順
 	public Page<Item> findByDeleteFlagOrderByPriceAscIdAsc(int deleteFlag, Pageable pageable);
-
-	@Query("SELECT i FROM Item i WHERE i.deleteFlag = 0 ORDER BY i.price ASC, i.name ASC")
-	public Page<Item> findByDeleteFlagOrderByPriceAsc(Pageable pageable);
-
-//	public Page<Item> findByDeleteFlag(Sort sort, Pageable pageapbe);
 
 	//価格の高い順
 	public Page<Item> findByDeleteFlagOrderByPriceDescIdAsc(int deleteFlag, Pageable pageable);
@@ -58,18 +59,34 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	ORDER BY SUM(order_items.quantity) DESC;
 	 */
 
+
+	//売れ筋順(トップ画面用)
 	@Query("SELECT new Item(i.id, i.name, i.price, i.description, i.image, c.name) "
 			+ "FROM Item i INNER JOIN i.category c INNER JOIN i.orderItemList o "
 			+ "GROUP BY i.id, i.name, i.price, i.description, i.image, c.name, o.quantity "
 			+ "ORDER BY SUM(o.quantity) DESC")
-	public List<Item> findBySaleItemsQuery();
+	public Page<Item> findBySaleItemsQuery(Pageable pageable);
+
+
+	@Query("SELECT new Item(i.id, i.name, i.price, i.description, i.image, c.name) "
+			+ "FROM Item i INNER JOIN i.category c INNER JOIN i.orderItemList o "
+			+ "WHERE c.id = :categoryId "
+			+ "GROUP BY i.id, i.name, i.price, i.description, i.image, c.name, o.quantity "
+			+ "ORDER BY SUM(o.quantity) DESC")
+public Page<Item> findBySumQuantityQuery(@Param("categoryId") Integer categoryId,
+			Pageable pageable);
+
+
+	/**SELECT items.id, items.name, items.image, items.price, items.stock
+	FROM items
+	INNER JOIN categories
+	ON items.category_id = categories.id
+	INNER JOIN order_items
+	ON items.id = order_items.item_id
+	WHERE categories.id = items.category_id
+	GROUP BY items.id, items.name, items.image, items.price, items.stock,
+	order_items.quantity
+	ORDER BY items.price ASC; */
 
 	public List<Item> findByCategoryId(Integer tergetCategoryid);
-
-	//注文確定商品を在庫数に反映
-	@Transactional
-	@Modifying
-	@Query("UPDATE Item i SET i.stock = :quantityInBasket WHERE i.id = :id")
-	public Integer updateStockById(@Param("quantityInBasket") Integer stock, @Param("id") Integer id);
-
 }

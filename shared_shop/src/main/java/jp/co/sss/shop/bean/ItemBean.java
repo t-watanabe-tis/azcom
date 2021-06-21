@@ -50,6 +50,20 @@ public class ItemBean {
 
 	private Integer quantityInBasket;
 
+
+	private Integer SumQuantity;
+
+
+
+
+	public Integer getSumQuantity() {
+		return SumQuantity;
+	}
+
+	public void setSumQuantity(Integer sumQuantity) {
+		SumQuantity = sumQuantity;
+	}
+
 	public Integer getQuantityInBasket() {
 		return quantityInBasket;
 	}
@@ -133,5 +147,12 @@ public class ItemBean {
 		}
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return "id=" + id + ", name=" + name + ", price=" + price;
+	}
+
+
 
 }

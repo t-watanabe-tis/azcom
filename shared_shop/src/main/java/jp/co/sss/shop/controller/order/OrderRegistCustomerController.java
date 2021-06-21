@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -129,14 +130,14 @@ public class OrderRegistCustomerController {
 			model.addAttribute("order", form);
 			return "order/regist/order_payment_input";
 		}
-//				return "order/regist/order_payment_input";
+		//				return "order/regist/order_payment_input";
 
 	}
 
 	//支払方法選択画面から注文登録確認画面
 	@RequestMapping(path = "/order/check", method = RequestMethod.POST)
-//	public String checkOrder(@ModelAttribute ItemForm itemForm, BindingResult result, UserForm form, boolean backFlg, Model model) {
-		public String checkOrder(UserForm form, Model model) {
+	//	public String checkOrder(@ModelAttribute ItemForm itemForm, BindingResult result, UserForm form, boolean backFlg, Model model) {
+	public String checkOrder(UserForm form, Model model) {
 
 		//買い物かごの商品個数が在庫数を超過しているか判定
 		List<ItemBean> orverStockItems = new ArrayList<>();
@@ -147,19 +148,35 @@ public class OrderRegistCustomerController {
 			int currentStock = itemRepository.getOne(item.getId()).getStock();
 			if(currentStock == 0) {
 
+				item.setStock(0);
 				zeroStockItems.add(item);
 			}
 			if( currentStock != 0  &&  item.getQuantityInBasket() > currentStock) {
 
+				item.setQuantityInBasket(currentStock);
 				orverStockItems.add(item);
 			}
 		}
 
+
+		//在庫がない商品を買い物かごから削除
+		Iterator<ItemBean> iter = basket.iterator();
+		while(iter.hasNext()) {
+
+			ItemBean ib = iter.next();
+			if(ib.getStock() == 0) {
+				iter.remove();
+			}
+		}
+
+
+
+
 		//買い物かご内商品の合計額
 		int totalPrice = 0;
-		for(ItemBean item: basket) {
+		for(ItemBean ib: basket) {
 
-			int s = item.getQuantityInBasket() * item.getPrice();
+			int s = ib.getQuantityInBasket() * ib.getPrice();
 			totalPrice += s;
 		}
 
@@ -177,21 +194,17 @@ public class OrderRegistCustomerController {
 			e.printStackTrace();
 		}
 
-		System.out.println(new java.util.Date().toString());
-
-
-
 		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("token", toReturn);
 		model.addAttribute("orverStockItems", orverStockItems);
 		model.addAttribute("zeroStockItems", zeroStockItems);
-//		model.addAttribute("item", itemForm);
 		model.addAttribute("order", form);
-		model.addAttribute("token", toReturn);
 
 		return "order/regist/order_check";
+
 	}
 
-    //注文登録確認画面から注文登録完了画面
+	//注文登録確認画面から注文登録完了画面
 	@RequestMapping(path = "/order/complete", method = RequestMethod.POST)
 	public String completeOrder(OrderForm form, UserForm userForm, Model model) {
 		Order order = new Order();
@@ -201,16 +214,16 @@ public class OrderRegistCustomerController {
 
 		//ダブルクリック対策機能の確認のため、3秒経過後に画面遷移するよう設定
 		try {
-			 Thread.sleep(3000); // 3秒間だけ処理を止める
-			 } catch (InterruptedException e) {
-			 }
+			Thread.sleep(3000); // 3秒間だけ処理を止める
+		} catch (InterruptedException e) {
+		}
 
 		//過去に同じ注文がされているか確認
 		List<Order> orderList = orderRepository.findByToken(form.getToken());
 		if(orderList.isEmpty()) {
 
 			// ordersテーブルに登録
-//			order.setId(form.getId());
+			//			order.setId(form.getId());
 			order.setPostalCode(form.getPostalCode());
 			order.setAddress(form.getAddress());
 			order.setName(form.getName());
@@ -219,11 +232,11 @@ public class OrderRegistCustomerController {
 			order.setUser(user);
 			order.setInsertDate(new Date(new java.util.Date().getTime()));
 			order.setToken(form.getToken());
-//			order.setOrderItemsList(orderItemList);
+			//			order.setOrderItemsList(orderItemList);
 			orderRepository.save(order);
 
 
-//			  order_itemsテーブルに登録
+			//			  order_itemsテーブルに登録
 			List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
 			for(ItemBean item: basket) {
 
@@ -237,7 +250,7 @@ public class OrderRegistCustomerController {
 				orderItem.setOrder(order);
 
 
-//				在庫数を減らす
+				//				在庫数を減らす
 				itemRepository.updateStockById(item.getStock() - item.getQuantityInBasket(), item.getId());
 
 
@@ -246,12 +259,12 @@ public class OrderRegistCustomerController {
 
 			//買い物かごの中身を空にする
 			basket.clear();
-//			model.addAttribute("duplicatedOrder", false);
+			//			model.addAttribute("duplicatedOrder", false);
 			return "redirect:/order/complete";
 		}
 		else {
 
-//			model.addAttribute("duplicatedOrder", true);
+			//			model.addAttribute("duplicatedOrder", true);
 			model.addAttribute("duplicatedOrder", true);
 			return checkOrder(userForm, model);
 		}
