@@ -11,12 +11,18 @@
 				<h2 class="title">
 					お支払い方法選択
 				</h2>
+
+				<!-- 支払方法が未選択の時に出力されるメッセージ -->
+				<div th:if="${order.payMethod == 0}">
+					<p th:text="#{payMethod.none}"></p>
+				</div>
+
 				<div class="user_info_form_area">
 					<form method="post" action="/shared_shop/order/check">
 						<ul class="payment_method_select">
 							<li>
 								<label class="radio_label">
-									<input type="radio" name="payMethod" value="1" />
+									<input type="radio" name="payMethod" value="1" checked="checked"/>
 									クレジットカード
 								</label>
 							</li>

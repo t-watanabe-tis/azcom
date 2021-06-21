@@ -121,7 +121,8 @@ public class OrderRegistCustomerController {
 	@RequestMapping(path = "/payment/input", method = RequestMethod.POST)
 	public String inputPayment(@Valid @ModelAttribute UserForm form, BindingResult result, boolean backFlg, Model model) {
 
-		/*System.out.println(result.hasErrors());*/
+		System.out.println(result.hasErrors());
+
 		if(result.hasErrors()) {
 			//				return "order/regist/order_address_input";
 			return inputAddress(form, !backFlg);
@@ -137,7 +138,11 @@ public class OrderRegistCustomerController {
 	//支払方法選択画面から注文登録確認画面
 	@RequestMapping(path = "/order/check", method = RequestMethod.POST)
 	//	public String checkOrder(@ModelAttribute ItemForm itemForm, BindingResult result, UserForm form, boolean backFlg, Model model) {
-	public String checkOrder(UserForm form, Model model) {
+	public String checkOrder(@Valid UserForm form, BindingResult result, Model model) {
+
+//		System.out.println(result.hasErrors());
+		System.out.println(form.getPayMethod());
+
 
 		//買い物かごの商品個数が在庫数を超過しているか判定
 		List<ItemBean> orverStockItems = new ArrayList<>();
@@ -264,9 +269,9 @@ public class OrderRegistCustomerController {
 		}
 		else {
 
-			//			model.addAttribute("duplicatedOrder", true);
 			model.addAttribute("duplicatedOrder", true);
-			return checkOrder(userForm, model);
+//			return checkOrder(userForm, model);
+			return "order/regist/order_check";
 		}
 
 
