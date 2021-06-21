@@ -46,6 +46,7 @@
 				<input type="hidden" name="postalCode" th:value="${userForm.postalCode}" />
 				<input type="hidden" name="address" th:value="${userForm.address}" />
 				<input type="hidden" name="phoneNumber" th:value="${userForm.phoneNumber}" />
+				<input type="hidden" name="authority" th:value="${userForm.authority}" />
 				<input type="submit" value="登録" class="send_button" />
 			</form>
 			<form th:action="@{/user/update/input}" method="post">
@@ -57,6 +58,7 @@
 				<input type="hidden" name="postalCode" th:value="${userForm.postalCode}" />
 				<input type="hidden" name="address" th:value="${userForm.address}" />
 				<input type="hidden" name="phoneNumber" th:value="${userForm.phoneNumber}" />
+				<input type="hidden" name="authority" th:value="${userForm.authority}" />
 				<input type="submit" value="戻る" class="back_button" />
 			</form>
 		</div>

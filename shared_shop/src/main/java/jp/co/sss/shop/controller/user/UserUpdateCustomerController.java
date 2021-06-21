@@ -86,6 +86,7 @@ public class UserUpdateCustomerController {
 	 */
 	@RequestMapping(path = "/user/update/check", method = RequestMethod.POST)
 	public String updateCheck( Model model, @Valid @ModelAttribute UserForm form, BindingResult result) {
+		System.out.println(form.getAuthority());
 		// 入力値にエラーがあった場合、会員情報 変更入力画面表示処理に戻る
 		if (result.hasErrors()) {
 
@@ -131,6 +132,13 @@ public class UserUpdateCustomerController {
 		// 会員情報を保存
 		user.setAuthority(2);
 		userRepository.save(user);
+
+		//変更内容をセッションに反映
+		UserBean userBean = (UserBean) session.getAttribute("user");
+		if(userBean.getId() == user.getId()) {
+
+			BeanUtils.copyProperties(form, userBean);
+		}
 
 		return "redirect:/user/update/complete";
 	}
