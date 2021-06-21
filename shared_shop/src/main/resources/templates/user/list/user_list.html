@@ -10,6 +10,11 @@
 		<form th:action="@{/user/regist/input/admin}" class="sign_up_form">
 			<input type="submit" value="会員新規登録" class="menu_button" />
 		</form>
+
+		運用会員:<tr th:text="${authorities0}"></tr>
+			&nbsp;&nbsp;&nbsp;システム会員:<tr th:text="${authorities1}"></tr>
+			&nbsp;&nbsp;&nbsp;一般会員:<tr th:text="${authorities2}"></tr>
+
 		<table class="list_table" th:if="!${#lists.isEmpty(users)}">
 			<tr>
 				<th>会員氏名</th>
@@ -43,8 +48,9 @@
 				</form>
 				</td>
 			</tr>
+
 		</table>
-		<ul class="paging" th:if="!${#lists.isEmpty(users)}">
+		 		<ul class="paging" th:if="!${#lists.isEmpty(users)}">
 			<li th:class="${pages.first} ? 'disabled':''" >
 				<span th:if="${pages.first}">&lt;&lt;</span>
 				<a th:if="${not pages.first}" th:href="@{${url}(page=0)}">&lt;&lt;</a>

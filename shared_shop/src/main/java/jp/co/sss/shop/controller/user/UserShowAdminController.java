@@ -51,6 +51,14 @@ public class UserShowAdminController {
 		model.addAttribute("users", userList.getContent());
 		model.addAttribute("url", "/user/list");
 
+		 Long userCount0=userRepository.findByUserWithAuthority0();
+		 model.addAttribute("authorities0",userCount0);
+
+		 Long userCount1=userRepository.findByUserWithAuthority1();
+		 model.addAttribute("authorities1",userCount1);
+
+		 Long userCount2=userRepository.findByUserWithAuthority2();
+		 model.addAttribute("authorities2",userCount2);
 		return "user/list/user_list";
 	}
 
@@ -77,4 +85,5 @@ public class UserShowAdminController {
 
 		return "user/detail/user_detail_admin";
 	}
-}
+
+	}
