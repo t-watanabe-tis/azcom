@@ -1,8 +1,11 @@
 package jp.co.sss.shop.controller.order;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -21,7 +24,6 @@ import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.entity.Order;
 import jp.co.sss.shop.entity.OrderItem;
 import jp.co.sss.shop.entity.User;
-import jp.co.sss.shop.form.ItemForm;
 import jp.co.sss.shop.form.OrderForm;
 import jp.co.sss.shop.form.UserForm;
 import jp.co.sss.shop.repository.ItemRepository;
@@ -133,7 +135,8 @@ public class OrderRegistCustomerController {
 
 	//支払方法選択画面から注文登録確認画面
 	@RequestMapping(path = "/order/check", method = RequestMethod.POST)
-	public String checkOrder(@ModelAttribute ItemForm itemForm, BindingResult result, UserForm form, boolean backFlg, Model model) {
+//	public String checkOrder(@ModelAttribute ItemForm itemForm, BindingResult result, UserForm form, boolean backFlg, Model model) {
+		public String checkOrder(UserForm form, Model model) {
 
 		//買い物かごの商品個数が在庫数を超過しているか判定
 		List<ItemBean> orverStockItems = new ArrayList<>();
@@ -146,7 +149,7 @@ public class OrderRegistCustomerController {
 
 				zeroStockItems.add(item);
 			}
-			if(item.getQuantityInBasket() > currentStock) {
+			if( currentStock != 0  &&  item.getQuantityInBasket() > currentStock) {
 
 				orverStockItems.add(item);
 			}
@@ -159,69 +162,103 @@ public class OrderRegistCustomerController {
 			int s = item.getQuantityInBasket() * item.getPrice();
 			totalPrice += s;
 		}
+
+		//注文情報を一意に識別するトークンの生成
+		String toReturn = null;
+		Integer randNum = new Random().nextInt(100);
+		try {
+			MessageDigest digest = MessageDigest.getInstance("SHA-256");
+			digest.reset();
+			digest.update((new java.util.Date().toString() + randNum.toString()).getBytes());
+			toReturn = String.format("%04x", new BigInteger(1, digest.digest()));
+
+		} catch(Exception e) {
+
+			e.printStackTrace();
+		}
+
+		System.out.println(new java.util.Date().toString());
+
+
+
 		model.addAttribute("totalPrice", totalPrice);
-
-		/*System.out.println(totalPrice);*/
-
 		model.addAttribute("orverStockItems", orverStockItems);
-
+		model.addAttribute("zeroStockItems", zeroStockItems);
+//		model.addAttribute("item", itemForm);
 		model.addAttribute("order", form);
+		model.addAttribute("token", toReturn);
+
 		return "order/regist/order_check";
 	}
 
     //注文登録確認画面から注文登録完了画面
 	@RequestMapping(path = "/order/complete", method = RequestMethod.POST)
-	public String completeOrder(OrderForm form, UserForm userForm) {
+	public String completeOrder(OrderForm form, UserForm userForm, Model model) {
 		Order order = new Order();
 
 		User user = new User();
 		user.setId(form.getId());
 
+		//ダブルクリック対策機能の確認のため、3秒経過後に画面遷移するよう設定
 		try {
-			 Thread.sleep(5000); // 10秒(1万ミリ秒)間だけ処理を止める
+			 Thread.sleep(3000); // 3秒間だけ処理を止める
 			 } catch (InterruptedException e) {
 			 }
 
+		//過去に同じ注文がされているか確認
+		List<Order> orderList = orderRepository.findByToken(form.getToken());
+		if(orderList.isEmpty()) {
+
+			// ordersテーブルに登録
+//			order.setId(form.getId());
+			order.setPostalCode(form.getPostalCode());
+			order.setAddress(form.getAddress());
+			order.setName(form.getName());
+			order.setPhoneNumber(form.getPhoneNumber());
+			order.setPayMethod(form.getPayMethod());
+			order.setUser(user);
+			order.setInsertDate(new Date(new java.util.Date().getTime()));
+			order.setToken(form.getToken());
+//			order.setOrderItemsList(orderItemList);
+			orderRepository.save(order);
 
 
-		// ordersテーブルに登録
-//		order.setId(form.getId());
-		order.setPostalCode(form.getPostalCode());
-		order.setAddress(form.getAddress());
-		order.setName(form.getName());
-		order.setPhoneNumber(form.getPhoneNumber());
-		order.setPayMethod(form.getPayMethod());
-		order.setUser(user);
-		order.setInsertDate(new Date(new java.util.Date().getTime()));
-//		order.setOrderItemsList(orderItemList);
-		orderRepository.save(order);
+//			  order_itemsテーブルに登録
+			List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
+			for(ItemBean item: basket) {
+
+				OrderItem orderItem = new OrderItem();
+				Item i = new Item();
+				i.setId(item.getId());
+
+				orderItem.setQuantity(item.getQuantityInBasket());
+				orderItem.setPrice(item.getPrice());
+				orderItem.setItem(i);
+				orderItem.setOrder(order);
 
 
-//		  order_itemsテーブルに登録
-		List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
-		for(ItemBean item: basket) {
-
-			OrderItem orderItem = new OrderItem();
-			Item i = new Item();
-			i.setId(item.getId());
-
-			orderItem.setQuantity(item.getQuantityInBasket());
-			orderItem.setPrice(item.getPrice());
-			orderItem.setItem(i);
-			orderItem.setOrder(order);
+//				在庫数を減らす
+				itemRepository.updateStockById(item.getStock() - item.getQuantityInBasket(), item.getId());
 
 
-//			在庫数を減らす
-			itemRepository.updateStockById(item.getStock() - item.getQuantityInBasket(), item.getId());
+				orderItemRepository.save(orderItem);
+			}
 
+			//買い物かごの中身を空にする
+			basket.clear();
+//			model.addAttribute("duplicatedOrder", false);
+			return "redirect:/order/complete";
+		}
+		else {
 
-			orderItemRepository.save(orderItem);
+//			model.addAttribute("duplicatedOrder", true);
+			model.addAttribute("duplicatedOrder", true);
+			return checkOrder(userForm, model);
 		}
 
-		//買い物かごの中身を空にする
-		basket.clear();
 
-		return "redirect:/order/complete";
+
+
 	}
 
 	@RequestMapping(path = "/order/complete")

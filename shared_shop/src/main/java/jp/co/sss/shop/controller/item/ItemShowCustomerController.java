@@ -165,12 +165,6 @@ public class ItemShowCustomerController {
 		model.addAttribute("pages", itemList);
 		model.addAttribute("url", "/item/list");
 
-		for(Item item: itemList.getContent()) {
-			System.out.print(item.getId());
-			System.out.print("  ");
-			System.out.println(item.getPrice());
-		}
-
 		return "item/list/item_list";
 	}
 

@@ -21,6 +21,8 @@
 				<p th:text="${item.name} + #{orderStock.itemStockNone}"></p>
 			</div>
 
+			<p th:if="${duplicatedOrder != null}" th:text="#{orderCheck.duplicatedOrder}"></p>
+
 
 
 			<!-- 注文時点で在庫数＜注文数の場合に出力されるメッセージ
@@ -91,16 +93,27 @@
 						<td><span th:text="${order.payMethod}"> </span></td>
 					</tr>
 				</table>
-			<table><td><form method="post" action="/shared_shop/order/complete">
+
+			<!-- <form method="post" action="/shared_shop/order/complete" onsubmit="return checkSubmit()"> -->
+
+			<table><td><form method="post" action="/shared_shop/order/complete" onsubmit="return checkSubmit()">
+
 			<input type="hidden" name="deleteFlag" th:value="*{deleteFlag}" >
+
 					<input type="hidden" name="id" th:value="${order.id}" />
 					<input type="hidden" name="postalCode" th:value="${order.postalCode}" />
 					 <input type="hidden" name="address" th:value="${order.address}" />
 					 <input type="hidden" name="name" th:value="${order.name}" />
 					 <input type="hidden" name="phoneNumber" th:value="${order.phoneNumber}" />
 					 <input type="hidden" name="payMethod" th:value="${order.payMethod}" />
+					 <input type="hidden" name="token" th:value="${token}">
+
+					 <!-- <input type="hidden" name="name" th:value="${itemForm.name}">
+					 <input type="hidden" name="" th:value="${itemForm.image}">
+					 <input type="hidden" name="" th:value="${itemForm.price}">
+					 <input type="hidden" name="" th:value="${itemForm.quantityInBasket}"> -->
 				<div th:unless="${order.id == 0}">
-					<input class="send_button" type="submit" value="ご注文の確定" />
+					<input th:if="${duplicatedOrder == null}" class="send_button" type="submit" value="ご注文の確定" />
 				</div>
 			</form></td>
 			<td><form method="post" action="/shared_shop/payment/input" class="update">
@@ -115,7 +128,6 @@
 				</form></td></table>
 			</div>
 			</article>
-
-
+			<script type="text/javascript" th:src="@{/js/submit-check.js}"></script>
 </body>
 </html>
