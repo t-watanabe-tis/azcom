@@ -22,7 +22,7 @@
 									</span>
 									<!--   <input type="text" name="postalCode" th:value=""/> -->
 									<input type = "text" th:field="*{postalCode}">
-									<!-- <span th:errors="*{pastalCode}"></span><br/> -->
+									<span th:errors="*{postalCode}"></span><br/>
 								</label>
 							</li>
 							<li>
@@ -31,7 +31,7 @@
 										住所
 									</span>
 									<textarea name="address" rows="6" th:field="*{address}"></textarea>
-									<!-- <span th:errors="*{address}"></span><br/> -->
+									 <span th:errors="*{address}"></span><br/>
 
 								</label>
 							</li>
@@ -42,7 +42,7 @@
 									</span>
 									<!-- <input type="text" name="name" value=""/> -->
 									<input type = "text" th:field="*{name}">
-									<!-- <span th:errors="*{name}"></span><br/> -->
+									<span th:errors="*{name}"></span><br/>
 								</label>
 							</li>
 							<li>
@@ -52,17 +52,28 @@
 									</span>
 									<!-- <input type="text" name="phoneNumber" value=""/> -->
 									<input type = "text" th:field="*{phoneNumber}">
-									<!-- <span th:errors="*{phoneNumber}"></span><br/> -->
+									<span th:errors="*{phoneNumber}"></span><br/>
 								</label>
 							</li>
 						</ul>
-						<input type="submit" value="次へ" class="send_button" />
+				<input type="submit" value="次へ" class="send_button" />
 						<input type="hidden" name="id" th:value="*{id}" >
+						<input type="hidden" name="email" th:value="*{email}" >
+						<input type="hidden" name="password" th:value="*{password}" >
+						<!-- <input type="hidden" name="name" th:value="*{name}" > -->
+						<!-- <input type="hidden" name="postalCode" th:value="*{postalCode}" > -->
+						<!-- <input type="hidden" name="address" th:value="*{address}" > -->
+						<!-- <input type="hidden" name="phoneNumber" th:value="*{phoneNumber}" > -->
+						<input type="hidden" name="authority" th:value="*{authority}" >
+						<input type="hidden" name="deleteFlag" th:value="*{deleteFlag}" >
+						<input type="hidden" name="insertDate" th:value="*{insertDate}" >
+						<input type="hidden" name="payMethod" th:value="*{payMethod}" >
+
 						<input type="hidden" name="backFlg" value="false" />
 					</form>
 					<form action="/shared_shop/basket/list">
 						<input type="submit" value="戻る" class="back_button" />
-					</form>
+					</form></table>
 				</div>
 			</article>
 </body>

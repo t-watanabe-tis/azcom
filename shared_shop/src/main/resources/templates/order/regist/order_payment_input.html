@@ -46,12 +46,16 @@
 							</li>
 						</ul>
 						<!-- <span th:if="${#fields.hasErrors('payMethod')}" th:errors="*{payMethod}"></span> -->
+						<input type="hidden" name="deleteFlag" th:value="*{deleteFlag}" >
 						<input type="hidden" name="id" th:value="${order.id}">
 						<input type="hidden" name="postalCode" th:value="${order.postalCode}">
 						<input type="hidden" name="address" th:value="${order.address}">
 						<input type="hidden" name="name" th:value="${order.name}">
 						<input type="hidden" name="phoneNumber" th:value="${order.phoneNumber}">
-						<input type="submit" class="send_buttton" value="次へ" />
+
+						<input type="submit" class="send_button" value="次へ" />
+
+
 						</form>
 						<form method="post" action="/shared_shop/address/input" class="update">
 						<input type="hidden" name="id" th:value="${order.id}">

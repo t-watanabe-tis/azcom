@@ -36,12 +36,10 @@ public class BasketCustomerController {
 			for(ItemBean item: basket) {
 
 				Integer currentStock = itemRepository.getOne(item.getId()).getStock();
-
-
-
 				item.setStock(currentStock);
 			}
 		}
+
 		return "basket/shopping_basket";
 	}
 
@@ -54,7 +52,7 @@ public class BasketCustomerController {
 
 
 
-	/*
+	/**
 	 * 買い物かごへの商品追加
 	 *
 	 *
@@ -73,22 +71,26 @@ public class BasketCustomerController {
 			List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
 
 			//既に同じ商品が買い物かごに含まれているか判定
+
+			//既に同じ商品が含まれている場合、商品数を加算する
 			if(basket.contains(itemBean)) {
 
 				ItemBean ib = basket.get(basket.indexOf(itemBean));
 
 				//商品の総量が在庫数を超過しているか判定
-				//trueの場合カートに商品を追加
+				//trueで商品を加算
 				if( ib.getQuantityInBasket() + 1 <= currentStock ) {
 
 					ib.setQuantityInBasket(ib.getQuantityInBasket() + 1);
-				} else {
+				}
+				else {
 
 					model.addAttribute("orverStockItemName", ib.getName());
 					return "basket/shopping_basket";
 				}
 
 			}
+			//同じ商品が含まれていない場合、バスケットリストに商品オブジェクトを追加し、商品数を１にする
 			else {
 
 				itemBean.setQuantityInBasket(1);
@@ -106,6 +108,7 @@ public class BasketCustomerController {
 
 		List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
 		basket.remove(basket.indexOf(itemBean));
+
 		return "redirect:/basket/list";
 	}
 
@@ -116,6 +119,7 @@ public class BasketCustomerController {
 
 		List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
 		basket.clear();
+
 		return "redirect:/basket/list";
 	}
 

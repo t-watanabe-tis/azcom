@@ -19,16 +19,24 @@
 							th:value="${category.id}" th:text="${category.name}"
 							th:selected="${category.id == textCategoryId}"></option>
 					</select> <input type="submit" value="検索" />
+
+						<!-- <input type="hidden" name="sorted" th:value="${sort}" /> -->
+
+						<input type="hidden" name="sorted" th:value="${sort}" />
+
 				</form>
 				<!-- 商品一覧画面上で表示 -->
-				<form th:unless="${sortType == null}"
+				<!-- <form th:unless="${sortType == null}"
 					th:action="@{/item/list/category/} + ${sortType}">
 					<select name="categoryId">
 						<option th:each="category: ${categories}"
 							th:value="${category.id}" th:text="${category.name}"
 							th:selected="${category.id == textCategoryId}"></option>
 					</select> <input type="submit" value="検索" />
-				</form>
+
+					<input type="hidden" name="sorted" th:value="${sort}" />
+
+				</form> -->
 			</div>
 		</div>
 
@@ -43,6 +51,12 @@
 							th:selected="${category.id == textCategoryId}"></option>
 					</select> <input type="submit" value="検索" />
 				</form>
+
+			<input type="hidden" name="sorted" th:value="${sort}" />
+
+
+
+
 
 
 

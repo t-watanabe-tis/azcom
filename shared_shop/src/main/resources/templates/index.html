@@ -8,14 +8,15 @@
 <body>
 	<article class="main">
 		<h2 class="title">売れ筋商品</h2>
-
+<div class="fit">
 		<div th:each="item:${saleItems}">
-			<div th:text="${item.name}"></div>
+
 
 			<a th:href="@{/item/detail/{id}(id=${item.id})}"> <img
-				th:src="${item.image}" />
+				th:src="${item.image}" width="30%" height="auto"class="fit__img" />
 			</a>
-
+			 <font size="4.0"><div th:text="${item.name}"class="fit__name" ></div></font>
+          <td th:text="${item.description}"class="fit__desc"></td>
 		</div>
 	</article>
 

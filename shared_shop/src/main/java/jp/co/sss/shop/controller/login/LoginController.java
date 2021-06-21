@@ -1,11 +1,10 @@
 package jp.co.sss.shop.controller.login;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -78,7 +77,7 @@ public class LoginController {
 			if (authority.intValue() == 2) {
 				// 一般会員ログインした場合、トップ画面に遷移
 
-				List<Item> sale = itemRepository.findBySaleItemsQuery();
+				Page<Item> sale = itemRepository.findBySaleItemsQuery(null);
 
 				model.addAttribute("saleItems", sale);
 

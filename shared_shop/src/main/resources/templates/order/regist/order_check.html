@@ -21,6 +21,8 @@
 				<p th:text="${item.name} + #{orderStock.itemStockNone}"></p>
 			</div>
 
+			<p th:if="${duplicatedOrder != null}" th:text="#{orderCheck.duplicatedOrder}"></p>
+
 
 
 			<!-- 注文時点で在庫数＜注文数の場合に出力されるメッセージ
@@ -40,9 +42,12 @@
 					<th>数量</th>
 					<th>小計</th>
 				</tr>
-				<tr th:if="!${#lists.contains(orverStockItems, item)}">
+				<tr th:if="!${#lists.contains(zeroStockItems, item)}">
 					<td th:text="${item.name}"></td>
-					<td th:text="${item.image}"></td>
+					<td><span th:if="${item.image}">
+				 <img th:src="${item.image}"width="25%" height="auto"></img>
+
+				</span></td>
 					<td th:text="${item.price}"></td>
 					<td th:text="${item.quantityInBasket}"></td>
 					<td th:text="${item.price * item.quantityInBasket}"></td>
@@ -66,15 +71,15 @@
 
 			 <div class="user_info_form_area">
 				<table class="detail_table address" th:each="order : ${userForm}">
-					<caption class="table_caption">お届け先</caption>
+					<caption class="table_caption"font size="1" >お届け先</caption>
 					<tr>
 						<th>郵便番号</th>
-						<td th:text="${order.postalCode}"></td>
-						<th>住所</th>
-						<td th:text="${order.address}"></td>
-						<th>氏名</th>
-						<td th:text="${order.name}"></td>
-						<th>電話番号</th>
+						<td th:text="${order.postalCode}"></td></tr>
+						<tr><th>住所</th>
+						<td th:text="${order.address}"></td></tr>
+						<tr><th>氏名</th>
+						<td th:text="${order.name}"></td></tr>
+						<tr><th>電話番号</th>
 						<td th:text="${order.phoneNumber}"></td>
 
 					</tr>
@@ -85,21 +90,41 @@
 					<caption class="table_caption">お支払い方法</caption>
 					<tr>
 						<th>お支払い方法</th>
-						<td><span th:text="${order.payMethod}"> </span></td>
+						<td><span th:switch="${order.payMethod}">
+						<span th:case="1">クレジットカード</span>
+						<span th:case="2">銀行振り込み</span>
+						<span th:case="3">着払い</span>
+						<span th:case="4">電子マネー</span>
+						<span th:case="5">コンビニ決済</span></td>
+						<!-- <td><span th:text="${order.payMethod}"> -->
+						</span></td>
 					</tr>
 				</table>
-			<form method="post" action="/shared_shop/order/complete">
+
+			<!-- <form method="post" action="/shared_shop/order/complete" onsubmit="return checkSubmit()"> -->
+
+			<table><td><form method="post" action="/shared_shop/order/complete" onsubmit="return checkSubmit()">
+
+			<input type="hidden" name="deleteFlag" th:value="*{deleteFlag}" >
+
 					<input type="hidden" name="id" th:value="${order.id}" />
 					<input type="hidden" name="postalCode" th:value="${order.postalCode}" />
 					 <input type="hidden" name="address" th:value="${order.address}" />
 					 <input type="hidden" name="name" th:value="${order.name}" />
 					 <input type="hidden" name="phoneNumber" th:value="${order.phoneNumber}" />
 					 <input type="hidden" name="payMethod" th:value="${order.payMethod}" />
-				<div th:unless="${order.id == 0}">
-					<input class="send_button" type="submit" value="ご注文の確定" />
-				</div>
-			</form>
-			<form method="post" action="/shared_shop/payment/input" class="update">
+					 <input type="hidden" name="token" th:value="${token}">
+
+					 <!-- <input type="hidden" name="name" th:value="${itemForm.name}">
+					 <input type="hidden" name="" th:value="${itemForm.image}">
+					 <input type="hidden" name="" th:value="${itemForm.price}">
+					 <input type="hidden" name="" th:value="${itemForm.quantityInBasket}"> -->
+				<!-- <div th:unless="${order.id == 0}"> -->
+					 <div th:unless="${#lists.isEmpty(session.basket)}">
+					<input th:if="${duplicatedOrder == null}"  class="send_button" type="submit" value="ご注文の確定" />
+					 </div>
+			</form></td>
+			<td><form method="post" action="/shared_shop/payment/input" class="update">
 					<input type="hidden" name="id" th:value="${order.id}" />
 					<input type="hidden" name="postalCode" th:value="${order.postalCode}" />
 					<input type="hidden" name="address" th:value="${order.address}" />
@@ -108,10 +133,9 @@
 					<input type="hidden" name="payMethod" th:value="${order.payMethod}" />
 					<input type="hidden" name="backFlg" value="true" />
 					<input class="back_button" type="submit" value="戻る" />
-				</form>
+				</form></td></table>
 			</div>
 			</article>
-
-
+			<script type="text/javascript" th:src="@{/js/submit-check.js}"></script>
 </body>
 </html>

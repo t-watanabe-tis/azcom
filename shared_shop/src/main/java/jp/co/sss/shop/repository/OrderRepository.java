@@ -1,5 +1,7 @@
 package jp.co.sss.shop.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,4 +28,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	// 注文日付順で注文情報すべてを検索
 	@Query(JPQLConstant.FIND_ALL_ORDERS_ORDER_BY_INSERT_DATE)
 	Page<Order> findAllOrderByInsertDateDesc(Pageable pageable);
+
+	//引数の注文トークンに一致するレコードを検索
+	List<Order> findByToken(String token);
 }

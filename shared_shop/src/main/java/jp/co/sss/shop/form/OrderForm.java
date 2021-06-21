@@ -64,8 +64,22 @@ public class OrderForm {
 	private Integer price;
 
 
+	/**
+	 * 注文トークン
+	 */
+	private String token;
 
 
+
+
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 	public Integer getId() {
 		return id;
