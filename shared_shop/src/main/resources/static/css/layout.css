@@ -102,7 +102,7 @@ body > .container {
   background-size: over;
   animation: move 17s infinite both;
   overflow: hidden;
-  font-size: 35 px;
+  font-size: 20 px;
 
 }
 
@@ -128,12 +128,14 @@ body > .container {
 /* ---- ヘッダー ---- */
 header {
 
-	background: #87ceeb;
+	background: linear-gradient(-50deg, #87ceeb, #00008b);
 	padding: 10px 0;
 
 }
 .admin header {
-	background: #ff8669;
+	background: linear-gradient(to bottom, #ff7f50 0%, #dc143c 100%);
+  opacity: 0.5;
+  animation: huerotator 3s infinite alternate;
 }
 
 /* スキルアップテクニック4
@@ -147,16 +149,16 @@ header {
  @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 .site_title {
 	float: left;
-	font-size: 3.3em;
+	font-size: 4.0em;
 	line-height:0.95em;
 	font-weight:bold;
-	text-shadow: 0.02em 0.02em 0.02em rgba(0,0,0,1);
+	text-shadow: 0.05em 0.02em 0.02em rgba(0,0,0,1);
 	margin:0;
 	overflow: hidden;
-  transform: translate(115%, 0);
+  transform: translate(97%, 0);
   transition: transform cubic-bezier(0.215, 0.61, 0.355, 1)3s;
-  color: #0000ff;
-  font-family: 'Josefin Sans', sans-serif;
+  color: #8080ff;
+  font-family: 'Century Gothic';
 }
 .title span {
   display: block;
@@ -201,7 +203,7 @@ header {
 }
 .user_info a {
 	text-decoration: none;
-	font-size: 1.5em;
+	font-size: 1.2em;
 }
 
 /* スキルアップテクニック6
@@ -228,6 +230,7 @@ header {
 	padding: 5px 8px;
 	color: #fff;
 	text-shadow: 1px 1px 1px #12526d;
+	font-size: 1.3rem;
 
 }
 
@@ -244,12 +247,12 @@ header {
 }
 .navi_menu li {
 	display: inline-block;
-	width: 30%;
+	width: 25%;
 }
 .navi_menu a {
 	display: inline-block;
 	width: 100%;
-	font-size: 1.5em;
+	font-size: 1.3em;
 	line-height: 2.5em;
 	border: 1px solid #5fb4d9;
 	text-align: center;
@@ -275,32 +278,34 @@ header {
 aside.admin_menu {
 	float: left;
 	width: 20%;
+    height:100%;
+/*		background: #8080ff;  */
 }
 .search .title,
 .admin_menu .title {
 	border-radius: 6px 6px 0 0;
 	text-align: center;
-	font-size: 1.4rem;
+	font-size: 1.2rem;
 }
 .admin_menu .title {
 	background: #ff6c49;
 }
 .search .form {
-	padding: 20px 0 100px 8px;
+	padding: 50px 0 100px 8px;
 	width:100%;
 
 }
 .search .price,
 .admin_menu .display_list {
 	display: block;
-	padding: 10px;
+	padding: 20px;
 	border-right: 1px solid #aaa;
 	border-bottom: 1px solid #aaa;
 	border-left: 1px solid #aaa;
 	text-align: center;
 	text-decoration: none;
 	transition: background-color 0.18s;
-	width: 200px; height: 30px;
+	width: 200px; height: 50px;
 
 }
 .search .price:link,
@@ -332,7 +337,7 @@ aside.admin_menu {
 	float: right;
 	width: 75%;
 	padding-bottom: 80px;
-	font-size: 1.2rem;
+	font-size: 0.7rem;
 
 }
 .admin_menu .main {

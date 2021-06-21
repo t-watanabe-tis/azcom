@@ -62,6 +62,8 @@ p {
 .description {
 	margin-top: 30px;
 	text-align: center;
+	font-size: 1.4em;
+
 }
 
 /* ---- ボタン(機能呼出) ---- */
@@ -99,6 +101,7 @@ p {
 	margin: 15px 5px 15px 5px;
 	border-radius: 6px;
 	font-weight: bold;
+
 }
 
 /* ---- 商品情報 ---- */
@@ -140,6 +143,7 @@ p {
 	transition: 0.4s;
 	position: relative;
 	z-index: 1;
+
 }
 
 .item:hover img {
@@ -154,6 +158,10 @@ p {
 	padding: 5px;
 	color: #4169e1;
 	font-weight: bold;
+
+
+
+
 }
 
 .sorted_by {
@@ -279,7 +287,7 @@ p {
 }
 .user_info_form_area .send_button,
 .item_info_form_area .send_button {
-	background: #edf9fe;
+	background: rgb(0, 64, 128);
 	height: 35px;
     width: 30%;
     text-align: center;
@@ -287,12 +295,13 @@ p {
     font-size:13px;
   display: flex;
   justify-content: space-evenly;
+  display:inline-block;
 
 
 }
 .user_info_form_area .back_button,
 .item_info_form_area .back_button {
-	background: #ddd;
+	background: rgb(86, 86, 86);
 	height: 35px;
     width: 5%;
     text-align: center;
@@ -300,6 +309,7 @@ p {
     font-size:13px;
     display: flex;
   justify-content: space-evenly;
+  display:inline-block;
 
 }
 .order_check .user_info_form_area {
@@ -329,7 +339,8 @@ p {
 }
 .detail_button_area [type="submit"]{
 	padding: 0.6em 1.8em;
-	font-size: 1.2em;
+	font-size: 1.0em;
+	text-align: center;
 }
 .card_info {
 	padding-top: 10px;
@@ -367,11 +378,35 @@ p {
 
 /* ---- 検索フォーム ---- */
 .search [type=text] {
-	width: auto;
+width: auto;
+	-webkit-appearance: none;
+	display: inline-block;
+	margin-right: 0;
+	margin-bottom: 20px;
+	padding: 10px;
+	width: 200px;
+	height: 40px;
+	font-size: 100%;
+	box-sizing: border-box;
+	border-radius: 5px 0 0 5px;
+	border: 1px solid #ccc;
+	border-right: none;
+
 }
 
 .search select {
 	width: auto;
+
+	display: inline-block;
+	padding: 0 10px;
+	color: #004080;
+	width: 180px;
+	height: 40px;
+	font-size: 100%;
+	vertical-align: top;
+	border: none;
+	border-radius: 0 5px 5px 0;
+	background: #ffffff;
 }
 
 /* ---- 処理完了メッセージの出力箇所 ---- */
@@ -403,13 +438,17 @@ select {
 
 /* ---- ボタン全般 ---- */
 [type=submit] {
-	border: 1px solid #808080;
-	border-radius: 6px;
-	padding: 4px 10px;
-	color: #12526d;
-	background: #fff;
-	box-shadow: 1px 2px 2px #eee;
-	text-shadow: 1px 1px 1px #d8d8d8;
+	-webkit-appearance: none;
+	display: inline-block;
+	padding: 0 10px;
+	color: #fff;
+	width: auto;
+	height: 40px;
+	font-size: 100%;
+	vertical-align: top;
+	border: none;
+	border-radius: 0 5px 5px 0;
+	background: #0000a0;
 
 }
 
@@ -458,6 +497,8 @@ select {
 .list_table {
 	width: 100%;
 	text-align: center;
+	font-size: 1.0rem;
+
 }
 .list_table tr:nth-of-type(odd) {
     background: #f0f8fb;
@@ -485,7 +526,7 @@ select {
 }
 .detail_table caption {
 	text-align: left;
-	font-size: 4.4rem;
+	font-size: 1.0rem;
 }
 .detail_table th{
 	border-bottom: 1px solid #fff;
@@ -511,6 +552,7 @@ select {
 }
 .category_list .sign_up_form .menu_button{
 	width:auto;
+
 }
 .list_table.user {
 	clear: both;
@@ -551,9 +593,11 @@ select {
 .detail_table.address,
 .detail_table.pay {
 	width: 100%;
+	text-align: left;
 }
 .detail_table.pay {
 	margin-bottom: 50px;
+
 }
 
 /* ---- 買物カゴ ---- */
@@ -662,3 +706,34 @@ p.link_center {
 .err {
 	color: #FF0000;
 }
+.fit {
+  background: #c0c0c0;
+  width: 250px;
+  padding:1.0rem;
+}
+
+.fit__img {
+  width: 100%;
+}
+
+
+ @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+.fit__name {
+  padding:0.5rem 0 .2rem;
+  font-weight:bold;
+  font-size:1.0rem;
+  letter-spacing:.1rem;
+  color: #000040;
+font-family: 'Century Gothic';
+}
+.fit__desc {
+  padding:0.5rem 0 .2rem;
+  line-height:1.3rem;
+
+   letter-spacing:.1rem;
+   font-size:1.0rem;
+
+
+}
+
+

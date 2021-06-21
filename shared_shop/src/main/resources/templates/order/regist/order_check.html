@@ -42,7 +42,10 @@
 				</tr>
 				<tr th:if="!${#lists.contains(orverStockItems, item)}">
 					<td th:text="${item.name}"></td>
-					<td th:text="${item.image}"></td>
+					<td><span th:if="${item.image}">
+				 <img th:src="${item.image}"width="25%" height="auto"></img>
+
+				</span></td>
 					<td th:text="${item.price}"></td>
 					<td th:text="${item.quantityInBasket}"></td>
 					<td th:text="${item.price * item.quantityInBasket}"></td>
@@ -66,15 +69,15 @@
 
 			 <div class="user_info_form_area">
 				<table class="detail_table address" th:each="order : ${userForm}">
-					<caption class="table_caption">お届け先</caption>
+					<caption class="table_caption"font size="1" >お届け先</caption>
 					<tr>
 						<th>郵便番号</th>
-						<td th:text="${order.postalCode}"></td>
-						<th>住所</th>
-						<td th:text="${order.address}"></td>
-						<th>氏名</th>
-						<td th:text="${order.name}"></td>
-						<th>電話番号</th>
+						<td th:text="${order.postalCode}"></td></tr>
+						<tr><th>住所</th>
+						<td th:text="${order.address}"></td></tr>
+						<tr><th>氏名</th>
+						<td th:text="${order.name}"></td></tr>
+						<tr><th>電話番号</th>
 						<td th:text="${order.phoneNumber}"></td>
 
 					</tr>
@@ -88,7 +91,7 @@
 						<td><span th:text="${order.payMethod}"> </span></td>
 					</tr>
 				</table>
-			<form method="post" action="/shared_shop/order/complete">
+			<table><td><form method="post" action="/shared_shop/order/complete">
 			<input type="hidden" name="deleteFlag" th:value="*{deleteFlag}" >
 					<input type="hidden" name="id" th:value="${order.id}" />
 					<input type="hidden" name="postalCode" th:value="${order.postalCode}" />
@@ -99,8 +102,8 @@
 				<div th:unless="${order.id == 0}">
 					<input class="send_button" type="submit" value="ご注文の確定" />
 				</div>
-			</form>
-			<form method="post" action="/shared_shop/payment/input" class="update">
+			</form></td>
+			<td><form method="post" action="/shared_shop/payment/input" class="update">
 					<input type="hidden" name="id" th:value="${order.id}" />
 					<input type="hidden" name="postalCode" th:value="${order.postalCode}" />
 					<input type="hidden" name="address" th:value="${order.address}" />
@@ -109,7 +112,7 @@
 					<input type="hidden" name="payMethod" th:value="${order.payMethod}" />
 					<input type="hidden" name="backFlg" value="true" />
 					<input class="back_button" type="submit" value="戻る" />
-				</form>
+				</form></td></table>
 			</div>
 			</article>
 
