@@ -11,8 +11,8 @@
 			<input type="submit" value="会員新規登録" class="menu_button" />
 		</form>
 
-		運用会員:<tr th:text="${authorities0}"></tr>
-			&nbsp;&nbsp;&nbsp;システム会員:<tr th:text="${authorities1}"></tr>
+		運用会員:<tr th:text="${authorities1}"></tr>
+			&nbsp;&nbsp;&nbsp;システム会員:<tr th:text="${authorities0}"></tr>
 			&nbsp;&nbsp;&nbsp;一般会員:<tr th:text="${authorities2}"></tr>
 
 		<table class="list_table" th:if="!${#lists.isEmpty(users)}">
