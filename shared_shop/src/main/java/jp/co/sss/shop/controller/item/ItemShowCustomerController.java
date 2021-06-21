@@ -96,11 +96,17 @@ public class ItemShowCustomerController {
 		//		id（item）をもとに商品情報を取得 例：オレンジ
 
 		Item targetItem = itemRepository.getOne(id);
-		//		取得した商品情報のid(item)をもとにしてid(category)が一致するものを取得　例：食料品
-		Integer targetCategoryId = targetItem.getCategoryId();
-		List<Item> sameCategoryItems = itemRepository.findByCategoryId(targetCategoryId);
-		model.addAttribute("targetItem", sameCategoryItems);
+//		ItemBean itemBean = BeanCopy.copyEntityToBean(itemRepository.getOne(id));
 
+
+		//		取得した商品情報のid(item)をもとにしてid(category)が一致するものを取得　例：食料品
+//		Integer targetCategoryId = targetItem.getCategoryId();
+//		List<Item> sameCategoryItems = itemRepository.findByCategoryId(targetCategoryId);
+		List<Item> sameCategoryItems = itemRepository.findByIdNotAndCategoryId(id, targetItem.getCategoryId());
+
+
+
+		model.addAttribute("targetItem", sameCategoryItems);
 		model.addAttribute("item", targetItem);
 
 		return "item/detail/item_detail";

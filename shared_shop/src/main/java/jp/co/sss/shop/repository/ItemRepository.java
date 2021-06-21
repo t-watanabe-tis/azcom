@@ -62,4 +62,7 @@ public Page<Item> findBySumQuantityQuery(@Param("categoryId") Integer categoryId
 			Pageable pageable);
 
 	public List<Item> findByCategoryId(Integer tergetCategoryid);
+
+
+	public List<Item> findByIdNotAndCategoryId(Integer id, Integer categoryId);
 }

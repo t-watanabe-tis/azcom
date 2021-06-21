@@ -84,6 +84,7 @@ public class UserForm {
 	/**
 	 * 支払方法
 	 */
+//	@NotNull
 	private Integer payMethod;
 
 
