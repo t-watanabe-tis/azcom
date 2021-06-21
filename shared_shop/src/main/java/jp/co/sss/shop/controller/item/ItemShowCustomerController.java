@@ -84,10 +84,6 @@ public class ItemShowCustomerController {
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("url", "/item/list");
 
-		//追加部分
-
-		model.addAttribute("sort", "InsertDateDescIdAsc");
-
 		model.addAttribute("sort", "NewArrival");
 
 		return "item/list/item_list";
@@ -96,16 +92,9 @@ public class ItemShowCustomerController {
 	//商品詳細画面
 	@RequestMapping(path = "/item/detail/{id}")
 	public String create(@PathVariable int id, Model model) {
-
-		//		model.addAttribute("item", itemRepository.getOne(id));
-		//		return "item/detail/item_detail";
-
-		//	model.addAttribute("categoryId", categoryRepository.findById(id));
-
 		//		商品関連表示
 		//		id（item）をもとに商品情報を取得 例：オレンジ
 
-		//
 		Item targetItem = itemRepository.getOne(id);
 		//		取得した商品情報のid(item)をもとにしてid(category)が一致するものを取得　例：食料品
 		Integer targetCategoryId = targetItem.getCategoryId();
@@ -114,8 +103,6 @@ public class ItemShowCustomerController {
 
 		model.addAttribute("item", targetItem);
 
-		//		System.out.println("detail");
-		//		System.out.println(itemRepository.getOne(id).getName());
 		return "item/detail/item_detail";
 	}
 
@@ -130,13 +117,25 @@ public class ItemShowCustomerController {
 
 		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
 
-		if (sorted.equals("saleDesc")) {
+		if (sorted.equals("NewArrival")) {
+
+			ArrayList<ItemBean> ItemBeansort = new ArrayList<>();
+			ItemBeansort.addAll(itemBeanList);
+			Collections.sort(itemBeanList, new Comparator<ItemBean>() {
+				@Override
+				public int compare(ItemBean ItemBeanFirst, ItemBean ItemBeanSecond) {
+					return ItemBeanFirst.getInsertDate().compareTo(ItemBeanSecond.getInsertDate());
+				}
+			});
+
+		}
+
+		else if (sorted.equals("saleDesc")) {
 
 			itemList = itemRepository.findBySumQuantityQuery(categoryId, pageable);
 			itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
 
-		}
-		if (sorted.equals("PriceAsc")) {
+		} else if (sorted.equals("PriceAsc")) {
 
 			ArrayList<ItemBean> ItemBeansort = new ArrayList<>();
 			ItemBeansort.addAll(itemBeanList);
@@ -146,23 +145,17 @@ public class ItemShowCustomerController {
 					return ItemBeanFirst.getPrice().compareTo(ItemBeanSecond.getPrice());
 				}
 			});
-			System.out.println(ItemBeansort);
-
-			//			itemBeanList =  ItemBeansort;
 
 		} else if (sorted.equals("PriceDesc")) {
 
 			ArrayList<ItemBean> ItemBeansort = new ArrayList<>();
 			ItemBeansort.addAll(itemBeanList);
-			Collections.sort(ItemBeansort, new Comparator<ItemBean>() {
+			Collections.sort(itemBeanList, new Comparator<ItemBean>() {
 				@Override
 				public int compare(ItemBean ItemBeanFirst, ItemBean ItemBeanSecond) {
 					return ItemBeanSecond.getPrice().compareTo(ItemBeanFirst.getPrice());
 				}
 			});
-			System.out.println(ItemBeansort);
-
-			itemBeanList = ItemBeansort;
 
 		}
 
@@ -171,10 +164,6 @@ public class ItemShowCustomerController {
 		model.addAttribute("url", "/item/list");
 		model.addAttribute("textCategoryId", categoryId);
 
-
-//		model.addAttribute("categories", itemRepository.findBySaleCategoryQuery(categoryId));
-
-
 		return "item/list/item_list";
 	}
 
@@ -182,22 +171,15 @@ public class ItemShowCustomerController {
 	@RequestMapping(path = "/item/list/saleDesc", method = RequestMethod.GET)
 	public String showItemListSaleDesc(Integer categoryId, Model model, Pageable pageable) {
 
-		//			System.out.println(categoryId);
 		Page<Item> itemList = itemRepository.findBySaleItemsQuery(pageable);
-		//			Page<Item> itemList = itemRepository.findBySaleCategoryQuery(categoryId, pageable);
-		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
 
-		//			System.out.println(itemList);
-		//			System.out.println(itemBeanList.get(0).getName());
+		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
 
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("pages", itemList);
 		model.addAttribute("url", "/item/list/saleDesc");
 
-		//追加部分
-
 		model.addAttribute("sort", "saleDesc");
-
 
 		return "item/list/item_list";
 	}
@@ -213,11 +195,6 @@ public class ItemShowCustomerController {
 		model.addAttribute("pages", itemList);
 		model.addAttribute("url", "/item/list/priceAsc");
 
-		//追加部分
-
-		model.addAttribute("sort", "PriceAsc");
-
-		//追加部分
 		model.addAttribute("sort", "PriceAsc");
 
 		return "item/list/item_list";
@@ -234,15 +211,11 @@ public class ItemShowCustomerController {
 		model.addAttribute("pages", itemList);
 		model.addAttribute("url", "/item/list/priceDesc");
 
-		//追加部分
-
-		model.addAttribute("sort", "PriceDesc");
-
-		//追加部分
 		model.addAttribute("sort", "PriceDesc");
 
 		return "item/list/item_list";
 	}
+
 	//商品名検索
 	@RequestMapping(path = "/item/list/categoryName", method = RequestMethod.GET)
 	public String itemName(@ModelAttribute ItemBean itemBean, String categoryName, Model model,
@@ -251,7 +224,6 @@ public class ItemShowCustomerController {
 		Page<Item> itemList = itemRepository.findByDeleteFlagAndNameLike(Constant.NOT_DELETED, "%" + categoryName + "%",
 				pageable);
 
-		//		List<Item> itemNameList = itemRepository.findByNameLike("%" + categoryName + "%");
 		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("pages", itemList);
@@ -261,6 +233,5 @@ public class ItemShowCustomerController {
 		return "item/list/item_list";
 
 	}
-
 
 }
