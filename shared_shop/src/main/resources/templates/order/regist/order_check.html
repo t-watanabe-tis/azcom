@@ -90,7 +90,14 @@
 					<caption class="table_caption">お支払い方法</caption>
 					<tr>
 						<th>お支払い方法</th>
-						<td><span th:text="${order.payMethod}"> </span></td>
+						<td><span th:switch="${order.payMethod}">
+						<span th:case="1">クレジットカード</span>
+						<span th:case="2">銀行振り込み</span>
+						<span th:case="3">着払い</span>
+						<span th:case="4">電子マネー</span>
+						<span th:case="5">コンビニ決済</span></td>
+						<!-- <td><span th:text="${order.payMethod}"> -->
+						</span></td>
 					</tr>
 				</table>
 
@@ -112,9 +119,10 @@
 					 <input type="hidden" name="" th:value="${itemForm.image}">
 					 <input type="hidden" name="" th:value="${itemForm.price}">
 					 <input type="hidden" name="" th:value="${itemForm.quantityInBasket}"> -->
-				<div th:unless="${order.id == 0}">
+				<!-- <div th:unless="${order.id == 0}"> -->
+					<div th:if="${#lists.isEmpty(session.basket)}">
 					<input th:if="${duplicatedOrder == null}" class="send_button" type="submit" value="ご注文の確定" />
-				</div>
+					</div>
 			</form></td>
 			<td><form method="post" action="/shared_shop/payment/input" class="update">
 					<input type="hidden" name="id" th:value="${order.id}" />
