@@ -10,10 +10,10 @@
 	<div>
 		<div>
 			<a th:href="@{/item/list}">新着順</a>
-			<a th:href="@{/item/list/saleDesc/{categoryId}(categoryId=${categoryId})}">売れ筋順</a>
+			<a th:href="@{/item/list/saleDesc/(categoryId=${categoryId})}">売れ筋順</a>
 			<!-- <a th:href="@{/item/list/priceAsc/(categoryId=${categoryId})}">売れ筋順</a> -->
-			<a th:href="@{/item/list/priceDesc/{categoryId}(categoryId=${categoryId})}">価格が高い順</a>
-			<a th:href="@{/item/list/priceAsc/{categoryId}(categoryId=${categoryId})}">価格が低い順</a>
+			<a th:href="@{/item/list/priceDesc/(categoryId=${categoryId})}">価格が高い順</a>
+			<a th:href="@{/item/list/priceAsc/(categoryId=${categoryId})}">価格が低い順</a>
 		</div>
 
 		<table class="list_table item_list"  th:if="!${#lists.isEmpty(items)}">

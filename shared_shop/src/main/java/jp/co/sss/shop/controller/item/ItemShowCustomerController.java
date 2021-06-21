@@ -129,19 +129,8 @@ public class ItemShowCustomerController {
 
 		if (sorted.equals("saleDesc")) {
 
-
-			ArrayList<ItemBean> ItemBeansort = new ArrayList<>();
-			ItemBeansort.addAll(itemBeanList);
-			Collections.sort(ItemBeansort, new Comparator<ItemBean>() {
-				@Override
-				public int compare(ItemBean ItemBeanFirst, ItemBean ItemBeanSecond) {
-					return ItemBeanSecond.getCategoryId().compareTo(ItemBeanFirst.getCategoryId());
-				}
-			});
-			System.out.println(ItemBeansort);
-
-			itemBeanList =  ItemBeansort;
-
+			itemList = itemRepository.findBySumQuantityQuery(categoryId, pageable);
+			itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
 
 		}
 		if (sorted.equals("PriceAsc")) {
@@ -156,7 +145,7 @@ public class ItemShowCustomerController {
 			});
 			System.out.println(ItemBeansort);
 
-//			itemBeanList =  ItemBeansort;
+			//			itemBeanList =  ItemBeansort;
 
 		} else if (sorted.equals("PriceDesc")) {
 
@@ -170,10 +159,9 @@ public class ItemShowCustomerController {
 			});
 			System.out.println(ItemBeansort);
 
-			itemBeanList =  ItemBeansort;
+			itemBeanList = ItemBeansort;
 
 		}
-
 
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("pages", itemList);
