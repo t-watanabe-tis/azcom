@@ -109,7 +109,18 @@ public class BasketCustomerController {
 	public String deleteItem(ItemBean itemBean) {
 
 		List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
-		basket.remove(basket.indexOf(itemBean));
+		ItemBean itemInBasket = basket.get(basket.indexOf(itemBean));
+
+		//かごの商品数が１つの場合、バスケットリストから商品を削除
+		if(itemInBasket.getQuantityInBasket() == 1) {
+
+			basket.remove(basket.indexOf(itemBean));
+		}
+		//かごの商品数が２つ以上の場合、個数を１減らす
+		else if (itemInBasket.getQuantityInBasket() >= 2) {
+
+			itemInBasket.setQuantityInBasket(itemInBasket.getQuantityInBasket() - 1);
+		}
 
 		return "redirect:/basket/list";
 	}
