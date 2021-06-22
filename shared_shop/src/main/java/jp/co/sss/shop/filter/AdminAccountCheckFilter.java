@@ -18,7 +18,7 @@ import jp.co.sss.shop.util.URLCheck;
 
 /**
  * 管理者向けアクセス制限用フィルタ
- * 
+ *
  * @author System Shared
  */
 @Component
@@ -39,7 +39,7 @@ public class AdminAccountCheckFilter implements Filter {
 				if (user.getAuthority() == 1) {
 					// セッション情報を削除
 					session.invalidate();
-					
+
 					// レスポンス情報を取得
 					HttpServletResponse httpResponse = (HttpServletResponse) response;
 
@@ -58,7 +58,7 @@ public class AdminAccountCheckFilter implements Filter {
 
 	/**
 	 * リクエストURLがチェック対象であるかを判定
-	 * 
+	 *
 	 * @param requestURL リクエストURL
 	 * @return true：チェック対象、false：チェック対象外
 	 */
@@ -67,6 +67,7 @@ public class AdminAccountCheckFilter implements Filter {
 		String requestURL = httpRequest.getRequestURI();
 
 		if (!URLCheck.checkURLForStaticFile(requestURL)
+				//下記のURLが含まれていない場合、フィルタを実行（ログイン画面にリダイレクト）
 				&& requestURL.indexOf("/login") == -1
 				&& requestURL.indexOf("/admin") == -1
 				&& requestURL.indexOf("/category") == -1
@@ -75,6 +76,7 @@ public class AdminAccountCheckFilter implements Filter {
 				&& requestURL.indexOf("/item/update") == -1
 				&& requestURL.indexOf("/item/delete") == -1
 				&& requestURL.indexOf("/logout") == -1) {
+
 			// URLのリクエスト先がフィルタ実行対象である場合
 			return true;
 		} else {

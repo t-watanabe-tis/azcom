@@ -67,7 +67,6 @@ public class SystemAdminAccountCheckFilter implements Filter {
 		String requestURL = httpRequest.getRequestURI();
 
 		if (!URLCheck.checkURLForStaticFile(requestURL)
-				//以下の文字列を含んだリクエストに対してフィルターを実行
 				&& requestURL.indexOf("/login") == -1
 				&& requestURL.indexOf("/admin") == -1
 				&& requestURL.indexOf("/user/list") == -1
