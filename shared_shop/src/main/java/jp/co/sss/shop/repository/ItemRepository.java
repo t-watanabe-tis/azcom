@@ -45,21 +45,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	public Page<Item> findByDeleteFlagOrderByPriceDescIdAsc(int deleteFlag, Pageable pageable);
 
 	//売れ筋順の表示
-
-	/*
-	 *SELECT items.id, items.name, items.image, items.price, items.stock, SUM(order_items.quantity)
-	FROM items
-	INNER JOIN categories
-	ON items.category_id = categories.id
-	INNER JOIN order_items
-	ON items.id = order_items.item_id
-	WHERE categories.id = items.category_id
-	GROUP BY items.id, items.name, items.image, items.price, items.stock,
-	order_items.quantity
-	ORDER BY SUM(order_items.quantity) DESC;
-	 */
-
-
 	//売れ筋順(トップ画面用)
 	@Query("SELECT new Item(i.id, i.name, i.price, i.description, i.image, c.name) "
 			+ "FROM Item i INNER JOIN i.category c INNER JOIN i.orderItemList o "
@@ -67,7 +52,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 			+ "ORDER BY SUM(o.quantity) DESC")
 	public Page<Item> findBySaleItemsQuery(Pageable pageable);
 
-
+	//売れ筋順(リンク用)
 	@Query("SELECT new Item(i.id, i.name, i.price, i.description, i.image, c.name) "
 			+ "FROM Item i INNER JOIN i.category c INNER JOIN i.orderItemList o "
 			+ "WHERE c.id = :categoryId "
@@ -76,17 +61,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 public Page<Item> findBySumQuantityQuery(@Param("categoryId") Integer categoryId,
 			Pageable pageable);
 
-
-	/**SELECT items.id, items.name, items.image, items.price, items.stock
-	FROM items
-	INNER JOIN categories
-	ON items.category_id = categories.id
-	INNER JOIN order_items
-	ON items.id = order_items.item_id
-	WHERE categories.id = items.category_id
-	GROUP BY items.id, items.name, items.image, items.price, items.stock,
-	order_items.quantity
-	ORDER BY items.price ASC; */
-
 	public List<Item> findByCategoryId(Integer tergetCategoryid);
+
+
+	public List<Item> findByIdNotAndCategoryId(Integer id, Integer categoryId);
 }

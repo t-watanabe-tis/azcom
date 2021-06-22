@@ -10,7 +10,7 @@
 	<h2 class="title" >商品一覧</h2>
 	<div>
 		<div>
-			<a th:href="@{/item/list}">新着順</a>
+			<a th:href="@{/item/list/(categoryId=${categoryId})}">新着順</a>
 			<a th:href="@{/item/list/saleDesc/(categoryId=${categoryId})}">売れ筋順</a>
 			<a th:href="@{/item/list/priceDesc/(categoryId=${categoryId})}">価格が高い順</a>
 			<a th:href="@{/item/list/priceAsc/(categoryId=${categoryId})}">価格が低い順</a>
@@ -26,7 +26,7 @@
 			<!--/* 商品情報 */-->
 			<tr th:each="item: ${items}" >
 				<td><span th:if="${item.image}">
-				 <img th:src="${item.image}"width="25%" height="auto"></img>
+				 <img th:src="${item.image}"width="25%" height="auto"border="1"></img>
 
 				</span></td>
 				<td><a th:href="@{/item/detail/{id}(id=${item.id})}"

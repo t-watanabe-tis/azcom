@@ -2,7 +2,7 @@
 
 body {
 	color: #12526d;
-	font-size: 14px;
+	font-size: 16px;
 
 }
 
@@ -10,6 +10,7 @@ body {
 .container .text {
 	font-weight: bold;
 	clear: both;
+
 }
 
 p {
@@ -49,6 +50,7 @@ p {
 .main .page_title {
 	padding-left: 10px;
 	float: left;
+
 }
 
 /* ---- 社員登録入力画面へのリンク ---- */
@@ -68,7 +70,7 @@ p {
 
 /* ---- ボタン(機能呼出) ---- */
 [type=submit].menu_button {
-	width: 120px;
+	width: auto;
 	height: 35px;
 	border-width: 1px;
 	border-style: solid;
@@ -185,6 +187,7 @@ p {
 	width: 55%;
 	text-align: left;
 	padding: 10px 5px;
+
 }
 
 .user_info_form_area,
@@ -579,6 +582,7 @@ select {
 /* ---- 注文詳細 ---- */
 .list_table .total {
 	font-weight: bold;
+
 }
 
 /* ---- 注文最終確認 ---- */
@@ -603,6 +607,7 @@ select {
 /* ---- 買物カゴ ---- */
 .list_table.basket th:first-of-type {
 	width: 45%;
+
 }
 .list_table.basket th:last-of-type {
 	width: 42%;
@@ -707,13 +712,18 @@ p.link_center {
 	color: #FF0000;
 }
 .fit {
-  background: #c0c0c0;
-  width: 250px;
+  background: #add8e6;
+  width: auto;
   padding:1.0rem;
+  border: 4px solid #5fb4d9;
+  border-image: linear-gradient(to right, #5fb4d9 0%, #7fffd4 100%);
+  border-image-slice: 1;
+
 }
 
 .fit__img {
-  width: 100%;
+  width: 25%;
+
 }
 
 
@@ -721,19 +731,23 @@ p.link_center {
 .fit__name {
   padding:0.5rem 0 .2rem;
   font-weight:bold;
-  font-size:1.0rem;
+  font-size:1.1rem;
   letter-spacing:.1rem;
   color: #000040;
 font-family: 'Century Gothic';
+
 }
 .fit__desc {
   padding:0.5rem 0 .2rem;
   line-height:1.3rem;
 
    letter-spacing:.1rem;
-   font-size:1.0rem;
-
+   font-size:0.4rem;
 
 }
+
+
+
+
 
 

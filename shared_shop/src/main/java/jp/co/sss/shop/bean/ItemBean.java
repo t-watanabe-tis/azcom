@@ -1,5 +1,7 @@
 package jp.co.sss.shop.bean;
 
+import java.util.Date;
+
 /**
  * 商品情報クラス
  *
@@ -10,59 +12,50 @@ public class ItemBean {
 	/**
 	 * 商品ID
 	 */
-	private Integer	id;
+	private Integer id;
 
 	/**
 	 * 商品名
 	 */
-	private String	name;
+	private String name;
 
 	/**
 	 * 価格
 	 */
-	private Integer	price;
+	private Integer price;
 
 	/**
 	 * 商品説明
 	 */
-	private String	description;
+	private String description;
 
 	/**
 	 * 在庫数
 	 */
-	private Integer	stock;
+	private Integer stock;
 
 	/**
 	 * 商品画像ファイル名
 	 */
-	private String	image;
+	private String image;
 
 	/**
 	 * カテゴリID
 	 */
-	private Integer	categoryId;
+	private Integer categoryId;
 
 	/**
 	 * カテゴリ名
 	 */
-	private String	categoryName;
+	private String categoryName;
 
+	/**
+	 * 登録日
+	 */
+
+	private Date InsertDate;
 
 	private Integer quantityInBasket;
-
-
-	private Integer SumQuantity;
-
-
-
-
-	public Integer getSumQuantity() {
-		return SumQuantity;
-	}
-
-	public void setSumQuantity(Integer sumQuantity) {
-		SumQuantity = sumQuantity;
-	}
 
 	public Integer getQuantityInBasket() {
 		return quantityInBasket;
@@ -136,23 +129,23 @@ public class ItemBean {
 		this.categoryName = categoryName;
 	}
 
+	public Date getInsertDate() {
+		return InsertDate;
+	}
+
+	public void setInsertDate(Date insertDate) {
+		InsertDate = insertDate;
+	}
 
 	//商品idと商品名が一致していれば等価
 	@Override
 	public boolean equals(Object obj) {
 
-		if(obj instanceof ItemBean) {
+		if (obj instanceof ItemBean) {
 			ItemBean other = (ItemBean) obj;
 			return other.getId() == this.getId() && other.getName().equals(this.getName());
 		}
 		return false;
 	}
-
-	@Override
-	public String toString() {
-		return "id=" + id + ", name=" + name + ", price=" + price;
-	}
-
-
 
 }

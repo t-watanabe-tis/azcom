@@ -13,7 +13,7 @@
 
 
 			<a th:href="@{/item/detail/{id}(id=${item.id})}"> <img
-				th:src="${item.image}" width="30%" height="auto"class="fit__img" />
+				th:src="${item.image}" width="30%" height="auto"class="fit__img" border="1"/>
 			</a>
 			 <font size="4.0"><div th:text="${item.name}"class="fit__name" ></div></font>
           <td th:text="${item.description}"class="fit__desc"></td>

@@ -30,12 +30,9 @@
 					<span class="input_value" th:text="${user.phoneNumber}"></span>
 				</li>
 				<li>
-					<span class="input_title">権限</span>
-					<span  class="input_value" th:switch="${user.authority}">
-						<span th:case="0">システム管理者</span>
-						<span th:case="1">運用管理者</span>
-						<span th:case="2">一般会員</span>
-					</span>
+
+
+
 				</li>
 			</ul>
 		</div>
@@ -53,7 +50,7 @@
 			</form>
 			<form th:action="@{/user/delete/check}" method="post" th:if="${user.authority != 0}" >
 				<input type="hidden" name="id" th:value="${user.id}" />
-				<input type="submit" value="削除" class="delete" />
+				<input type="submit" value="退会" class="delete" />
 			</form>
 		</div>
 </body>
