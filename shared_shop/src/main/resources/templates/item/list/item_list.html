@@ -5,16 +5,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
-	<script type="text/javascript" th:src="@{js/sort-link.js}"></script>
+<body >
+<script type="text/javascript" th:src="@{/js/sort-link.js}"></script>
+
 	<h2 class="title" >商品一覧</h2>
 	<div>
 		<div>
-			<a th:href="@{/item/list/(categoryId=${categoryId})}">新着順</a>
-			<a th:href="@{/item/list/saleDesc/(categoryId=${categoryId})}">売れ筋順</a>
-			<a th:href="@{/item/list/priceDesc/(categoryId=${categoryId})}">価格が高い順</a>
-			<a th:href="@{/item/list/priceAsc/(categoryId=${categoryId})}">価格が低い順</a>
+			<a id="newArrivals" th:href="@{/item/list/(categoryId=${categoryId})}">新着順</a>
+			<a id="saleDescLink" th:href="@{/item/list/saleDesc/(categoryId=${categoryId})}">売れ筋順</a>
+			<a id="priceDescLink" th:href="@{/item/list/priceDesc/(categoryId=${categoryId})}">価格が高い順</a>
+			<a id="priceAscLink" th:href="@{/item/list/priceAsc/(categoryId=${categoryId})}">価格が低い順</a>
 		</div>
+
 
 		<table class="list_table item_list"  th:if="!${#lists.isEmpty(items)}">
 			<tr>
@@ -57,6 +59,7 @@
 	<div th:unless="!${#lists.isEmpty(items)}">
 		<p>閲覧できる商品情報がありません。</p>
 	</div>
+
 
 </body>
 </html>
