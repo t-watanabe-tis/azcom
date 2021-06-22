@@ -286,7 +286,7 @@ p {
 	line-height: 2.8rem;
 	min-width: 7rem;
 	margin-right: 20px;
-	font-size: 0.7rem;
+	font-size: 1rem;
 }
 .user_info_form_area .send_button,
 .item_info_form_area .send_button {
@@ -731,7 +731,7 @@ p.link_center {
 .fit__name {
   padding:0.5rem 0 .2rem;
   font-weight:bold;
-  font-size:0.8rem;
+  font-size:1.1rem;
   letter-spacing:.1rem;
   color: #000040;
 font-family: 'Century Gothic';
@@ -742,7 +742,7 @@ font-family: 'Century Gothic';
   line-height:1.3rem;
 
    letter-spacing:.1rem;
-   font-size:0.5rem;
+   font-size:0.4rem;
 
 }
 

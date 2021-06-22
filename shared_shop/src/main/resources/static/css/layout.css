@@ -88,7 +88,7 @@ li {
 body > .container {
 	 margin: 0;
   width:100%;                              /* 横幅のサイズを指定    */
-    height:700px;
+    height:500px;
   background-image:
     linear-gradient(140deg,
       #00f3ffA0,
@@ -101,7 +101,7 @@ body > .container {
   background-attachment: fixed;
   background-size: over;
   animation: move 17s infinite both;
-  overflow: hidden;
+  overflow: visible;
   font-size: 20 px;
 
 }
@@ -343,6 +343,7 @@ aside.admin_menu {
 .admin_menu .main {
 	width: 100%;
 	float: none;
+
 }
 
 .user .main .title,
