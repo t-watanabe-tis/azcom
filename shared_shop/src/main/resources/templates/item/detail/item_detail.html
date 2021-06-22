@@ -63,16 +63,13 @@
 
 	<form action="/item/detail/{id}">
 
-		<h3>商品関連:</h3>
-		<tr>
-			<th>商品名:</th>
-		</tr>
+		<br/><h3>商品関連:</h3>
+
 		<tr th:each="item: ${targetItem}">
 		<a th:href="@{/item/detail/{id}(id=${item.id})}"> <img
-				th:src="${item.image}"width="25%" height="200%"></img>
+				th:src="${item.image}"width="25%" height="25%"></img>
 			</a>
-			<td><a th:href="@{/item/detail/{id}(id=${item.id})}"
-				th:text="${item.name}"></a></td>
+			</tr>
 	</form>
 
 
