@@ -69,13 +69,23 @@ public class AdminAccountCheckFilter implements Filter {
 		if (!URLCheck.checkURLForStaticFile(requestURL)
 				//下記のURLが含まれていない場合、フィルタを実行（ログイン画面にリダイレクト）
 				&& requestURL.indexOf("/login") == -1
-				&& requestURL.indexOf("/admin") == -1
+//				&& requestURL.indexOf("/admin") == -1
 				&& requestURL.indexOf("/category") == -1
 				&& requestURL.indexOf("/user/list") == -1
+				&& requestURL.indexOf("/user/detail") == -1
+				&& requestURL.indexOf("/user/update/input/admin") == -1
+				&& requestURL.indexOf("/user/update/check/admin") == -1
+				&& requestURL.indexOf("/user/update/complete/admin") == -1
+				&& requestURL.indexOf("/order/list/admin") == -1
+				&& requestURL.indexOf("/order/detail/admin") == -1
 				&& requestURL.indexOf("/item/regist") == -1
+				&& requestURL.indexOf("/item/list/admin") == -1
+				&& requestURL.indexOf("/item/detail/admin") == -1
 				&& requestURL.indexOf("/item/update") == -1
 				&& requestURL.indexOf("/item/delete") == -1
-				&& requestURL.indexOf("/logout") == -1) {
+				&& requestURL.indexOf("/logout") == -1
+				)
+		{
 
 			// URLのリクエスト先がフィルタ実行対象である場合
 			return true;
