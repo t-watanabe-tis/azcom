@@ -65,7 +65,6 @@ public class LoginCheckFilter implements Filter {
 				&& requestURL.indexOf("/item/list/") == -1
 				&& requestURL.indexOf("/item/detail/") == -1
 				&& requestURL.indexOf("/item/list") == -1
-				&& requestURL.indexOf("/js") == -1
 				&& !requestURL.endsWith("/user/regist/input")
 				&& !requestURL.endsWith("/user/regist/check")
 				&& !requestURL.endsWith("/user/regist/complete")) {
