@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
+    th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
 <head>
 <title>トップ | シェアードショップ</title>
 <meta charset="UTF-8" />
@@ -13,9 +13,12 @@
 
 
 			<a th:href="@{/item/detail/{id}(id=${item.id})}"> <img
-				th:src="${item.image}" width="30%" height="auto"class="fit__img" border="1"/>
+				th:src="${item.image}"width="25%" height="200%"border="1"></img>
 			</a>
-			 <font size="4.0"><div th:text="${item.name}"class="fit__name" ></div></font>
+			<td><a th:href="@{/item/detail/{id}(id=${item.id})}"
+				th:text="${item.name}"></a>&nbsp;:&nbsp;
+
+
           <td th:text="${item.description}"class="fit__desc"></td>
 		</div>
 	</article>

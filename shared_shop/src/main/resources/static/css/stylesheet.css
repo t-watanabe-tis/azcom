@@ -146,6 +146,7 @@ p {
 	position: relative;
 	z-index: 1;
 
+
 }
 
 .item:hover img {
@@ -327,23 +328,29 @@ p {
 	display: block;
 	width: 100%;
 	margin-top:60px;
+
+
 }
 .detail_button_area form{
 	display: inline-block;
-	width:33%;
+	width:30%;
 	margin-left:-1%;
 	text-align: center;
+	font-size: 0.8em;
 }
 .detail_button_area form:first-of-type{
 	text-align: right;
+	text-align: center;
 }
 .detail_button_area form:last-of-type{
 	text-align: left;
+	text-align: center;
 }
 .detail_button_area [type="submit"]{
-	padding: 0.6em 1.8em;
-	font-size: 1.0em;
+	padding: auto ;
+	font-size: 0.8em;
 	text-align: center;
+	width: 30%;
 }
 .card_info {
 	padding-top: 10px;

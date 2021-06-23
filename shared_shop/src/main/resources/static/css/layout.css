@@ -79,6 +79,14 @@ li {
 	float: none;
 	font-size: 50 px;
 }
+
+.container admin{
+	width: 87%;
+	margin: 0 auto;
+	overflow: hidden;
+	float: none;
+	font-size: 50 px;
+}
  body::-webkit-scrollbar {
     display:none;
 
@@ -88,7 +96,7 @@ li {
 body > .container {
 	 margin: 0;
   width:100%;                              /* 横幅のサイズを指定    */
-    height:500px;
+    height:600px;
   background-image:
     linear-gradient(140deg,
       #00f3ffA0,
@@ -98,10 +106,10 @@ body > .container {
     url("https://beiz.jp/images_T/water/water_00001.jpg");
   background-repeat: no-repeat;
   background-position:  center;
-  background-attachment: fixed;
+
   background-size: over;
   animation: move 17s infinite both;
-  overflow: visible;
+  overflow: scroll;
   font-size: 20 px;
 
 }
@@ -257,7 +265,7 @@ header {
 	border: 1px solid #5fb4d9;
 	text-align: center;
 	text-decoration: none;
-	background: #fff;
+	background: #d5d5d5;
 	transition: 0.18s;
 }
 .navi_menu a:hover {
@@ -285,10 +293,11 @@ aside.admin_menu {
 .admin_menu .title {
 	border-radius: 6px 6px 0 0;
 	text-align: center;
-	font-size: 1.2rem;
+	font-size: 1.5rem;
 }
 .admin_menu .title {
 	background: #ff6c49;
+	width: 90%;
 }
 .search .form {
 	padding: 50px 0 100px 0px;
@@ -350,7 +359,7 @@ aside.admin_menu {
 .admin .main .title {
 	padding: 8px 15px;
 	position: relative;
-	font-size: 2rem;
+	font-size: 1.5rem;
 	}
 .main .title::before,
 .admin .main .title::before {
@@ -434,7 +443,7 @@ aside.admin_menu {
  * footer要素は画面、もしくはページの最下部に表示されるようになります。
  */
 footer {
-	background-color: #87ceeb;
+	background: #87ceeb;
 	text-align: center;
 	position: absolute;
 	bottom: 0;
