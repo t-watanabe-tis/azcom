@@ -67,10 +67,13 @@ public class SystemAdminAccountCheckFilter implements Filter {
 		String requestURL = httpRequest.getRequestURI();
 
 		if (!URLCheck.checkURLForStaticFile(requestURL)
-				//以下の文字列を含んだリクエストに対してフィルターを実行
 				&& requestURL.indexOf("/login") == -1
-				&& requestURL.indexOf("/admin") == -1
+//				&& requestURL.indexOf("/admin") == -1
 				&& requestURL.indexOf("/user/list") == -1
+				&& requestURL.indexOf("/user/detail/admin") == -1
+				&& requestURL.indexOf("/user/update/input/admin") == -1
+				&& requestURL.indexOf("/user/update/check/admin") == -1
+				&& requestURL.indexOf("/user/update/complete/admin") == -1
 				&& requestURL.indexOf("/logout") == -1) {
 			// URLのリクエスト先がフィルタ実行対象である場合
 			return true;
