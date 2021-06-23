@@ -81,11 +81,11 @@ public class LoginController {
 
 				model.addAttribute("saleItems", sale);
 
-				return "/index";
+				return "redirect:/";
 			} else {
 				// 運用管理者、もしくはシステム管理者としてログインした場合、管理者用メニュー画面に遷移
 				return "admin_menu";
 			}
 		}
 	}
-}
+ }
