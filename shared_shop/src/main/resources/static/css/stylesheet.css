@@ -276,7 +276,7 @@ p {
 	display: list-item;
 	line-height: 0.9em;
 	font-size: 0.9rem;
-	list-style-type: disc;
+	list-style-type: none;
 	color:#C00;
 	text-align: center;
 }
