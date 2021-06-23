@@ -104,16 +104,14 @@ public class UserRegistCustomerController {
 
 		// 会員情報を保存
 		user.setAuthority(2);
+		userRepository.save(user);
 
 
-
-
-
-
+		// セッションスコープにログインしたユーザの情報を登録
 			BeanUtils.copyProperties(user, userBean);
 
-			// セッションスコープにログインしたユーザの情報を登録
 			userBean.setAuthority(2);
+			userBean.setId(user.getId());
 			session.setAttribute("user", userBean);
 
 			// セッションスコープに買い物かごを初期化
