@@ -59,15 +59,20 @@ public class LoginCheckFilter implements Filter {
 		// リクエストURLを取得
 		String requestURL = httpRequest.getRequestURI();
 
+//		System.out.println(requestURL.indexOf("/item/list/admin") != -1);
+//		System.out.println(requestURL.indexOf("/item/detail/admin") != -1);
 		if (!URLCheck.checkURLForStaticFile(requestURL)
 				&& !requestURL.endsWith("/login")
 				&& !requestURL.endsWith(httpRequest.getContextPath() + "/")
+				&& requestURL.indexOf("/item/list/admin") != -1
+				&& requestURL.indexOf("/item/detail/admin") != -1
 				&& requestURL.indexOf("/item/list/") == -1
 				&& requestURL.indexOf("/item/detail/") == -1
 				&& requestURL.indexOf("/item/list") == -1
 				&& !requestURL.endsWith("/user/regist/input")
 				&& !requestURL.endsWith("/user/regist/check")
-				&& !requestURL.endsWith("/user/regist/complete")) {
+				&& !requestURL.endsWith("/user/regist/complete")
+				) {
 			// URLのリクエスト先がフィルタ実行対象である場合
 			return true;
 		} else {

@@ -138,7 +138,7 @@ public class OrderRegistCustomerController {
 	//支払方法選択画面から注文登録確認画面
 	@RequestMapping(path = "/order/check", method = RequestMethod.POST)
 	//	public String checkOrder(@ModelAttribute ItemForm itemForm, BindingResult result, UserForm form, boolean backFlg, Model model) {
-	public String checkOrder(@Valid UserForm form, BindingResult result, Model model) {
+	public String checkOrder(UserForm form, Model model) {
 
 //		System.out.println(result.hasErrors());
 		System.out.println(form.getPayMethod());
@@ -270,8 +270,8 @@ public class OrderRegistCustomerController {
 		else {
 
 			model.addAttribute("duplicatedOrder", true);
-//			return checkOrder(userForm, model);
-			return "order/regist/order_check";
+			return checkOrder(userForm, model);
+//			return "order/regist/order_check";
 		}
 
 
@@ -279,7 +279,8 @@ public class OrderRegistCustomerController {
 
 	}
 
-	@RequestMapping(path = "/order/complete")
+	//リダイレクト用
+	@RequestMapping(path = "/order/complete", method = RequestMethod.GET)
 	public String showOrderComp() {
 		return "order/regist/order_complete";
 	}
