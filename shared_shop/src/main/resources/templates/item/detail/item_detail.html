@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-
-    th:replace="~{common/layout_5block :: layout(~{::body/content()})}">
-
+    th:replace="~{common/layout_5block :: layout(~{::title},~{::body/content()})}">
 <head>
 
 <title>商品詳細 | シェアードショップ</title>

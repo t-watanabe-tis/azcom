@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    th:fragment="layout(body)">
+	th:fragment="layout(title,body)">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
 <link rel="stylesheet" type="text/css" th:href="@{/css/stylesheet.css}" />
 
-<title>シェアードショップ</title>
+<title th:replace="${title}"></title>
 </head>
 <body>
 	<!--/* ヘッダー */-->
