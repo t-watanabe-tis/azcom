@@ -25,6 +25,8 @@
 			</tr>
 			<!--/* 商品情報 */-->
 			<tr th:each="item: ${items}">
+			<td><span th:if="${item.image}">
+				 <img th:src="${item.image}"width="25%" height="auto"border="1"></img>
 				<td th:text="${item.id}"></td>
 				<td><a th:href="@{/item/detail/admin/{id}(id=${item.id})}"
 					th:text="${item.name}"></a></td>
@@ -61,6 +63,6 @@
 			</li>
 		</ul>
 
-	
+
 </body>
 </html>
