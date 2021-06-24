@@ -317,6 +317,7 @@ p {
   justify-content: space-evenly;
   display:inline-block;
 
+
 }
 .order_check .user_info_form_area {
 	width: 80%;
@@ -755,7 +756,12 @@ font-family: 'Century Gothic';
 
 }
 
-
+[type=submit]:active {
+  /*ボタンを押したとき*/
+  -webkit-transform: translateY(4px);
+  transform: translateY(2px);/*下に動く*/
+  border-bottom: none;/*線を消す*/
+}
 
 
 

@@ -13,7 +13,7 @@
 html {
 	min-height: 100%;
 	position: relative;
-	scroll-behavior: smooth;
+
 }
 
 /* スキルアップテクニック1-2
@@ -22,7 +22,21 @@ html {
  */
 body {
 	margin: 0 0 30px;
-	padding: 0;
+	padding: 0; width:100%;                              /* 横幅のサイズを指定    */
+    height:auto;
+  background-image:
+    linear-gradient(140deg,
+      #00f3ffA0,
+      #0028b960 40%,
+      #00f3ff60 60%,
+      #00f3ffA0),
+    url("https://beiz.jp/images_T/water/water_00001.jpg");
+  background-repeat: no-repeat;
+ background-attachment: fixed;
+background-position: center;
+
+  background-size: 100% 750px;
+  animation: move 17s infinite both;
 
 }
 
@@ -75,6 +89,7 @@ li {
 
 .container {
 	width: 87%;
+ background-attachment: fixed;
 	margin: 0 auto;
 	overflow: hidden;
 	float: none;
@@ -97,7 +112,7 @@ li {
 body > .container {
 	 margin: 0;
   width:100%;                              /* 横幅のサイズを指定    */
-    height:600px;
+    height:auto;
   background-image:
     linear-gradient(140deg,
       #00f3ffA0,
@@ -106,11 +121,12 @@ body > .container {
       #00f3ffA0),
     url("https://beiz.jp/images_T/water/water_00001.jpg");
   background-repeat: no-repeat;
-  background-position:  center;
+ background-attachment: fixed;
+background-position: center;
 
-  background-size: over;
+  background-size: 100% 750px;
   animation: move 17s infinite both;
-  overflow: hidden;
+
   font-size: 20 px;
 
 }
@@ -142,9 +158,9 @@ header {
 
 }
 .admin header {
-	background: linear-gradient(to bottom, #ff7f50 0%, #dc143c 100%);
-  opacity: 0.5;
-  animation: huerotator 3s infinite alternate;
+	background: linear-gradient(-50deg, #ffa07a, #ff6347);
+	padding: 10px 0;
+
 }
 
 /* スキルアップテクニック4
