@@ -28,12 +28,6 @@
 				th:text="#{orderCheck.duplicatedOrder}"></p>
 
 
-
-			<!-- 注文時点で在庫数＜注文数の場合に出力されるメッセージ
-			<div th:if="${orverStockItemName != null}">
-				<p th:text="${orverStockItemName} +  #{orderStock.itemStockShortage}"></p>
-			</div> -->
-
 			<!-- 在庫がある場合 -->
 			<div th:unless="${#lists.isEmpty(session.basket)}">
 
@@ -100,35 +94,16 @@
 							th:case="1">クレジットカード</span> <span th:case="2">銀行振り込み</span> <span
 							th:case="3">着払い</span> <span th:case="4">電子マネー</span> <span
 							th:case="5">コンビニ決済</span></td>
-					<!-- <td><span th:text="${order.payMethod}"> -->
 					</span>
 					</td>
 				</tr>
 			</table>
-
-			<!-- <form method="post" action="/shared_shop/order/complete" onsubmit="return checkSubmit()"> -->
 
 			<table>
 				<td>
 					<form method="post" action="/shared_shop/order/complete"
 						onsubmit="return checkSubmit()">
 
-						<!-- <input type="hidden" name="deleteFlag" th:value="*{deleteFlag}">
-
-						<input type="hidden" name="id" th:value="${order.id}" /> <input
-							type="hidden" name="postalCode" th:value="${order.postalCode}" />
-						<input type="hidden" name="address" th:value="${order.address}" />
-						<input type="hidden" name="name" th:value="${order.name}" /> <input
-							type="hidden" name="phoneNumber" th:value="${order.phoneNumber}" />
-						<input type="hidden" name="payMethod"
-							th:value="${order.payMethod}" /> <input type="hidden"
-							name="token" th:value="${token}"> -->
-
-						<!-- <input type="hidden" name="name" th:value="${itemForm.name}">
-					 <input type="hidden" name="" th:value="${itemForm.image}">
-					 <input type="hidden" name="" th:value="${itemForm.price}">
-					 <input type="hidden" name="" th:value="${itemForm.quantityInBasket}"> -->
-						<!-- <div th:unless="${order.id == 0}"> -->
 
 						<input type="hidden" name="postalCode" th:value="*{postalCode}">
 						<input type="hidden" name="address" th:value="*{address}">
@@ -146,16 +121,8 @@
 				</td>
 				<td><form method="post" action="/shared_shop/payment/input"
 						class="update">
-						<!--  <input type="hidden" name="id" th:value="${order.id}" /> <input
-							type="hidden" name="postalCode" th:value="${order.postalCode}" />
-						<input type="hidden" name="address" th:value="${order.address}" />
-						<input type="hidden" name="name" th:value="${order.name}" /> <input
-							type="hidden" name="phoneNumber" th:value="${order.phoneNumber}" />
-						<input type="hidden" name="payMethod"
-							th:value="${order.payMethod}" /> <input type="hidden"
-							name="backFlg" value="true" />  -->
 
-							<input type="hidden" name="postalCode" th:value="*{postalCode}">
+						<input type="hidden" name="postalCode" th:value="*{postalCode}">
 						<input type="hidden" name="address" th:value="*{address}">
 						<input type="hidden" name="name" th:value="*{name}">
 						<input type="hidden" name="phoneNumber" th:value="*{phoneNumber}">

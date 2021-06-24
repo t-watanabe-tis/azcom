@@ -31,6 +31,11 @@ import jp.co.sss.shop.repository.OrderItemRepository;
 import jp.co.sss.shop.repository.OrderRepository;
 import jp.co.sss.shop.repository.UserRepository;
 
+/**
+ * 注文登録コントロールクラス
+ *
+ * @author SystemShared
+ */
 @Controller
 public class OrderRegistCustomerController {
 
@@ -40,15 +45,23 @@ public class OrderRegistCustomerController {
 	@Autowired
 	OrderRepository orderRepository;
 
+	/**
+	 * ユーザー情報
+	 */
 	@Autowired
 	UserRepository userRepository;
 
+	/**
+	 * 商品情報
+	 */
 	@Autowired
 	ItemRepository itemRepository;
 
+	/**
+	 * 注文商品情報
+	 */
 	@Autowired
 	OrderItemRepository orderItemRepository;
-
 
 	/**
 	 * セッション
@@ -56,10 +69,15 @@ public class OrderRegistCustomerController {
 	@Autowired
 	HttpSession session;
 
-	//買い物かご画面から届け先入力画面
+	/**
+	 * 買い物かご処理
+	 *
+	 * @param orderForm　注文情報
+	 * @param backFlg　ページ遷移の真偽
+	 * @return"order/regist/order_address_input"届け先入力画面へ
+	 */
 	@RequestMapping(path = "/address/input", method = RequestMethod.POST)
 	public String inputAddress(@ModelAttribute OrderForm orderForm, boolean backFlg) {
-
 
 		if(!backFlg) {
 			UserBean userBean = (UserBean) session.getAttribute("user");
@@ -76,12 +94,16 @@ public class OrderRegistCustomerController {
 		return "order/regist/order_address_input";
 	}
 
-
-
-	//届け先入力画面
+	/**
+	 * 届け先入力処理
+	 *
+	 * @param orderForm　注文情報
+	 * @param result　入力チェックの結果
+	 * @param backFlg　ページ遷移の真偽
+	 * @return"order/regist/order_address_input"届け先入力画面へ
+	 */
 	@RequestMapping(path = "/address/input", method = RequestMethod.GET)
 	public String inputAddressRedirect(@Valid @ModelAttribute OrderForm orderForm, BindingResult result, boolean backFlg) {
-
 
 		if(!backFlg)  {
 
@@ -98,10 +120,14 @@ public class OrderRegistCustomerController {
 		return "order/regist/order_address_input";
 	}
 
-
-
-
-	//届け先入力画面から支払方法選択画面
+	/**
+	 * ページ遷移の真偽による届け先入力画面への処理
+	 *
+	 * @param orderForm　注文情報
+	 * @param result　入力チェックの結果
+	 * @param backFlg　ページ遷移の真偽
+	 * @return"order/regist/order_payment_input"支払選択画面へ
+	 */
 	@RequestMapping(path = "/payment/input", method = RequestMethod.POST)
 	public String inputPayment(@Valid @ModelAttribute OrderForm orderForm, BindingResult result, boolean backFlg) {
 
@@ -121,14 +147,15 @@ public class OrderRegistCustomerController {
 
 	}
 
-
-
-	//支払方法選択画面から注文登録確認画面
+	/**
+	 * 支払選択処理
+	 *
+	 * @param orderForm
+	 * @param model
+	 * @return"order/regist/order_check"注文確認画面へ
+	 */
 	@RequestMapping(path = "/order/check", method = RequestMethod.POST)
 	public String checkOrder(@ModelAttribute OrderForm orderForm, Model model) {
-
-		System.out.println(orderForm.getPayMethod());
-
 
 		//買い物かごの商品個数が在庫数を超過しているか判定
 		List<ItemBean> orverStockItems = new ArrayList<>();
@@ -150,7 +177,6 @@ public class OrderRegistCustomerController {
 			}
 		}
 
-
 		//在庫がない商品を買い物かごから削除
 		Iterator<ItemBean> iter = basket.iterator();
 		while(iter.hasNext()) {
@@ -161,7 +187,6 @@ public class OrderRegistCustomerController {
 			}
 		}
 
-
 		//買い物かご内商品の合計額を算出
 		int totalPrice = 0;
 		for(ItemBean ib: basket) {
@@ -169,7 +194,6 @@ public class OrderRegistCustomerController {
 			int s = ib.getQuantityInBasket() * ib.getPrice();
 			totalPrice += s;
 		}
-
 
 		//注文情報を一意に識別するトークンの生成
 		String toReturn = null;
@@ -180,12 +204,10 @@ public class OrderRegistCustomerController {
 			digest.update((new java.util.Date().toString() + randNum.toString()).getBytes());
 			toReturn = String.format("%04x", new BigInteger(1, digest.digest()));
 
-//			orderForm.setToken(toReturn);
 		} catch(Exception e) {
 
 			e.printStackTrace();
 		}
-
 
 		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("token", toReturn);
@@ -197,12 +219,15 @@ public class OrderRegistCustomerController {
 
 	}
 
-
-
-	//注文登録確認画面から注文登録完了画面
+	/**
+	 * 注文登録確認処理
+	 *
+	 * @param orderForm　ユーザー情報
+	 * @param model　viewとの値渡し
+	 * @return"redirect:/order/complete"注文登録完了画面へ
+	 */
 	@RequestMapping(path = "/order/complete", method = RequestMethod.POST)
 	public String completeOrder(OrderForm orderForm, Model model) {
-
 
 		//ダブルクリック対策機能の確認のため、2秒経過後に画面遷移するよう設定
 		try {
@@ -218,7 +243,6 @@ public class OrderRegistCustomerController {
 		if(orderList.isEmpty()) {
 
 			// ordersテーブルに登録
-			//			order.setId(form.getId());
 			order.setPostalCode(orderForm.getPostalCode());
 			order.setAddress(orderForm.getAddress());
 			order.setName(orderForm.getName());
@@ -227,7 +251,7 @@ public class OrderRegistCustomerController {
 			order.setUser(user);
 			order.setInsertDate(new Date(new java.util.Date().getTime()));
 			order.setToken(orderForm.getToken());
-			//			order.setOrderItemsList(orderItemList);
+
 			orderRepository.save(order);
 
 
@@ -244,32 +268,31 @@ public class OrderRegistCustomerController {
 				orderItem.setItem(i);
 				orderItem.setOrder(order);
 
-
 				//購入した商品数を在庫数に反映
 				itemRepository.updateStockById(item.getStock() - item.getQuantityInBasket(), item.getId());
-
 
 				orderItemRepository.save(orderItem);
 			}
 
 			//買い物かごの中身を空にする
 			basket.clear();
-			//			model.addAttribute("duplicatedOrder", false);
+
 			return "redirect:/order/complete";
 		}
 		else {
 
 			model.addAttribute("duplicatedOrder", true);
 			return checkOrder(orderForm, model);
-//			return "order/regist/order_check";
+
 		}
-
-
-
 
 	}
 
-	//リダイレクト用
+	/**
+	 * リダイレクト用注文確認処理
+	 *
+	 * @return"order/regist/order_complete"注文登録完了画面へ
+	 */
 	@RequestMapping(path = "/order/complete", method = RequestMethod.GET)
 	public String showOrderComp() {
 		return "order/regist/order_complete";
