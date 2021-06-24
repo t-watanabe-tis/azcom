@@ -65,6 +65,7 @@ public class UserDeleteCustomerController {
     */
    @RequestMapping(path = "/user/delete/complete", method = RequestMethod.GET)
    public String deleteCompleteRedirect(HttpSession session) {
+
       //セッションを切る
       session.invalidate();
       return "user/delete/user_delete_complete";

@@ -26,7 +26,6 @@ import jp.co.sss.shop.entity.Order;
 import jp.co.sss.shop.entity.OrderItem;
 import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.form.OrderForm;
-import jp.co.sss.shop.form.UserForm;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.repository.OrderItemRepository;
 import jp.co.sss.shop.repository.OrderRepository;
@@ -59,57 +58,42 @@ public class OrderRegistCustomerController {
 
 	//買い物かご画面から届け先入力画面
 	@RequestMapping(path = "/address/input", method = RequestMethod.POST)
-	public String inputAddress(@ModelAttribute UserForm form, boolean backFlg) {
+	public String inputAddress(@ModelAttribute OrderForm orderForm, boolean backFlg) {
 
 
 		if(!backFlg) {
 			UserBean userBean = (UserBean) session.getAttribute("user");
-			//			User user =  userRepository.getOne(userBean.getId());
 			User user =  userRepository.getOne(userBean.getId());
-			form.setId(user.getId());
-			form.setPostalCode(user.getPostalCode());
-			form.setAddress(user.getAddress());
-			form.setName(user.getName());
-			form.setPhoneNumber(user.getPhoneNumber());
 
-			form.setEmail(user.getEmail());
-			form.setPassword(user.getPassword());
-			form.setAuthority(user.getAuthority());
-			form.setDeleteFlag(user.getDeleteFlag());
-			/*form.setInsertDate(user.getInsertDate());*/
+			orderForm.setPostalCode(user.getPostalCode());
+			orderForm.setAddress(user.getAddress());
+			orderForm.setName(user.getName());
+			orderForm.setPhoneNumber(user.getPhoneNumber());
+			orderForm.setUserId(user.getId());
 
 		}
+
 		return "order/regist/order_address_input";
 	}
+
+
+
 	//届け先入力画面
 	@RequestMapping(path = "/address/input", method = RequestMethod.GET)
-	public String inputAddressRedirect(@Valid @ModelAttribute UserForm form, BindingResult result, boolean backFlg) {
+	public String inputAddressRedirect(@Valid @ModelAttribute OrderForm orderForm, BindingResult result, boolean backFlg) {
 
 
+		if(!backFlg)  {
 
-		if(backFlg) {
-			Order order = new Order();
-			order.setId(form.getId());
-		} else  {
-
-			//			UserBean userBean = (UserBean) session.getAttribute("user");
-			//			User user =  userRepository.getOne(userBean.getId());
 			UserBean userBean = (UserBean) session.getAttribute("user");
 			User user =  userRepository.getOne(userBean.getId());
-			form.setId(user.getId());
-			form.setPostalCode(user.getPostalCode());
-			form.setAddress(user.getAddress());
-			form.setName(user.getName());
-			form.setPhoneNumber(user.getPhoneNumber());
-
-			form.setEmail(user.getEmail());
-			form.setPassword(user.getPassword());
-			form.setAuthority(user.getAuthority());
-			form.setDeleteFlag(user.getDeleteFlag());
-
+			orderForm.setPostalCode(user.getPostalCode());
+			orderForm.setAddress(user.getAddress());
+			orderForm.setName(user.getName());
+			orderForm.setPhoneNumber(user.getPhoneNumber());
+			orderForm.setUserId(user.getId());
 
 		}
-
 
 		return "order/regist/order_address_input";
 	}
@@ -119,34 +103,37 @@ public class OrderRegistCustomerController {
 
 	//届け先入力画面から支払方法選択画面
 	@RequestMapping(path = "/payment/input", method = RequestMethod.POST)
-	public String inputPayment(@Valid @ModelAttribute UserForm form, BindingResult result, boolean backFlg, Model model) {
+	public String inputPayment(@Valid @ModelAttribute OrderForm orderForm, BindingResult result, boolean backFlg) {
 
-		System.out.println(result.hasErrors());
+		if(backFlg) {
 
-		if(result.hasErrors()) {
-			//				return "order/regist/order_address_input";
-			return inputAddress(form, !backFlg);
-		} else {
-
-			model.addAttribute("order", form);
 			return "order/regist/order_payment_input";
 		}
-		//				return "order/regist/order_payment_input";
+
+		if(result.hasErrors()) {
+
+			return inputAddress(orderForm, backFlg);
+		}
+		else {
+
+			return "order/regist/order_payment_input";
+		}
 
 	}
 
+
+
 	//支払方法選択画面から注文登録確認画面
 	@RequestMapping(path = "/order/check", method = RequestMethod.POST)
-	//	public String checkOrder(@ModelAttribute ItemForm itemForm, BindingResult result, UserForm form, boolean backFlg, Model model) {
-	public String checkOrder(UserForm form, Model model) {
+	public String checkOrder(@ModelAttribute OrderForm orderForm, Model model) {
 
-//		System.out.println(result.hasErrors());
-		System.out.println(form.getPayMethod());
+		System.out.println(orderForm.getPayMethod());
 
 
 		//買い物かごの商品個数が在庫数を超過しているか判定
 		List<ItemBean> orverStockItems = new ArrayList<>();
 		List<ItemBean> zeroStockItems = new ArrayList<>();
+
 		List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
 		for(ItemBean item: basket) {
 
@@ -175,15 +162,14 @@ public class OrderRegistCustomerController {
 		}
 
 
-
-
-		//買い物かご内商品の合計額
+		//買い物かご内商品の合計額を算出
 		int totalPrice = 0;
 		for(ItemBean ib: basket) {
 
 			int s = ib.getQuantityInBasket() * ib.getPrice();
 			totalPrice += s;
 		}
+
 
 		//注文情報を一意に識別するトークンの生成
 		String toReturn = null;
@@ -194,49 +180,53 @@ public class OrderRegistCustomerController {
 			digest.update((new java.util.Date().toString() + randNum.toString()).getBytes());
 			toReturn = String.format("%04x", new BigInteger(1, digest.digest()));
 
+//			orderForm.setToken(toReturn);
 		} catch(Exception e) {
 
 			e.printStackTrace();
 		}
 
+
 		model.addAttribute("totalPrice", totalPrice);
 		model.addAttribute("token", toReturn);
 		model.addAttribute("orverStockItems", orverStockItems);
 		model.addAttribute("zeroStockItems", zeroStockItems);
-		model.addAttribute("order", form);
+		model.addAttribute("order", orderForm);
 
 		return "order/regist/order_check";
 
 	}
 
+
+
 	//注文登録確認画面から注文登録完了画面
 	@RequestMapping(path = "/order/complete", method = RequestMethod.POST)
-	public String completeOrder(OrderForm form, UserForm userForm, Model model) {
-		Order order = new Order();
+	public String completeOrder(OrderForm orderForm, Model model) {
 
-		User user = new User();
-		user.setId(form.getId());
 
-		//ダブルクリック対策機能の確認のため、3秒経過後に画面遷移するよう設定
+		//ダブルクリック対策機能の確認のため、2秒経過後に画面遷移するよう設定
 		try {
-			Thread.sleep(3000); // 3秒間だけ処理を止める
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 		}
+		Order order = new Order();
+		User user = new User();
+		user.setId(orderForm.getUserId());
 
 		//過去に同じ注文がされているか確認
-		List<Order> orderList = orderRepository.findByToken(form.getToken());
+		List<Order> orderList = orderRepository.findByToken(orderForm.getToken());
 		if(orderList.isEmpty()) {
 
 			// ordersテーブルに登録
 			//			order.setId(form.getId());
-			order.setPostalCode(form.getPostalCode());
-			order.setAddress(form.getAddress());
-			order.setName(form.getName());
-			order.setPhoneNumber(form.getPhoneNumber());
-			order.setPayMethod(form.getPayMethod());
+			order.setPostalCode(orderForm.getPostalCode());
+			order.setAddress(orderForm.getAddress());
+			order.setName(orderForm.getName());
+			order.setPhoneNumber(orderForm.getPhoneNumber());
+			order.setPayMethod(orderForm.getPayMethod());
 			order.setUser(user);
 			order.setInsertDate(new Date(new java.util.Date().getTime()));
-			order.setToken(form.getToken());
+			order.setToken(orderForm.getToken());
 			//			order.setOrderItemsList(orderItemList);
 			orderRepository.save(order);
 
@@ -255,7 +245,7 @@ public class OrderRegistCustomerController {
 				orderItem.setOrder(order);
 
 
-				//				在庫数を減らす
+				//購入した商品数を在庫数に反映
 				itemRepository.updateStockById(item.getStock() - item.getQuantityInBasket(), item.getId());
 
 
@@ -270,7 +260,7 @@ public class OrderRegistCustomerController {
 		else {
 
 			model.addAttribute("duplicatedOrder", true);
-			return checkOrder(userForm, model);
+			return checkOrder(orderForm, model);
 //			return "order/regist/order_check";
 		}
 

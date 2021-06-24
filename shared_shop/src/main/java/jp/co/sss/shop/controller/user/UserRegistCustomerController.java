@@ -1,5 +1,8 @@
 package jp.co.sss.shop.controller.user;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jp.co.sss.shop.bean.ItemBean;
 import jp.co.sss.shop.bean.UserBean;
 import jp.co.sss.shop.entity.User;
 import jp.co.sss.shop.form.UserForm;
@@ -93,6 +97,7 @@ public class UserRegistCustomerController {
 	public String registComplete(@ModelAttribute UserForm form) {
 		// 会員情報の生成
 		User user = new User();
+		UserBean userBean = new UserBean();
 
 		// 入力値を会員情報にコピー
 		BeanUtils.copyProperties(form, user);
@@ -100,6 +105,18 @@ public class UserRegistCustomerController {
 		// 会員情報を保存
 		user.setAuthority(2);
 		userRepository.save(user);
+
+
+		// セッションスコープにログインしたユーザの情報を登録
+			BeanUtils.copyProperties(user, userBean);
+
+			userBean.setAuthority(2);
+			userBean.setId(user.getId());
+			session.setAttribute("user", userBean);
+
+			// セッションスコープに買い物かごを初期化
+			List<ItemBean> basket = new ArrayList<ItemBean>();
+			session.setAttribute("basket", basket);
 
 		return "redirect:/user/regist/complete";
 	}
