@@ -23,6 +23,7 @@ html {
 body {
 	margin: 0 0 30px;
 	padding: 0;
+
 }
 
 h2{
@@ -109,7 +110,7 @@ body > .container {
 
   background-size: over;
   animation: move 17s infinite both;
-  overflow: scroll;
+  overflow: hidden;
   font-size: 20 px;
 
 }
