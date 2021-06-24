@@ -13,11 +13,11 @@
 				</h2>
 
 				<!-- 支払方法が未選択の時に出力されるメッセージ -->
-				<div th:if="${order.payMethod == 0}">
+				<!--  <div th:if="${order.payMethod == 0}">
 					<p th:text="#{payMethod.none}"></p>
-				</div>
+				</div> -->
 
-				<div class="user_info_form_area">
+				<div class="user_info_form_area" th:object="${orderForm}">
 					<form method="post" action="/shared_shop/order/check">
 						<ul class="payment_method_select">
 							<li>
@@ -52,24 +52,32 @@
 							</li>
 						</ul>
 						<!-- <span th:if="${#fields.hasErrors('payMethod')}" th:errors="*{payMethod}"></span> -->
-						<input type="hidden" name="deleteFlag" th:value="*{deleteFlag}" >
+						<!-- <input type="hidden" name="deleteFlag" th:value="*{deleteFlag}" >
 						<input type="hidden" name="id" th:value="${order.id}">
 						<input type="hidden" name="postalCode" th:value="${order.postalCode}">
 						<input type="hidden" name="address" th:value="${order.address}">
 						<input type="hidden" name="name" th:value="${order.name}">
-						<input type="hidden" name="phoneNumber" th:value="${order.phoneNumber}">
+						<input type="hidden" name="phoneNumber" th:value="${order.phoneNumber}"> -->
+
+						<input type="hidden" name="postalCode" th:value="*{postalCode}">
+						<input type="hidden" name="address" th:value="*{address}">
+						<input type="hidden" name="name" th:value="*{name}">
+						<input type="hidden" name="phoneNumber" th:value="*{phoneNumber}">
+						<input type="hidden" name="userId" th:value="*{userId}">
 
 						<input type="submit" class="send_button" value="次へ" />
 
 
 						</form>
 						<form method="post" action="/shared_shop/address/input" class="update">
-						<input type="hidden" name="id" th:value="${order.id}">
-						<input type="hidden" name="postalCode" th:value="${order.postalCode}">
-						<input type="hidden" name="address" th:value="${order.address}">
-						<input type="hidden" name="name" th:value="${order.name}">
-						<input type="hidden" name="phoneNumber" th:value="${order.phoneNumber}">
-						<input type="hidden" name="backFlg" value="true" />
+
+						<input type="hidden" name="postalCode" th:value="*{postalCode}">
+						<input type="hidden" name="address" th:value="*{address}">
+						<input type="hidden" name="name" th:value="*{name}">
+						<input type="hidden" name="phoneNumber" th:value="*{phoneNumber}">
+						<input type="hidden" name="userId" th:value="*{userId}">
+						<input type="hidden" name="backFlg" value="true">
+
 						<input type="submit" class="back_button" value="戻る" />
 					</form>
 						</div>

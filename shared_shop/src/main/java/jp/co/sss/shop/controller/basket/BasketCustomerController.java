@@ -31,7 +31,7 @@ public class BasketCustomerController {
 	@RequestMapping(path = "/basket/list", method = RequestMethod.GET)
 	public String basketListGet() {
 
-		//買い物かご内の在庫数の更新
+		//買い物かご内商品在庫数の更新
 		List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
 		if(!basket.isEmpty()) {
 
@@ -72,21 +72,20 @@ public class BasketCustomerController {
 
 			List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
 
-			//既に同じ商品が買い物かごに含まれているか判定
 
 			//既に同じ商品が含まれている場合、商品数を加算する
 			if(basket.contains(itemBean)) {
 
 				ItemBean ib = basket.get(basket.indexOf(itemBean));
 
-				//商品の総量が在庫数を超過しているか判定
-				//trueで商品を加算
+				//商品の総量が在庫数以下であれば、商品数を加算
 				if( ib.getQuantityInBasket() + 1 <= currentStock ) {
 
 					ib.setQuantityInBasket(ib.getQuantityInBasket() + 1);
 				}
 				else {
 
+					//追加した分の総量が在庫数より多ければ、メッセージを表示
 					model.addAttribute("orverStockItemName", ib.getName());
 					return "basket/shopping_basket";
 				}
@@ -111,12 +110,12 @@ public class BasketCustomerController {
 		List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
 		ItemBean itemInBasket = basket.get(basket.indexOf(itemBean));
 
-		//かごの商品数が１つの場合、バスケットリストから商品を削除
+		//削除対象商品が1つの場合商品を買い物かごから除外
 		if(itemInBasket.getQuantityInBasket() == 1) {
 
 			basket.remove(basket.indexOf(itemBean));
 		}
-		//かごの商品数が２つ以上の場合、個数を１減らす
+		//削除対象商品が2つ以上の場合、個数を1減算する
 		else if (itemInBasket.getQuantityInBasket() >= 2) {
 
 			itemInBasket.setQuantityInBasket(itemInBasket.getQuantityInBasket() - 1);
