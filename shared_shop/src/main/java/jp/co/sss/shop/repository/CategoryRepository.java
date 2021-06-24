@@ -20,7 +20,6 @@ import jp.co.sss.shop.util.JPQLConstant;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	Category findByNameAndDeleteFlag(String name, int deleteFlag);
-
 	Category findByIdAndDeleteFlag(Integer id, int deleteFlag);
 
 	// カテゴリ情報を登録日付順に取得

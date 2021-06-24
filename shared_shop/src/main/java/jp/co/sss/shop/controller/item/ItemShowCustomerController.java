@@ -39,9 +39,15 @@ public class ItemShowCustomerController {
 	@Autowired
 	ItemRepository itemRepository;
 
+	/**
+	 * カテゴリー情報
+	 */
 	@Autowired
 	CategoryRepository categoryRepository;
 
+	/**
+	 * 注文商品情報
+	 */
 	@Autowired
 	OrderItemRepository orderItemRepository;
 
@@ -49,12 +55,12 @@ public class ItemShowCustomerController {
 	EntityManager entityManager;
 
 	/**
-	 * トップ画面 表示処理
+	 * 商品情報一覧表示処理
 	 *
-	 * @param model    Viewとの値受渡し
-	 * @param categoryId
+	 * @param model viewとの値渡し
 	 * @param pageable ページング情報
-	 * @return "/" トップ画面へ
+	 * @return"/index"トップ画面表示画面へ
+	 * @return"item/list/item_list"トップ画面へ
 	 */
 	@RequestMapping(path = "/")
 	public String index(Model model, Pageable pageable) {
@@ -66,6 +72,13 @@ public class ItemShowCustomerController {
 		return "/index";
 	}
 
+	/**
+	 * 商品情報表示処理
+	 *
+	 * @param model　viewとの値渡し
+	 * @param pageable　ページング機能
+	 * @return"item/list/item_list"商品一覧画面へ
+	 */
 	@RequestMapping("/item/list")
 	public String showNewItemList(Model model, Pageable pageable) {
 
@@ -75,36 +88,31 @@ public class ItemShowCustomerController {
 		// エンティティ内の検索結果をJavaBeansにコピー
 		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
 		// 会員情報をViewに渡す
-
 		for (Item item : il) {
-			System.out.println(item.getName());
 		}
 
 		model.addAttribute("pages", itemList);
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("url", "/item/list");
-
 		model.addAttribute("sort", "NewArrival");
 
 		return "item/list/item_list";
 	}
 
-	//商品詳細画面
+
+	 /**
+	  * 商品情報詳細表示処理
+	  *
+	  * @param id 商品ID
+	  * @param model viewとの値渡し
+	  * @return"item/detail/item_detail"商品詳細画面へ
+	  */
 	@RequestMapping(path = "/item/detail/{id}")
 	public String create(@PathVariable int id, Model model) {
-		//		商品関連表示
-		//		id（item）をもとに商品情報を取得 例：オレンジ
+
 
 		Item targetItem = itemRepository.getOne(id);
-//		ItemBean itemBean = BeanCopy.copyEntityToBean(itemRepository.getOne(id));
-
-
-		//		取得した商品情報のid(item)をもとにしてid(category)が一致するものを取得　例：食料品
-//		Integer targetCategoryId = targetItem.getCategoryId();
-//		List<Item> sameCategoryItems = itemRepository.findByCategoryId(targetCategoryId);
 		List<Item> sameCategoryItems = itemRepository.findByIdNotAndCategoryId(id, targetItem.getCategoryId());
-
-
 
 		model.addAttribute("targetItem", sameCategoryItems);
 		model.addAttribute("item", targetItem);
@@ -112,7 +120,16 @@ public class ItemShowCustomerController {
 		return "item/detail/item_detail";
 	}
 
-	//カテゴリー別検索
+	/**
+	 * カテゴリー別検索処理
+	 *
+	 * @param args
+	 * @param categoryId　カテゴリーID
+	 * @param model　viewとの値渡し
+	 * @param pageable　ページング情報
+	 * @param sorted　並び替え項目
+	 * @return
+	 */
 	@RequestMapping(path = "/item/list/category", method = RequestMethod.GET)
 	public String categorySearch(String[] args, Integer categoryId, Model model, Pageable pageable, String sorted) {
 
@@ -173,7 +190,14 @@ public class ItemShowCustomerController {
 		return "item/list/item_list";
 	}
 
-	//商品一覧並び替え【　商品の売れ筋順　】
+	/**
+	 * 商品一覧並び替え(売れ筋順）処理
+	 *
+	 * @param categoryId　カテゴリーID
+	 * @param model　viewとの値渡し
+	 * @param pageable　ページング機能
+	 * @return　"item/list/item_list"商品一覧画面へ
+	 */
 	@RequestMapping(path = "/item/list/saleDesc", method = RequestMethod.GET)
 	public String showItemListSaleDesc(Integer categoryId, Model model, Pageable pageable) {
 
@@ -184,13 +208,20 @@ public class ItemShowCustomerController {
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("pages", itemList);
 		model.addAttribute("url", "/item/list/saleDesc");
-
 		model.addAttribute("sort", "saleDesc");
 
 		return "item/list/item_list";
 	}
 
-	//商品一覧並び替え【　価格の低い順　】
+
+	/**
+	 * 商品一覧並び替え（価格に低い順）処理
+	 *
+	 * @param categoryId　カテゴリーID
+	 * @param model　viewとの値渡し
+	 * @param pageable　ページング機能
+	 * @return"item/list/item_list"商品一覧画面へ
+	 */
 	@RequestMapping(path = "/item/list/priceAsc", method = RequestMethod.GET)
 	public String showItemListPriceAsc(Integer categoryId, Model model, Pageable pageable) {
 
@@ -200,13 +231,19 @@ public class ItemShowCustomerController {
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("pages", itemList);
 		model.addAttribute("url", "/item/list/priceAsc");
-
 		model.addAttribute("sort", "PriceAsc");
 
 		return "item/list/item_list";
 	}
 
-	//商品一覧並び替え【　価格の高い順　】
+
+	/**
+	 * 商品一覧並び替え（価格の高い順）処理
+	 *
+	 * @param model　viewとの値渡し
+	 * @param pageable　ページング機能
+	 * @return"item/list/item_list"商品一覧画面へ
+	 */
 	@RequestMapping(path = "/item/list/priceDesc", method = RequestMethod.GET)
 	public String showItemListPriceDesc(Model model, Pageable pageable) {
 
@@ -216,13 +253,21 @@ public class ItemShowCustomerController {
 		model.addAttribute("items", itemBeanList);
 		model.addAttribute("pages", itemList);
 		model.addAttribute("url", "/item/list/priceDesc");
-
 		model.addAttribute("sort", "PriceDesc");
 
 		return "item/list/item_list";
 	}
 
-	//商品名検索
+
+	/**
+	 * 商品名検索（曖昧検索）処理
+	 *
+	 * @param itemBean　商品情報
+	 * @param categoryName　カテゴリー名
+	 * @param model　viewとの値渡し
+	 * @param pageable　ページング機能
+	 * @return"item/list/item_list"商品一覧画面へ
+	 */
 	@RequestMapping(path = "/item/list/categoryName", method = RequestMethod.GET)
 	public String itemName(@ModelAttribute ItemBean itemBean, String categoryName, Model model,
 			Pageable pageable) {

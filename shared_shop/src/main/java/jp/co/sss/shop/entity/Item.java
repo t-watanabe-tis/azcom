@@ -221,19 +221,6 @@ public class Item {
 	public void setOrderItemsList(List<OrderItem> orderItemList) {
 		this.orderItemList = orderItemList;
 	}
-//
-//	@Override
-//	public int compareTo(Item anothor) {
-//
-//		if(this.getInsertDate().equals(anothor.getInsertDate())) {
-//			return 0;
-//		}
-//		else if(this.getInsertDate().before(anothor.getInsertDate())) {
-//			return -1;
-//		}
-//		else {
-//			return 1;
-//		}
-//	}
+
 
 }

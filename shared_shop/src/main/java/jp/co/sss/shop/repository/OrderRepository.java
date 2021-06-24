@@ -17,7 +17,6 @@ import jp.co.sss.shop.util.JPQLConstant;
  * @author System Shared
  */
 @Repository
-
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
 	Order findTop1ByOrderByInsertDateDesc();

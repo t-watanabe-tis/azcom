@@ -16,17 +16,24 @@ import jp.co.sss.shop.repository.UserRepository;
  */
 @Controller
 public class UserShowCustomerController {
+
+	/**
+	 * セッション
+	 */
 	@Autowired
 	HttpSession session;
+
 	/**
 	 * 会員情報を取得
 	 */
 	@Autowired
 	UserRepository userRepository;
+
 	/**
-	 * URLを隠すためにIDを格納するフィールドを用意しています。
+	 * URLを隠すためにIDを格納するフィールドを用意
 	 */
 	private int hiddenId;
+
 	/**
 	 * URLに表示されるIDを隠すメソッド
 	 * @param id URLからIDを取得します。
@@ -35,9 +42,10 @@ public class UserShowCustomerController {
 	@RequestMapping("/user/detail/{id}")
 	public String hiddenId(@PathVariable int id) {
 		this.hiddenId = id;
-		System.out.println(this.hiddenId);
+
 		return "redirect:/user/detail";
 	}
+
 	/**
 	 * 一般ユーザーの会員詳細画面を表示するメソッド
 	 * @param model 会員の情報を格納するためのモデル
@@ -47,7 +55,6 @@ public class UserShowCustomerController {
 	public String showCustomerController(Model model) {
 		this.hiddenId = ((UserBean)session.getAttribute("user")).getId();
 		//フィールドのIDから検索して、Viewに渡す。
-		System.out.println(userRepository.getOne(this.hiddenId));
 		model.addAttribute("user",userRepository.getOne(this.hiddenId));
 		//ユーザー詳細情報画面に遷移
 		return"/user/detail/user_detail";

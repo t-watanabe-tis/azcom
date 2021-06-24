@@ -48,14 +48,10 @@ public class OrderShowCustomerController {
 	/**
 	 * 注文情報一覧表示処理
 	 *
-	 * @param model
-	 *            Viewとの値受渡し
-	 * @param form
-	 *            表示用注文情報
-	 * @param session
-	 *            セッション情報
-	 * @param pageable
-	 *            ページング情報
+	 * @param model　Viewとの値受渡し
+	 * @param form　表示用注文情報
+	 * @param session　セッション情報
+	 * @param pageable　ページング情報
 	 * @return "order/list/order_list" 注文情報 一覧画面へ
 	 */
 	@RequestMapping(path = "/order/list", method = RequestMethod.GET)
@@ -71,17 +67,14 @@ public class OrderShowCustomerController {
 		for (Order order : orderList) {
 			OrderBean orderBean = new OrderBean();
 			orderBean.setId(order.getId());
-
 			orderBean.setInsertDate(order.getInsertDate().toString());
 			orderBean.setPayMethod(order.getPayMethod());
 
 			//注文時点の単価を合計するための一時変数
 			int total = 0;
 
-
 			//orderレコードから紐づくOrderItemのListを取り出す
 			List<OrderItem> orderItemList = order.getOrderItemsList();
-
 			for(OrderItem orderItem :  orderItemList) {
 
 				//購入時単価 * 買った個数をもとめて、合計に加算
@@ -89,7 +82,6 @@ public class OrderShowCustomerController {
 			}
 			//Orderに改めて注文時点の単価をセット
 			orderBean.setTotal(total);
-
 			orderBeanList.add(orderBean);
 		}
 
@@ -106,12 +98,9 @@ public class OrderShowCustomerController {
 	/**
 	 * 注文情報詳細表示処理
 	 *
-	 * @param model
-	 *            Viewとの値受渡し
-	 * @param form
-	 *            表示用注文情報
-	 * @param session
-	 *            セッション情報
+	 * @param model　Viewとの値受渡し
+	 * @param form　表示用注文情報
+	 * @param session　セッション情報
 	 * @return "/order/detail/order_detail" 注文情報 詳細画面へ
 	 */
 	@RequestMapping(path = "/order/detail/{id}")
@@ -142,7 +131,6 @@ public class OrderShowCustomerController {
 			int subtotal = orderItem.getPrice() * orderItem.getQuantity();
 
 			orderItemBean.setSubtotal(subtotal);
-
 			orderItemBeanList.add(orderItemBean);
 		}
 
@@ -156,6 +144,5 @@ public class OrderShowCustomerController {
 
 		return "order/detail/order_detail";
 	}
-
 
 }

@@ -55,6 +55,9 @@ public class ItemBean {
 
 	private Date InsertDate;
 
+	/**
+	 * 買い物かごに入っている情報
+	 */
 	private Integer quantityInBasket;
 
 	public Integer getQuantityInBasket() {
@@ -137,7 +140,10 @@ public class ItemBean {
 		InsertDate = insertDate;
 	}
 
-	//商品idと商品名が一致していれば等価
+	/**
+	 * 商品IDと商品名が一致していれば等価
+	 *
+	 */
 	@Override
 	public boolean equals(Object obj) {
 

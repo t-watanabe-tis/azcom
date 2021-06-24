@@ -35,6 +35,9 @@ public class UserRegistCustomerController {
 	@Autowired
 	UserRepository userRepository;
 
+	/**
+	 * セッション
+	 */
 	@Autowired
 	HttpSession session;
 

@@ -60,7 +60,6 @@ public class Order {
 	@Column
 	private Integer			payMethod;
 
-
 	/**
 	 * 注文日付
 	 */
@@ -85,8 +84,6 @@ public class Order {
 	 */
 	@OneToMany(mappedBy = "order")
 	private List<OrderItem>	orderItemsList;
-
-
 
 
 	public Integer getId() {

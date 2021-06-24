@@ -16,18 +16,21 @@ import jp.co.sss.shop.repository.UserRepository;
 import jp.co.sss.shop.util.Constant;
 /**
  * 一般ユーザーの削除処理を行うコントローラクラス
- * @author 梅津優樹
+ * @author SystemShared
  *
  */
 @Controller
 public class UserDeleteCustomerController {
+
    /**
     * 会員情報を取得
     */
    @Autowired
    UserRepository userRepository;
+
    /**
     * 削除する会員情報を入手するメソッド
+    *
     * @param model formを格納するためのモデル
     * @param form ユーザ情報を得るためのform
     * @return 削除確認画面へ遷移
@@ -43,8 +46,10 @@ public class UserDeleteCustomerController {
       model.addAttribute("user", userBean);
       return "user/delete/user_delete_check";
    }
+
    /**
     * 論理削除を行うメソッド
+    *
     * @param form 削除対象の情報を取得するためのform
     * @return 削除完了画面へ遷移するメソッドにリクエスト
     */
@@ -58,8 +63,10 @@ public class UserDeleteCustomerController {
       userRepository.save(user);
       return "redirect:/user/delete/complete";
    }
+
    /**
     * 削除完了画面へ遷移するためのメソッド
+    *
     * @param session ユーザが削除されたのでセッションを切るためにスコープを用意
     * @return 削除完了画面へ
     */

@@ -12,14 +12,15 @@ import jp.co.sss.shop.filter.SystemAdminAccountCheckFilter;
 
 /**
  * フィルタ設定クラス
- * 
+ *
  * @author SystemShared
  */
 @Configuration
 public class FilterConfig {
+
 	/**
 	 * 非会員向けアクセス制限用フィルタの設定
-	 * 
+	 *
 	 * @return フィルタ設定情報
 	 */
 	@Bean
@@ -30,10 +31,10 @@ public class FilterConfig {
 		bean.setOrder(1);
 		return bean;
 	}
-	
+
 	/**
 	 * 一般会員向けアクセス制限用フィルタの設定
-	 * 
+	 *
 	 * @return フィルタ設定情報
 	 */
 	@Bean
@@ -44,10 +45,10 @@ public class FilterConfig {
 		bean.setOrder(2);
 		return bean;
 	}
-	
+
 	/**
 	 * 管理者向けアクセス制限用フィルタの設定
-	 * 
+	 *
 	 * @return フィルタ設定情報
 	 */
 	@Bean
@@ -58,10 +59,10 @@ public class FilterConfig {
 		bean.setOrder(3);
 		return bean;
 	}
-	
+
 	/**
 	 * システム管理者向けアクセス制限用フィルタの設定
-	 * 
+	 *
 	 * @return フィルタ設定情報
 	 */
 	@Bean

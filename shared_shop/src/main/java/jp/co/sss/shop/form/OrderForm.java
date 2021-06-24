@@ -63,14 +63,10 @@ public class OrderForm {
 	 */
 	private Integer price;
 
-
 	/**
 	 * 注文トークン
 	 */
 	private String token;
-
-
-
 
 
 	public String getToken() {

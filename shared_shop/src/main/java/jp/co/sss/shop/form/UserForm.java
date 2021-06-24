@@ -69,7 +69,6 @@ public class UserForm {
 	 */
 	private Integer authority;
 
-
 	/**
 	 * 削除フラグ 0:未削除、1:削除済み
 	 */
@@ -78,13 +77,11 @@ public class UserForm {
 	 * 登録日付
 	 */
 	private String	insertDate;
-
 	private Integer	index	= 1;
 
 	/**
 	 * 支払方法
 	 */
-//	@NotNull
 	private Integer payMethod;
 
 
@@ -95,8 +92,6 @@ public class UserForm {
 	public void setPayMethod(Integer payMethod) {
 		this.payMethod = payMethod;
 	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -161,8 +156,6 @@ public class UserForm {
 	public void setAuthority(Integer authority) {
 		this.authority = authority;
 	}
-
-
 
 	public Integer getDeleteFlag() {
 		return deleteFlag;

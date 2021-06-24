@@ -15,19 +15,33 @@ import jp.co.sss.shop.entity.Item;
 import jp.co.sss.shop.repository.ItemRepository;
 import jp.co.sss.shop.util.BeanCopy;
 
-
-
+/**
+ * 買い物かご管理のコントロールクラス
+ * @author SystemShared
+ *
+ */
 @Controller
 public class BasketCustomerController {
 
+
+	/**
+	 * 商品情報
+	*/
 	@Autowired
 	ItemRepository itemRepository;
 
+	/**
+	 * 買い物かごに入っている商品情報
+	 */
 	@Autowired
 	HttpSession session;
 
 
-	//ナビゲーションバーからの買い物かご一覧表示
+	/**
+	 * ナビゲーションバーから買い物かご一覧表示
+	 *
+	 * @return "basket/shopping_basket"買い物かご一覧画面へ
+	 */
 	@RequestMapping(path = "/basket/list", method = RequestMethod.GET)
 	public String basketListGet() {
 
@@ -45,19 +59,24 @@ public class BasketCustomerController {
 		return "basket/shopping_basket";
 	}
 
-	//リダイレクト用買い物かご一覧表示
+	/**
+	 * リダイレクト用買い物かご一覧表示処理
+	 *
+	 * @return"basket/shopping_basket"買い物かご一覧画面へ
+	 */
 	@RequestMapping(path = "/basket/list", method = RequestMethod.POST)
 	public String basketList() {
 
 		return "basket/shopping_basket";
 	}
 
-
-
 	/**
 	 * 買い物かごへの商品追加
 	 *
-	 *
+	 * @param id itemRepositoryから取ってくる商品id
+	 * @param session 買い物かご情報
+	 * @param model viewとの値渡し
+	 * @return
 	 */
 	@RequestMapping(path = "/basket/add", method = RequestMethod.POST)
 	public String addItem(Integer id, HttpSession session, Model model) {
@@ -103,7 +122,12 @@ public class BasketCustomerController {
 	}
 
 
-	//カート内商品の削除
+	/**
+	 * 買い物かご内の商品削除
+	 *
+	 * @param itemBean 商品情報クラス
+	 * @return "redirect:/basket/list"リダイレクト用買い物かご一覧表示画面へ
+	 */
 	@RequestMapping(path = "/basket/delete", method = RequestMethod.POST)
 	public String deleteItem(ItemBean itemBean) {
 
@@ -125,7 +149,11 @@ public class BasketCustomerController {
 	}
 
 
-	//カート内の全商品削除
+	/**
+	 * 買い物かご内の全商品削除
+	 *
+	 * @return"redirect:/basket/list"リダイレクト用買い物かご一覧表示画面へ
+	 */
 	@RequestMapping(path = "/basket/allDelete", method = RequestMethod.POST)
 	public String deleteAll() {
 

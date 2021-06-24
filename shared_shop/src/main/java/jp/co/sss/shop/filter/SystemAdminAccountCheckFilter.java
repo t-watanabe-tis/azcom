@@ -68,7 +68,6 @@ public class SystemAdminAccountCheckFilter implements Filter {
 
 		if (!URLCheck.checkURLForStaticFile(requestURL)
 				&& requestURL.indexOf("/login") == -1
-//				&& requestURL.indexOf("/admin") == -1
 				&& requestURL.indexOf("/user/list") == -1
 				&& requestURL.indexOf("/user/detail/admin") == -1
 				&& requestURL.indexOf("/user/update/input/admin") == -1

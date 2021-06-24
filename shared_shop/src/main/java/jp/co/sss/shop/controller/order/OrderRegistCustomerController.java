@@ -69,6 +69,7 @@ public class OrderRegistCustomerController {
 	@Autowired
 	HttpSession session;
 
+
 	/**
 	 * 買い物かご処理
 	 *
@@ -93,6 +94,7 @@ public class OrderRegistCustomerController {
 
 		return "order/regist/order_address_input";
 	}
+
 
 	/**
 	 * 届け先入力処理
@@ -126,8 +128,7 @@ public class OrderRegistCustomerController {
 	 * @param orderForm　注文情報
 	 * @param result　入力チェックの結果
 	 * @param backFlg　ページ遷移の真偽
-	 * @return"order/regist/order_payment_input"支払選択画面へ
-	 */
+ 	*/
 	@RequestMapping(path = "/payment/input", method = RequestMethod.POST)
 	public String inputPayment(@Valid @ModelAttribute OrderForm orderForm, BindingResult result, boolean backFlg) {
 
@@ -144,7 +145,6 @@ public class OrderRegistCustomerController {
 
 			return "order/regist/order_payment_input";
 		}
-
 	}
 
 	/**
@@ -219,6 +219,7 @@ public class OrderRegistCustomerController {
 
 	}
 
+
 	/**
 	 * 注文登録確認処理
 	 *
@@ -285,6 +286,7 @@ public class OrderRegistCustomerController {
 			return checkOrder(orderForm, model);
 
 		}
+
 
 	}
 

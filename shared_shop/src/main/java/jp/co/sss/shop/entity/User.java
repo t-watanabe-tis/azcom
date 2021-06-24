@@ -70,8 +70,6 @@ public class User {
 	@Column
 	private Integer	authority;
 
-
-
 	/**
 	 * 削除フラグ 0:未削除、1:削除済み
 	 */
