@@ -265,9 +265,10 @@ p {
 .input_list .error_message {
 
 	display: block;
-	line-height: 0.9em;
+	line-height: 1.1em;
 	font-size: 0.9rem;
 	color: #C00;
+
 
 }
 
@@ -275,8 +276,9 @@ p {
 	display: list-item;
 	line-height: 0.9em;
 	font-size: 0.9rem;
-	list-style-type: disc;
+	list-style-type: none;
 	color:#C00;
+	text-align: center;
 }
 
 

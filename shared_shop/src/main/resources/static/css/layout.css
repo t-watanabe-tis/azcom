@@ -23,6 +23,7 @@ html {
 body {
 	margin: 0 0 30px;
 	padding: 0;
+
 }
 
 h2{
@@ -109,7 +110,7 @@ body > .container {
 
   background-size: over;
   animation: move 17s infinite both;
-  overflow: scroll;
+  overflow: hidden;
   font-size: 20 px;
 
 }
@@ -293,7 +294,7 @@ aside.admin_menu {
 .admin_menu .title {
 	border-radius: 6px 6px 0 0;
 	text-align: center;
-	font-size: 1.5rem;
+	font-size: 1.3rem;
 }
 .admin_menu .title {
 	background: #ff6c49;

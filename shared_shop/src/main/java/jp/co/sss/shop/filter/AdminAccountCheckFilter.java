@@ -76,6 +76,11 @@ public class AdminAccountCheckFilter implements Filter {
 				&& requestURL.indexOf("/user/update/input/admin") == -1
 				&& requestURL.indexOf("/user/update/check/admin") == -1
 				&& requestURL.indexOf("/user/update/complete/admin") == -1
+
+				&& requestURL.indexOf("/user/regist/input/admin") == -1
+				&& requestURL.indexOf("/user/regist/check/admin") == -1
+				&& requestURL.indexOf("/user/regist/complete/admin") == -1
+
 				&& requestURL.indexOf("/order/list/admin") == -1
 				&& requestURL.indexOf("/order/detail/admin") == -1
 				&& requestURL.indexOf("/item/regist") == -1

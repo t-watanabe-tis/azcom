@@ -63,11 +63,15 @@
 
 		<br/><h3>商品関連:</h3>
 
-		<tr th:each="item: ${targetItem}">
+		<div class="fit"><p th:each="item: ${targetItem}">
 		<a th:href="@{/item/detail/{id}(id=${item.id})}"> <img
-				th:src="${item.image}"width="25%" height="25%"></img>
-			</a>
-			</tr>
+				th:src="${item.image}"width="25%" height="25%"border="1"></img>
+			</a><a th:href="@{/item/detail/{id}(id=${item.id})}"
+				th:text="${item.name}"></a>&nbsp;:&nbsp;
+
+
+          <td th:text="${item.description}"class="fit__desc"></td>
+			</p></div>
 	</form>
 
 
