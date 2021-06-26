@@ -88,7 +88,6 @@ public class BasketCustomerController {
 		if(item.getStock() > 0) {
 
 			ItemBean itemBean = BeanCopy.copyEntityToBean(item);
-
 			List<ItemBean> basket = (List<ItemBean>) session.getAttribute("basket");
 
 

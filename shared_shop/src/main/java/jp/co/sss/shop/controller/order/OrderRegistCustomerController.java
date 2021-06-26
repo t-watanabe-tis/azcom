@@ -177,6 +177,7 @@ public class OrderRegistCustomerController {
 			}
 		}
 
+
 		//在庫がない商品を買い物かごから削除
 		Iterator<ItemBean> iter = basket.iterator();
 		while(iter.hasNext()) {

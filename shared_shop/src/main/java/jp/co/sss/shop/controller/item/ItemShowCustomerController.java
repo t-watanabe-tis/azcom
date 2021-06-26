@@ -88,8 +88,6 @@ public class ItemShowCustomerController {
 		// エンティティ内の検索結果をJavaBeansにコピー
 		List<ItemBean> itemBeanList = BeanCopy.copyEntityToItemBean(itemList.getContent());
 		// 会員情報をViewに渡す
-		for (Item item : il) {
-		}
 
 		model.addAttribute("pages", itemList);
 		model.addAttribute("items", itemBeanList);
